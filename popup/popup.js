@@ -208,7 +208,7 @@ class CheckPopup {
           enableDebugLogging: false,
         };
         console.log("Still loading");
-        this.brandingConfig = { companyName: "Check", productName: "Check" };
+        this.brandingConfig = { companyName: "Bruinsma", productName: "IsThePageReal" };
         this.applyBranding();
         console.log("Applying default branding");
 
@@ -379,24 +379,24 @@ class CheckPopup {
       // Fallback to default branding if background script fails
       console.warn("Popup: Using fallback branding configuration");
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "IsThePageReal",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
       };
     } catch (error) {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "IsThePageReal",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
       };
     }
   }
@@ -406,7 +406,7 @@ class CheckPopup {
 
     // Update title
     this.elements.brandingTitle.textContent =
-      this.brandingConfig.productName || "Check";
+      this.brandingConfig.productName || "IsThePageReal";
 
     // Update logo with fallback handling
     if (this.brandingConfig.logoUrl) {
@@ -437,7 +437,7 @@ class CheckPopup {
 
     // Update company name
     this.elements.companyName.textContent =
-      this.brandingConfig.companyName || "CyberDrain";
+      this.brandingConfig.companyName || "Bruinsma";
 
     // Update link URLs with fallbacks
     if (this.brandingConfig.supportUrl) {

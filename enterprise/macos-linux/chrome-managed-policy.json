@@ -1,13 +1,13 @@
 {
     "ExtensionSettings": {
-        "benimdeioplgkhanklclahllklceahbe": {
+        "REPLACE_WITH_CHROME_EXTENSION_ID": {
             "installation_mode": "force_installed",
             "update_url": "https://clients2.google.com/service/update2/crx"
         }
     },
     "3rdparty": {
         "extensions": {
-            "benimdeioplgkhanklclahllklceahbe": {
+            "REPLACE_WITH_CHROME_EXTENSION_ID": {
                 "showNotifications": true,
                 "enableValidPageBadge": true,
                 "validPageBadgeTimeout": 5,
@@ -15,21 +15,21 @@
                 "enableCippReporting": false,
                 "cippServerUrl": "",
                 "cippTenantId": "",
-                "customRulesUrl": "",
+                "customRulesUrl": "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
                 "updateInterval": 24,
                 "enableDebugLogging": false,
                 "domainSquatting": {
                     "enabled": true
                 },
                 "customBranding": {
-                    "companyName": "",
-                    "productName": "",
-                    "supportEmail": "",
-                    "supportUrl": "",
-                    "privacyPolicyUrl": "",
-                    "aboutUrl": "",
-                    "primaryColor": "#F77F00",
-                    "logoUrl": ""
+                    "companyName": "Bruinsma",
+                    "productName": "IsThePageReal",
+                    "supportEmail": "info@bruinsmakantoor.nl",
+                    "supportUrl": "https://bruinsmakantoor.nl/ict/",
+                    "privacyPolicyUrl": "https://bruinsmakantoor.nl/",
+                    "aboutUrl": "https://bruinsmakantoor.nl/ict/over-ons/",
+                    "primaryColor": "#299DCF",
+                    "logoUrl": "https://bruinsmakantoor.nl/wp-content/uploads/2024/02/favicon_kantoor.png"
                 },
                 "genericWebhook": {
                     "enabled": false,

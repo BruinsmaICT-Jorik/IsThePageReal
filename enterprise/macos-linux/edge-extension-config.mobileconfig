@@ -17,11 +17,11 @@
                 <integer>1</integer>
                 <key>ExtensionInstallForcelist</key>
                 <array>
-                    <string>knepjpocdagponkonnbggpcnhnaikajg;https://edge.microsoft.com/extensionwebstorebase/v1/crx</string>
+                    <string>REPLACE_WITH_EDGE_EXTENSION_ID;https://edge.microsoft.com/extensionwebstorebase/v1/crx</string>
                 </array>
                 <key>ExtensionSettings</key>
                 <dict>
-                    <key>knepjpocdagponkonnbggpcnhnaikajg</key>
+                    <key>REPLACE_WITH_EDGE_EXTENSION_ID</key>
                     <dict>
                         <key>installation_mode</key>
                         <string>force_installed</string>

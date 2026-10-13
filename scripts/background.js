@@ -473,7 +473,7 @@ class CheckBackground {
 
   getDefaultPolicy() {
     return {
-      BrandingName: "CyberDrain Check Phishing Protection",
+      BrandingName: "IsThePageReal by Bruinsma",
       BrandingImage: "",
       ExtraAllowlist: [],
       CIPPReportingServer: "",

@@ -5,11 +5,11 @@
         ""
       ],
       "Locked": [
-        "check@cyberdrain.com"
+        "isthepagereal@bruinsmakantoor.nl"
       ]
     },
     "ExtensionSettings": {
-      "check@cyberdrain.com": {
+      "isthepagereal@bruinsmakantoor.nl": {
         "installation_mode": "force_installed",
         "install_url": "",
         "default_area": "navbar"
@@ -17,7 +17,7 @@
     },
     "3rdparty": {
       "Extensions": {
-        "check@cyberdrain.com": {
+        "isthepagereal@bruinsmakantoor.nl": {
           "showNotifications": true,
           "enableValidPageBadge": true,
           "validPageBadgeTimeout": 5,
@@ -25,7 +25,7 @@
           "enableCippReporting": false,
           "cippServerUrl": "",
           "cippTenantId": "",
-          "customRulesUrl": "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+          "customRulesUrl": "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
           "updateInterval": 24,
           "urlAllowlist": [],
           "domainSquatting": {
@@ -33,14 +33,14 @@
           },
           "enableDebugLogging": false,
           "customBranding": {
-            "companyName": "",
-            "productName": "",
-            "supportEmail": "",
-            "supportUrl": "",
-            "privacyPolicyUrl": "",
-            "aboutUrl": "",
-            "primaryColor": "#F77F00",
-            "logoUrl": ""
+            "companyName": "Bruinsma",
+            "productName": "IsThePageReal",
+            "supportEmail": "info@bruinsmakantoor.nl",
+            "supportUrl": "https://bruinsmakantoor.nl/ict/",
+            "privacyPolicyUrl": "https://bruinsmakantoor.nl/",
+            "aboutUrl": "https://bruinsmakantoor.nl/ict/over-ons/",
+            "primaryColor": "#299DCF",
+            "logoUrl": "https://bruinsmakantoor.nl/wp-content/uploads/2024/02/favicon_kantoor.png"
           },
           "genericWebhook": {
             "enabled": false,

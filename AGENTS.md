@@ -1,9 +1,10 @@
-# Check Agent Guide
+# IsThePageReal (Bruinsma) Agent Guide
 
 ## Purpose and Scope
 - Manifest V3 browser extension that detects phishing sites impersonating Microsoft 365 sign-in pages.
+- Bruinsma-branded fork of Check (product name **IsThePageReal**).
 - Key components: detection engine, policy/branding management, and popup/options interfaces.
-- Files are packaged directly—no build step. All guidance in this file applies repository-wide.
+- Files are packaged directly—no build step (`npm run package:edge` only zips for Edge). All guidance in this file applies repository-wide.
 
 ## Coding Conventions
 - Plain JavaScript ES modules; filenames use `kebab-case.js`.

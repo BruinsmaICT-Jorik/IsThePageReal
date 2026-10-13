@@ -6221,7 +6221,7 @@ if (window.checkExtensionLoaded) {
         if (!bannerEl) return;
         try {
           const companyName =
-            branding.companyName || branding.productName || "CyberDrain";
+            branding.companyName || branding.productName || "Bruinsma";
           const supportEmail = branding.supportEmail || "";
           let logoUrl = branding.logoUrl || "";
           const packagedFallback = chrome.runtime.getURL("images/icon48.png");

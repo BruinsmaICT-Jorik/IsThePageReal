@@ -415,7 +415,7 @@ class CheckOptions {
         showNotifications: true,
         enableValidPageBadge: false,
         customRulesUrl:
-          "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+          "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
         updateInterval: 24,
         enableDebugLogging: false,
         enableDeveloperConsoleLogging: false,
@@ -492,23 +492,23 @@ class CheckOptions {
       // Fallback to default branding if background script fails
       console.warn("Options: Using fallback branding configuration");
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "IsThePageReal",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
         logoUrl: "images/icon48.png",
       };
     } catch (error) {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "IsThePageReal",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
         logoUrl: "images/icon48.png",
       };
     }
@@ -866,12 +866,12 @@ class CheckOptions {
   applyBranding() {
     // Update sidebar branding
     document.getElementById("sidebarTitle").textContent =
-      this.brandingConfig?.productName || "Check";
+      this.brandingConfig?.productName || "IsThePageReal";
 
     // Update mobile logo text
     const mobileLogoText = document.getElementById("mobileLogoText");
     if (mobileLogoText) {
-      mobileLogoText.textContent = this.brandingConfig?.productName || "Check";
+      mobileLogoText.textContent = this.brandingConfig?.productName || "IsThePageReal";
     }
 
     // Function to set logo src with fallback
@@ -1045,7 +1045,7 @@ class CheckOptions {
       this.brandingConfig?.privacyPolicyUrl || "";
     this.elements.aboutUrl.value = this.brandingConfig?.aboutUrl || "";
     this.elements.primaryColor.value =
-    this.brandingConfig?.primaryColor || "#F77F00";
+    this.brandingConfig?.primaryColor || "#299DCF";
     this.elements.logoUrl.value = this.brandingConfig?.logoUrl || "";
   }
 
@@ -1083,7 +1083,7 @@ class CheckOptions {
         subtitle: "Customize the extension's appearance and branding",
       },
       about: {
-        title: "About Check, a product by CyberDrain",
+        title: "About IsThePageReal by Bruinsma",
         subtitle:
           "Enterprise-grade protection against Microsoft 365 phishing attacks",
       },
@@ -2517,21 +2517,21 @@ class CheckOptions {
           cippServerUrl: "",
           cippTenantId: "",
           customRulesUrl:
-            "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+            "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
           updateInterval: 24,
           enableDebugLogging: false,
           // Note: enableDeveloperConsoleLogging is not policy-managed - remains under user control
 
           // Custom branding (matches managed_schema.json structure)
           customBranding: {
-            companyName: "CyberDrain",
-            productName: "Check Enterprise",
+            companyName: "Bruinsma",
+            productName: "IsThePageReal",
             supportUrl: "",
             privacyPolicyUrl: "",
             aboutUrl: "",
-            primaryColor: "#F77F00",
+            primaryColor: "#299DCF",
             logoUrl:
-              "https://cyberdrain.com/images/favicon_hu_20e77b0e20e363e.png",
+              "images/icon48.png",
           },
         };
 

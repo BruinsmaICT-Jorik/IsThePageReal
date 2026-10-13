@@ -1,70 +1,64 @@
-# Check
+# IsThePageReal by Bruinsma
 
-An open-source, Manifest V3 browser extension for detecting phishing attacks that
-impersonate Microsoft 365 sign-in pages.
+Manifest V3 browser extension that detects phishing sites impersonating Microsoft 365 sign-in pages. This is Bruinsma's branded fork of [Check by CyberDrain](https://github.com/CyberDrain/Check) (AGPL-3.0), intended for customer rollout via Microsoft Edge.
 
-Install it from the [Chrome](https://chromewebstore.google.com/detail/benimdeioplgkhanklclahllklceahbe) Store here or the [Edge](https://microsoftedge.microsoft.com/addons/detail/check-by-cyberdrain/knepjpocdagponkonnbggpcnhnaikajg) store here.
+## Branding
 
-**Firefox Support**: The extension also works on Firefox 109+. See [Firefox Support](docs/firefox-support.md) for installation instructions.
+Default branding lives in `config/branding.json`:
 
-## Features 
+- **Company:** Bruinsma
+- **Product:** IsThePageReal
+- **Primary color:** `#299DCF`
+- **Support:** info@bruinsmakantoor.nl / https://bruinsmakantoor.nl/ict/
 
-- **Detection engine** – loads rules from `rules/detection-rules.json` and
-  analyses URLs and page content to block or warn about suspicious sites
-  targeting Microsoft 365 credentials
-- **Configuration management** – merges local settings, branding, and browser
-  policies provided through Chrome managed storage (GPO/Intune)
-- **Policy enforcement & logging** – loads enterprise policies, tracks
-  compliance mode, and records audit events for security reporting
-- **Custom branding** – logos, colors, and messaging are defined in
-  `config/branding.json` and can be replaced for white‑label deployments
-- **Options & popup interfaces** – interactive pages (`options/`, `popup/`) let
-  administrators adjust settings and view detection status
+Icons use the Bruinsma “b” mark in `images/icon{16,32,48,128}.png`.
+
+## Features
+
+- **Detection engine** – loads rules from `rules/detection-rules.json` and analyses URLs/page content
+- **Configuration management** – merges local settings, branding, and browser policies (GPO/Intune)
+- **Policy enforcement & logging** – enterprise policies, compliance mode, audit events
+- **Custom branding** – logos, colors, and messaging via `config/branding.json` or managed policy
+- **Options & popup** – admin settings and status UI
 
 ## Requirements
 
-- Chrome 88+, Edge 88+, or Firefox 109+ (browsers supporting Manifest V3)
-- Optional enterprise management via Group Policy or Microsoft Intune for
-  policy enforcement
+- Edge 88+ / Chrome 88+ (Manifest V3)
+- Optional enterprise management via Group Policy or Microsoft Intune
 
-## Installation
+## Installation (developer / test)
 
-### Manual
+### Edge / Chrome
 
-#### Chrome/Edge
 1. Clone this repository.
-2. In Chrome/Edge open `chrome://extensions/` or `edge://extensions` and enable **Developer mode**.
+2. Open `edge://extensions` or `chrome://extensions` and enable **Developer mode**.
 3. Click **Load unpacked** and select the project directory.
-4. Verify the extension using `test-extension-loading.html`.
+4. Verify with `test-pages/` and the popup/options pages.
 
-#### Firefox
-1. Clone this repository.
-2. Run `npm run build:firefox` to configure for Firefox.
-3. Open `about:debugging#/runtime/this-firefox` in Firefox.
-4. Click **Load Temporary Add-on** and select `manifest.json`.
-5. For more details, see [Firefox Support](docs/firefox-support.md).
+### Package for Edge distribution
 
-### Enterprise
+```bash
+npm run package:edge
+```
 
-Package the extension directory (zip) and deploy through your browser’s policy
-mechanism. Managed settings follow the schema in `config/managed_schema.json`.
+Creates `dist/IsThePageReal-edge.zip` for Edge Add-ons Partner Center or private hosting.
+
+Full rollout steps: [docs/edge-deployment.md](docs/edge-deployment.md).
+
+## Enterprise deployment
+
+- Edge managed policy template: `enterprise/macos-linux/edge-managed-policy.json`
+- Windows deploy script: `enterprise/Deploy-Windows-Chrome-and-Edge.ps1`
+- Replace `REPLACE_WITH_EDGE_EXTENSION_ID` / `$edgeExtensionId` after publishing to Edge Add-ons
+
+Managed settings follow `config/managed_schema.json`.
 
 ## Configuration
 
-- **Policies** – see `config/managed_schema.json` for available options such as
-  URL blocking, logging, and performance controls.
-- **Branding** – update `config/branding.json` to change names, logos, and
-  colors.
-- **Detection rules** – edit `rules/detection-rules.json` or enable remote
-  rules using the `detectionRules` section in the policy schema.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. The project uses plain
-JavaScript modules and does not include a build system; package the directory
-directly for distribution.
+- **Policies** – `config/managed_schema.json`
+- **Branding** – `config/branding.json`
+- **Detection rules** – `rules/detection-rules.json` (or remote URL via policy)
 
 ## License
 
-Licensed under the AGPL-3.0. See [LICENSE](LICENSE) for details.
-
+Licensed under AGPL-3.0. Based on Check by CyberDrain; keep attribution and source availability when distributing.

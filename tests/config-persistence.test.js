@@ -99,7 +99,7 @@ test('ConfigManager - custom rules URL persistence', async (t) => {
     });
     
     const config = await configManager.getConfig();
-    const defaultUrl = 'https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json';
+    const defaultUrl = 'https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json';
     
     assert.strictEqual(
       config.customRulesUrl,

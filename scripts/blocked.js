@@ -510,7 +510,7 @@ async function loadBranding() {
 
       // Apply branding from background script
       const companyName =
-        storageResult.companyName || storageResult.productName || "Check";
+        storageResult.companyName || storageResult.productName || "IsThePageReal";
       console.log("Setting company name from background to:", companyName);
       document.getElementById("companyName").textContent = companyName;
       document.title = `Access Blocked - ${companyName}`;
@@ -645,7 +645,7 @@ async function loadBranding() {
         const brandingConfig = await response.json();
         console.log("Loaded branding from file:", brandingConfig);
 
-        const companyName = brandingConfig.companyName || "Check";
+        const companyName = brandingConfig.companyName || "IsThePageReal";
         console.log("Setting company name from file to:", companyName);
         document.getElementById("companyName").textContent = companyName;
         document.title = `Access Blocked - ${companyName}`;
