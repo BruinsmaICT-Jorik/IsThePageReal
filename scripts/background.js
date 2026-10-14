@@ -473,7 +473,7 @@ class CheckBackground {
 
   getDefaultPolicy() {
     return {
-      BrandingName: "IsThePageReal by Bruinsma",
+      BrandingName: "Bruinsma Protect",
       BrandingImage: "",
       ExtraAllowlist: [],
       CIPPReportingServer: "",

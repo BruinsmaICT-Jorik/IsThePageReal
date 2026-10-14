@@ -1,6 +1,6 @@
-# IsThePageReal — Microsoft Edge uitrol (Bruinsma)
+# Bruinsma Protect — Microsoft Edge uitrol (Bruinsma)
 
-Deze fork is gebrandmerkt als **IsThePageReal by Bruinsma**. Hieronder staan de praktische stappen om de extensie als eigen Edge-extensie uit te rollen bij klanten.
+Deze fork is gebrandmerkt als **Bruinsma Protect**. Hieronder staan de praktische stappen om de extensie als eigen Edge-extensie uit te rollen bij klanten.
 
 ## 1. Pakket maken
 
@@ -10,14 +10,14 @@ Maak een distributie-zip zonder ontwikkelbestanden:
 npm run package:edge
 ```
 
-Dit schrijft `dist/IsThePageReal-edge.zip`. Die zip upload je naar Edge Add-ons Partner Center, of je gebruikt hem voor een private update-host.
+Dit schrijft `dist/Bruinsma Protect-edge.zip`. Die zip upload je naar Edge Add-ons Partner Center, of je gebruikt hem voor een private update-host.
 
 Inhoud die meegaat: `manifest.json`, `scripts/`, `popup/`, `options/`, `config/`, `rules/`, `images/`, `styles/`, `blocked.html`.
 
 ## 2. Publiceren in Edge Add-ons (aanbevolen voor klanten)
 
 1. Maak een account in [Microsoft Partner Center – Edge Add-ons](https://partner.microsoft.com/dashboard/microsoftedge/overview).
-2. Maak een nieuwe extensie en upload `dist/IsThePageReal-edge.zip`.
+2. Maak een nieuwe extensie en upload `dist/Bruinsma Protect-edge.zip`.
 3. Vul store-listing in (naam, beschrijving, screenshots, privacybeleid).
 4. Na goedkeuring krijg je een **extension ID** (32 tekens).
 5. Vervang overal `REPLACE_WITH_EDGE_EXTENSION_ID` door die ID:
@@ -53,7 +53,7 @@ Belangrijke defaults:
 | Setting | Waarde |
 | --- | --- |
 | companyName | Bruinsma |
-| productName | IsThePageReal |
+| productName | Bruinsma Protect |
 | primaryColor | `#299DCF` |
 | supportEmail | info@bruinsmakantoor.nl |
 | supportUrl | https://bruinsmakantoor.nl/ict/ |
@@ -81,7 +81,7 @@ Als je niet via de publieke store wilt:
 ## 5. Handmatige validatie
 
 1. Open Edge → `edge://extensions` → Load unpacked (projectmap) of installeer via policy.
-2. Controleer popup: titel **IsThePageReal**, company **Bruinsma**, blauw icoon.
+2. Controleer popup: titel **Bruinsma Protect**, company **Bruinsma**, blauw icoon.
 3. Open Options → Branding/About: Bruinsma-teksten en kleuren.
 4. Open `test-pages/phishing-basic.html` en controleer detectie/blokkade.
 5. Open `edge://policy` en bevestig dat managed settings binnenkomen.

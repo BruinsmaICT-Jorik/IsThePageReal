@@ -10,7 +10,7 @@
 
 Write-Host ""
 Write-Host "======================================================" -ForegroundColor DarkCyan
-Write-Host "  IsThePageReal by Bruinsma - Intune Deployment Setup" -ForegroundColor DarkCyan
+Write-Host "  Bruinsma Protect - Intune Deployment Setup" -ForegroundColor DarkCyan
 Write-Host "======================================================" -ForegroundColor DarkCyan
 Write-Host ""
 Write-Host "This script will download the latest Check extension scripts from GitHub"
@@ -170,7 +170,7 @@ Write-Host "--- Custom Branding Settings ---" -ForegroundColor Cyan
 Write-Host ""
 
 $cfg_companyName = Read-Setting -Name "companyName" -Description "Company name" -Default "Bruinsma"
-$cfg_productName = Read-Setting -Name "productName" -Description "Product name" -Default "IsThePageReal"
+$cfg_productName = Read-Setting -Name "productName" -Description "Product name" -Default "Bruinsma Protect"
 $cfg_supportEmail = Read-Setting -Name "supportEmail" -Description "Support email address" -Default "info@bruinsmakantoor.nl"
 $cfg_supportUrl = Read-Setting -Name "supportUrl" -Description "Support URL" -Default "https://bruinsmakantoor.nl/ict/"
 $cfg_privacyPolicyUrl = Read-Setting -Name "privacyPolicyUrl" -Description "Privacy policy URL" -Default ""
@@ -232,7 +232,7 @@ $replacements = @(
     @{ Pattern = '$enableGenericWebhook = 0 #';      Value = "`$enableGenericWebhook = $cfg_enableGenericWebhook #" }
     @{ Pattern = '$webhookUrl = "" #';               Value = "`$webhookUrl = $(Format-SingleQuoted $cfg_webhookUrl) #" }
     @{ Pattern = '$companyName = "Bruinsma" #';    Value = "`$companyName = $(Format-SingleQuoted $cfg_companyName) #" }
-    @{ Pattern = '$productName = "IsThePageReal" #'; Value = "`$productName = $(Format-SingleQuoted $cfg_productName) #" }
+    @{ Pattern = '$productName = "Bruinsma Protect" #'; Value = "`$productName = $(Format-SingleQuoted $cfg_productName) #" }
     @{ Pattern = '$supportEmail = "info@bruinsmakantoor.nl" #';             Value = "`$supportEmail = $(Format-SingleQuoted $cfg_supportEmail) #" }
     @{ Pattern = '$supportUrl = "https://bruinsmakantoor.nl/ict/" #';               Value = "`$supportUrl = $(Format-SingleQuoted $cfg_supportUrl) #" }
     @{ Pattern = '$privacyPolicyUrl = "" #';         Value = "`$privacyPolicyUrl = $(Format-SingleQuoted $cfg_privacyPolicyUrl) #" }

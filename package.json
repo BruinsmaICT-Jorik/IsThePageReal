@@ -1,7 +1,7 @@
 {
-  "name": "isthepagereal",
+  "name": "bruinsma-protect",
   "version": "1.2.0",
-  "description": "IsThePageReal by Bruinsma — Manifest V3 browser extension for detecting phishing attacks that impersonate Microsoft 365 sign-in pages.",
+  "description": "Bruinsma Protect — Manifest V3 browser extension for detecting phishing attacks that impersonate Microsoft 365 sign-in pages.",
   "main": "index.js",
   "directories": {
     "doc": "docs"

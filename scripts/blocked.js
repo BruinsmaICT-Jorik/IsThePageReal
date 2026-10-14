@@ -510,10 +510,10 @@ async function loadBranding() {
 
       // Apply branding from background script
       const companyName =
-        storageResult.companyName || storageResult.productName || "IsThePageReal";
+        storageResult.companyName || storageResult.productName || "Bruinsma Protect";
       console.log("Setting company name from background to:", companyName);
       document.getElementById("companyName").textContent = companyName;
-      document.title = `Access Blocked - ${companyName}`;
+      document.title = `Toegang geblokkeerd - ${companyName}`;
 
       // Update product name if available
       if (storageResult.productName) {
@@ -645,10 +645,10 @@ async function loadBranding() {
         const brandingConfig = await response.json();
         console.log("Loaded branding from file:", brandingConfig);
 
-        const companyName = brandingConfig.companyName || "IsThePageReal";
+        const companyName = brandingConfig.companyName || "Bruinsma Protect";
         console.log("Setting company name from file to:", companyName);
         document.getElementById("companyName").textContent = companyName;
-        document.title = `Access Blocked - ${companyName}`;
+        document.title = `Toegang geblokkeerd - ${companyName}`;
       }
     } catch (fetchError) {
       console.warn("Could not load branding.json:", fetchError);

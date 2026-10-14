@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Package IsThePageReal for Microsoft Edge distribution.
- * Creates dist/IsThePageReal-edge.zip with only runtime extension files.
+ * Package Bruinsma Protect for Microsoft Edge distribution.
+ * Creates dist/Bruinsma-Protect-edge.zip with only runtime extension files.
  */
 
 import fs from "fs";
@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.join(__dirname, "..");
 const distDir = path.join(rootDir, "dist");
 const stagingDir = path.join(distDir, "edge-staging");
-const zipPath = path.join(distDir, "IsThePageReal-edge.zip");
+const zipPath = path.join(distDir, "Bruinsma-Protect-edge.zip");
 
 const includePaths = [
   "manifest.json",

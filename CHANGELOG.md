@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Bruinsma branding (IsThePageReal)
-- Rebranded extension to **IsThePageReal by Bruinsma** (name, icons, colors, About/UI defaults).
+### Bruinsma Protect + Nederlandse UI
+- Productnaam gewijzigd naar **Bruinsma Protect**.
+- Gebruikersgerichte teksten in popup, options, blocked page en waarschuwingsbanners naar het Nederlands.
+- Downloadpakket: `download/Bruinsma-Protect-for-edge.zip`.
+
+### Bruinsma branding (Bruinsma Protect)
+- Rebranded extension to **Bruinsma Protect** (name, icons, colors, About/UI defaults).
 - Updated `config/branding.json`, manifests, popup/options defaults, and enterprise Edge policy template.
 - Added `npm run package:edge` and `docs/edge-deployment.md` for Edge Add-ons / Intune rollout.
-- Default rules URL and support links point to the BruinsmaICT-Jorik/IsThePageReal fork.
+- Default rules URL and support links point to the BruinsmaICT-Jorik/Bruinsma Protect fork.
 - AGPL attribution to upstream Check by CyberDrain retained in About.
 
 ### d02e0d1 - Merge branch 'main' of https://github.com/CyberDrain/Check

@@ -1,11 +1,11 @@
 {
   "companyName": "Bruinsma",
-  "productName": "IsThePageReal",
+  "productName": "Bruinsma Protect",
   "supportUrl": "https://bruinsmakantoor.nl/ict/",
   "privacyPolicyUrl": "https://bruinsmakantoor.nl/",
   "aboutUrl": "https://bruinsmakantoor.nl/ict/over-ons/",
   "version": "1.2.0",
-  "description": "Bescherming tegen phishing die Microsoft 365-inlogpagina's nabootsen — herkenbaar als Bruinsma-extensie voor jouw organisatie",
+  "description": "Bescherming tegen phishing die Microsoft 365-inlogpagina's nabootsen — Bruinsma Protect voor jouw organisatie",
   "branding": {
     "primaryColor": "#299DCF",
     "primaryHover": "#2189B5",
@@ -48,14 +48,14 @@
     "customIconsEnabled": true
   },
   "features": {
-    "welcomeMessage": "Welkom bij IsThePageReal — phishingbescherming van Bruinsma voor Microsoft 365",
+    "welcomeMessage": "Welkom bij Bruinsma Protect — phishingbescherming voor Microsoft 365",
     "tagline": "Herkenbare phishingdetectie voor Microsoft 365-inlogpagina's door Bruinsma",
     "securityBadgeText": "Beschermd door Bruinsma",
-    "blockedPageTitle": "Phishingpoging geblokkeerd door Bruinsma",
-    "blockedPageMessage": "Deze pagina lijkt een phishingpoging die Microsoft 365-inloggegevens wil stelen. Bruinsma heeft de toegang geblokkeerd om jouw organisatie te beschermen."
+    "blockedPageTitle": "Phishingpoging geblokkeerd door Bruinsma Protect",
+    "blockedPageMessage": "Deze pagina lijkt een phishingpoging die Microsoft 365-inloggegevens wil stelen. Bruinsma Protect heeft de toegang geblokkeerd om jouw organisatie te beschermen."
   },
   "customText": {
-    "extensionDescription": "IsThePageReal detecteert en blokkeert phishingpogingen die Microsoft 365-inlogpagina's nabootsen, met policybeheer en logging voor organisaties.",
+    "extensionDescription": "Bruinsma Protect detecteert en blokkeert phishingpogingen die Microsoft 365-inlogpagina's nabootsen, met policybeheer en logging voor organisaties.",
     "securityFeatures": [
       "Realtime Microsoft 365 phishingdetectie",
       "Verificatie van verdachte inlogpagina's",
@@ -148,10 +148,10 @@
   },
   "metadata": {
     "created": "2024-01-01T00:00:00Z",
-    "modified": "2026-10-13T00:00:00Z",
+    "modified": "2026-10-14T00:00:00Z",
     "author": "Bruinsma ICT",
     "maintainer": "info@bruinsmakantoor.nl",
     "schema_version": "1.0",
-    "upstream": "Based on Check by CyberDrain (AGPL-3.0)"
+    "upstream": "Gebaseerd op Check by CyberDrain (AGPL-3.0)"
   }
 }

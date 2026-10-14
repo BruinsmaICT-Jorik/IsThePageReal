@@ -129,7 +129,7 @@ export class ConfigManager {
           // Custom branding (matches managed_schema.json structure)
           customBranding: {
             companyName: "Bruinsma",
-            productName: "IsThePageReal",
+            productName: "Bruinsma Protect",
             supportUrl: "https://bruinsmakantoor.nl/ict/",
             privacyPolicyUrl: "https://bruinsmakantoor.nl/",
             aboutUrl: "https://bruinsmakantoor.nl/ict/over-ons/",
@@ -350,7 +350,7 @@ export class ConfigManager {
     return {
       // Company branding
       companyName: "Bruinsma",
-      productName: "IsThePageReal",
+      productName: "Bruinsma Protect",
       version: "1.2.0",
 
       // Visual branding

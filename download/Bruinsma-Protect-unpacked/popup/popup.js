@@ -194,7 +194,7 @@ class CheckPopup {
 
   async initialize() {
     try {
-      this.showLoading("Initializing...");
+      this.showLoading("Initialiseren...");
       console.log("Check: Initializing popup...");
       const backgroundReady = await this.waitForBackgroundScript();
       console.log("Check: Background script ready:", backgroundReady);
@@ -208,14 +208,14 @@ class CheckPopup {
           enableDebugLogging: false,
         };
         console.log("Still loading");
-        this.brandingConfig = { companyName: "Bruinsma", productName: "IsThePageReal" };
+        this.brandingConfig = { companyName: "Bruinsma", productName: "Bruinsma Protect" };
         this.applyBranding();
         console.log("Applying default branding");
 
         // Initialize theme even in fallback mode
         await this.initializeTheme();
 
-        this.showNotification("Extension running in limited mode", "warning");
+        this.showNotification("Extensie draait in beperkte modus", "warning");
         this.hideLoading();
         return;
       }
@@ -264,7 +264,7 @@ class CheckPopup {
       this.hideLoading();
     } catch (error) {
       console.error("Check: Failed to initialize popup:", error);
-      this.showNotification("Failed to initialize extension", "error");
+      this.showNotification("Initialiseren van de extensie is mislukt", "error");
       this.hideLoading();
     }
   }
@@ -380,7 +380,7 @@ class CheckPopup {
       console.warn("Popup: Using fallback branding configuration");
       this.brandingConfig = {
         companyName: "Bruinsma",
-        productName: "IsThePageReal",
+        productName: "Bruinsma Protect",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
@@ -391,7 +391,7 @@ class CheckPopup {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
         companyName: "Bruinsma",
-        productName: "IsThePageReal",
+        productName: "Bruinsma Protect",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
@@ -406,7 +406,7 @@ class CheckPopup {
 
     // Update title
     this.elements.brandingTitle.textContent =
-      this.brandingConfig.productName || "IsThePageReal";
+      this.brandingConfig.productName || "Bruinsma Protect";
 
     // Update logo with fallback handling
     if (this.brandingConfig.logoUrl) {
@@ -719,7 +719,7 @@ class CheckPopup {
     }
 
     if (!this.currentTab || !this.currentTab.url) {
-      this.elements.currentUrl.textContent = "No active tab";
+      this.elements.currentUrl.textContent = "Geen actief tabblad";
       return;
     }
 
@@ -729,7 +729,7 @@ class CheckPopup {
       this.elements.currentUrl.textContent = url.hostname + url.pathname;
 
       // Request page analysis from background with retry
-      this.showSecurityBadge("analyzing", "Analyzing...");
+      this.showSecurityBadge("analyzing", "Bezig met analyse...");
 
       try {
         const response = await this.sendMessage({
@@ -740,11 +740,11 @@ class CheckPopup {
         if (response && response.success && response.analysis) {
           this.updateSecurityStatus(response.analysis);
         } else {
-          this.showSecurityBadge("neutral", "Analysis unavailable");
+          this.showSecurityBadge("neutral", "Analyse niet beschikbaar");
         }
       } catch (error) {
         console.warn("Check: Failed to get URL analysis after retries:", error);
-        this.showSecurityBadge("neutral", "Analysis unavailable");
+        this.showSecurityBadge("neutral", "Analyse niet beschikbaar");
       }
 
       // Get page info from content script with safe wrapper
@@ -768,8 +768,8 @@ class CheckPopup {
       }
     } catch (error) {
       console.error("Failed to load page info:", error);
-      this.elements.currentUrl.textContent = "Invalid URL";
-      this.showSecurityBadge("neutral", "No Analysis Available");
+      this.elements.currentUrl.textContent = "Ongeldige URL";
+      this.showSecurityBadge("neutral", "Geen analyse beschikbaar");
     }
   }
 
@@ -782,26 +782,26 @@ class CheckPopup {
 
     // Handle different verdict types with improved status display
     if (isBlocked) {
-      this.showSecurityBadge("danger", "Blocked");
+      this.showSecurityBadge("danger", "Geblokkeerd");
       this.showThreats(analysis.threats);
     } else if (isSuspicious) {
-      this.showSecurityBadge("warning", "Suspicious");
+      this.showSecurityBadge("warning", "Verdacht");
       this.showThreats(analysis.threats);
     } else if (
       analysis.verdict === "trusted" ||
       analysis.verdict === "trusted-extra"
     ) {
-      this.showSecurityBadge("safe", "Trusted Login Domain");
+      this.showSecurityBadge("safe", "Vertrouwd inlogdomein");
       this.hideThreats();
     } else if (analysis.verdict === "ms-login-unknown") {
-      this.showSecurityBadge("warning", "MS Login - Unknown Domain");
+      this.showSecurityBadge("warning", "MS-inlog - onbekend domein");
       this.hideThreats();
     } else if (analysis.verdict === "not-evaluated") {
-      this.showSecurityBadge("neutral", "Not Microsoft Login");
+      this.showSecurityBadge("neutral", "Geen Microsoft-inlog");
       this.hideThreats();
     } else {
       // For general Microsoft domains or other safe sites - show neutral, no badge
-      this.showSecurityBadge("neutral", "No Action Required");
+      this.showSecurityBadge("neutral", "Geen actie nodig");
       this.hideThreats();
     }
 
@@ -827,7 +827,7 @@ class CheckPopup {
 
     if (!isEnabled) {
       protectionStatus.innerHTML =
-        '<span class="protection-badge disabled">⚠️ Protection Disabled</span>';
+        '<span class="protection-badge disabled">⚠️ Bescherming uitgeschakeld</span>';
       protectionStatus.style.display = "block";
     } else {
       protectionStatus.style.display = "none";
@@ -859,8 +859,8 @@ class CheckPopup {
     const threatDisplayNames = {
       // Phishing threats
       phishing_page: "Phishing Page",
-      fake_login: "Fake Login Page",
-      credential_harvesting: "Credential Harvesting",
+      fake_login: "Nep-inlogpagina",
+      credential_harvesting: "Credential harvesting",
       microsoft_impersonation: "Microsoft Impersonation",
       o365_phishing: "Office 365 Phishing",
       login_spoofing: "Login Page Spoofing",
@@ -874,7 +874,7 @@ class CheckPopup {
 
       // Domain threats
       typosquatting: "Typosquatting Domain",
-      suspicious_domain: "Suspicious Domain",
+      suspicious_domain: "Verdacht domein",
       homograph_attack: "Homograph Attack",
       punycode_abuse: "Punycode Abuse",
 
@@ -896,8 +896,8 @@ class CheckPopup {
       clipboard_access: "Clipboard Access",
 
       // Generic categories
-      content_threat_detected: "Content Threat",
-      threat_detected: "Security Threat",
+      content_threat_detected: "Contentdreiging",
+      threat_detected: "Beveiligingsdreiging",
       suspicious_activity: "Suspicious Activity",
       policy_violation: "Policy Violation",
     };
@@ -993,15 +993,15 @@ class CheckPopup {
 
   getEventDisplayName(eventType) {
     const eventDisplayNames = {
-      url_access: "Page Scanned",
-      content_threat_detected: "Content Threat Detected",
-      threat_detected: "Security Threat Detected",
+      url_access: "Pagina gescand",
+      content_threat_detected: "Contentdreiging gedetecteerd",
+      threat_detected: "Beveiligingsdreiging gedetecteerd",
       form_submission: "Form Monitored",
       script_injection: "Security Script Injected",
-      page_scanned: "Page Scanned",
-      blocked_page_viewed: "Blocked Content Viewed",
-      threat_blocked: "Threat Blocked",
-      threat_detected_no_action: "Threat Detected",
+      page_scanned: "Pagina gescand",
+      blocked_page_viewed: "Geblokkeerde inhoud bekeken",
+      threat_blocked: "Dreiging geblokkeerd",
+      threat_detected_no_action: "Dreiging gedetecteerd",
       legitimate_access: "Legitimate Access",
       phishing_page: "Phishing Page Blocked",
       fake_login: "Fake Login Blocked",
@@ -1051,8 +1051,8 @@ class CheckPopup {
 
   updateComplianceStatus(isCompliant) {
     this.elements.complianceBadge.textContent = isCompliant
-      ? "Compliant"
-      : "Non-Compliant";
+      ? "Conform beleid"
+      : "Niet conform beleid";
     this.elements.complianceBadge.className = isCompliant
       ? "compliance-badge"
       : "compliance-badge non-compliant";
@@ -1202,7 +1202,7 @@ class CheckPopup {
     });
   }
 
-  showLoading(text = "Loading...") {
+  showLoading(text = "Laden...") {
     this.isLoading = true;
     this.elements.loadingOverlay.style.display = "flex";
     if (this.elements.loadingOverlay.querySelector(".loading-text")) {
@@ -1330,12 +1330,12 @@ class CheckPopup {
 
   async retriggerAnalysis() {
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to analyze", "warning");
+      this.showNotification("Geen actief tabblad om te analyseren", "warning");
       return;
     }
 
     try {
-      this.showNotification("Re-triggering analysis...", "info");
+      this.showNotification("Analyse opnieuw starten...", "info");
 
       // First, ensure background script is awake (wake it up with a ping)
       const backgroundReady = await this.checkBackgroundScript();
@@ -1361,7 +1361,7 @@ class CheckPopup {
           if (chrome.runtime.lastError) {
             console.error("Check: Failed to communicate with page:", chrome.runtime.lastError);
             this.showNotification(
-              "Failed to communicate with page. Content script may not be loaded on this page.",
+              "Communicatie met de pagina mislukt. Het contentscript is mogelijk niet geladen op deze pagina.",
               "error"
             );
             return;
@@ -1416,7 +1416,7 @@ class CheckPopup {
     }
 
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to analyze", "warning");
+      this.showNotification("Geen actief tabblad om te analyseren", "warning");
       return;
     }
 
@@ -1645,7 +1645,7 @@ class CheckPopup {
     navigator.clipboard
       .writeText(this.pageSourceContent)
       .then(() => {
-        this.showNotification("Source copied to clipboard", "success");
+        this.showNotification("Broncode gekopieerd naar klembord", "success");
       })
       .catch(() => {
         // Fallback for older browsers
@@ -1655,7 +1655,7 @@ class CheckPopup {
         textArea.select();
         document.execCommand("copy");
         document.body.removeChild(textArea);
-        this.showNotification("Source copied to clipboard", "success");
+        this.showNotification("Broncode gekopieerd naar klembord", "success");
       });
   }
 
@@ -1756,7 +1756,7 @@ class CheckPopup {
             // Store debug data with the new console logs
             this.storeCurrentDebugData();
           } else {
-            this.elements.consoleStats.textContent = "No logs captured";
+            this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
             this.elements.consoleDisplay.textContent =
               "No console logs captured yet.";
           }
@@ -1772,7 +1772,7 @@ class CheckPopup {
 
   displayConsoleLogs(logs) {
     if (!logs || logs.length === 0) {
-      this.elements.consoleStats.textContent = "No logs captured";
+      this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
       this.elements.consoleDisplay.textContent = "No console logs available.";
       return;
     }

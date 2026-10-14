@@ -415,7 +415,7 @@ class CheckOptions {
         showNotifications: true,
         enableValidPageBadge: false,
         customRulesUrl:
-          "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
+          "https://raw.githubusercontent.com/BruinsmaICT-Jorik/Bruinsma Protect/refs/heads/main/rules/detection-rules.json",
         updateInterval: 24,
         enableDebugLogging: false,
         enableDeveloperConsoleLogging: false,
@@ -493,7 +493,7 @@ class CheckOptions {
       console.warn("Options: Using fallback branding configuration");
       this.brandingConfig = {
         companyName: "Bruinsma",
-        productName: "IsThePageReal",
+        productName: "Bruinsma Protect",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
@@ -504,7 +504,7 @@ class CheckOptions {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
         companyName: "Bruinsma",
-        productName: "IsThePageReal",
+        productName: "Bruinsma Protect",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
@@ -866,12 +866,12 @@ class CheckOptions {
   applyBranding() {
     // Update sidebar branding
     document.getElementById("sidebarTitle").textContent =
-      this.brandingConfig?.productName || "IsThePageReal";
+      this.brandingConfig?.productName || "Bruinsma Protect";
 
     // Update mobile logo text
     const mobileLogoText = document.getElementById("mobileLogoText");
     if (mobileLogoText) {
-      mobileLogoText.textContent = this.brandingConfig?.productName || "IsThePageReal";
+      mobileLogoText.textContent = this.brandingConfig?.productName || "Bruinsma Protect";
     }
 
     // Function to set logo src with fallback
@@ -1066,31 +1066,31 @@ class CheckOptions {
     // Update page title and subtitle
     const sectionInfo = {
       general: {
-        title: "General Settings",
+        title: "Algemene instellingen",
         subtitle:
-          "Configure basic phishing protection behavior and detection features",
+          "Stel het gedrag van phishingbescherming en detectiefuncties in",
       },
       detection: {
-        title: "Detection Rules",
-        subtitle: "Load custom detection rules for phishing protection",
+        title: "Detectieregels",
+        subtitle: "Beheer detectieregels voor phishingbescherming",
       },
       logs: {
-        title: "Activity Logs",
-        subtitle: "View security events and extension activity",
+        title: "Activiteitenlogboek",
+        subtitle: "Bekijk beveiligingsgebeurtenissen en extensieactiviteit",
       },
       branding: {
-        title: "Branding & White Labeling",
-        subtitle: "Customize the extension's appearance and branding",
+        title: "Branding",
+        subtitle: "Pas de uitstraling en branding van de extensie aan",
       },
       about: {
-        title: "About IsThePageReal by Bruinsma",
+        title: "Over Bruinsma Protect",
         subtitle:
-          "Enterprise-grade protection against Microsoft 365 phishing attacks",
+          "Bescherming tegen Microsoft 365-phishing voor jouw organisatie",
       },
     };
 
     const info = sectionInfo[sectionName] || {
-      title: "Settings",
+      title: "Instellingen",
       subtitle: "",
     };
     this.elements.pageTitle.textContent = info.title;
@@ -1193,13 +1193,13 @@ class CheckOptions {
         this.originalConfig = JSON.parse(JSON.stringify(newConfig));
         this.hasUnsavedChanges = false;
         this.updateSaveButton();
-        this.showToast("Settings saved successfully", "success");
+        this.showToast("Instellingen opgeslagen", "success");
       } else {
-        throw new Error(response?.error || "Failed to save settings");
+        throw new Error(response?.error || "Opslaan van instellingen mislukt");
       }
     } catch (error) {
       console.error("Failed to save settings:", error);
-      this.showToast("Failed to save settings", "error");
+      this.showToast("Opslaan van instellingen mislukt", "error");
     }
   }
 
@@ -1776,13 +1776,13 @@ class CheckOptions {
         this.setButtonIconAndLabel(
           this.elements.expandCollapseAll,
           "unfold_less",
-          "Collapse All"
+          "Alles inklappen"
         );
       } else {
         this.setButtonIconAndLabel(
           this.elements.expandCollapseAll,
           "unfold_more",
-          "Expand All"
+          "Alles uitklappen"
         );
       }
     }
@@ -1806,7 +1806,7 @@ class CheckOptions {
         this.setButtonIconAndLabel(
           this.elements.toggleConfigView,
           "code",
-          "Show Raw JSON"
+          "Ruwe JSON tonen"
         );
       }
     }
@@ -2517,7 +2517,7 @@ class CheckOptions {
           cippServerUrl: "",
           cippTenantId: "",
           customRulesUrl:
-            "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
+            "https://raw.githubusercontent.com/BruinsmaICT-Jorik/Bruinsma Protect/refs/heads/main/rules/detection-rules.json",
           updateInterval: 24,
           enableDebugLogging: false,
           // Note: enableDeveloperConsoleLogging is not policy-managed - remains under user control
@@ -2525,7 +2525,7 @@ class CheckOptions {
           // Custom branding (matches managed_schema.json structure)
           customBranding: {
             companyName: "Bruinsma",
-            productName: "IsThePageReal",
+            productName: "Bruinsma Protect",
             supportUrl: "",
             privacyPolicyUrl: "",
             aboutUrl: "",
@@ -3339,7 +3339,7 @@ class CheckOptions {
         this.showToast("Logs cleared successfully", "success");
       } catch (error) {
         console.error("Failed to clear logs:", error);
-        this.showToast("Failed to clear logs", "error");
+        this.showToast("Logboek wissen mislukt", "error");
       }
     }
   }
@@ -3409,7 +3409,7 @@ class CheckOptions {
         // Reload configuration display if visible
         await this.updateConfigDisplay();
       } else {
-        throw new Error(response?.error || "Failed to update detection rules");
+        throw new Error(response?.error || "Bijwerken van detectieregels mislukt");
       }
     } catch (error) {
       console.error("Failed to refresh detection rules:", error);

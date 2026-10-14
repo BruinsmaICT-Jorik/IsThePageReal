@@ -7,7 +7,7 @@ $chromeManagedStorageKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\exten
 $chromeExtensionSettingsKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionSettings\$chromeExtensionId"
 
 #Edge
-# TODO: vervang door jullie eigen Edge Add-ons extension ID na publicatie van IsThePageReal.
+# TODO: vervang door jullie eigen Edge Add-ons extension ID na publicatie van Bruinsma Protect.
 # Placeholder: laat force-install niet op de upstream CyberDrain-store-ID staan in productie.
 $edgeExtensionId = "REPLACE_WITH_EDGE_EXTENSION_ID"
 $edgeUpdateUrl = "https://edge.microsoft.com/extensionwebstorebase/v1/crx"
@@ -35,7 +35,7 @@ $webhookEvents = @() # This will set the "Event Types" to send to the webhook; d
 
 # Custom Branding Settings
 $companyName = "Bruinsma" # This will set the "Company Name" option in the Custom Branding settings; default is "CyberDrain".
-$productName = "IsThePageReal" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
+$productName = "Bruinsma Protect" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
 $supportEmail = "info@bruinsmakantoor.nl" # This will set the "Support Email" option in the Custom Branding settings; default is blank.
 $supportUrl = "https://bruinsmakantoor.nl/ict/" # This will set the "Support URL" option in the Custom Branding settings; default is blank.
 $privacyPolicyUrl = "" # This will set the "Privacy URL" option in the Custom Branding settings; default is blank.

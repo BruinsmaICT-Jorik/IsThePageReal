@@ -24,4 +24,4 @@ Email details to [info@bruinsmakantoor.nl](mailto:info@bruinsmakantoor.nl). Plea
 - Email: [info@bruinsmakantoor.nl](mailto:info@bruinsmakantoor.nl)
 - GitHub Security Advisories: use the repository's "Report a vulnerability" feature.
 
-Thank you for helping keep IsThePageReal by Bruinsma secure. Based on Check by CyberDrain (AGPL-3.0).
+Thank you for helping keep Bruinsma Protect secure. Based on Check by CyberDrain (AGPL-3.0).

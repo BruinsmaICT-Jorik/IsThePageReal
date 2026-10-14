@@ -4509,7 +4509,7 @@ if (window.checkExtensionLoaded) {
               logger.warn(
                 "⚠️ PROTECTION DISABLED: Would block critical threats but showing warning banner instead"
               );
-              showWarningBanner(`CRITICAL THREATS DETECTED: ${reason}`, {
+              showWarningBanner(`KRITIEKE DREIGINGEN GEDETECTEERD: ${reason}`, {
                 threats: criticalThreats,
               });
               if (!isRerun) {
@@ -4636,7 +4636,7 @@ if (window.checkExtensionLoaded) {
               logger.warn(
                 `⚠️ SUSPICIOUS CONTENT: Showing warning for ${warningThreats.length} phishing indicators on non-Microsoft page (below ${WARNING_THRESHOLD} threshold)`
               );
-              showWarningBanner(`SUSPICIOUS CONTENT DETECTED: ${reason}`, {
+              showWarningBanner(`VERDACHTE INHOUD GEDETECTEERD: ${reason}`, {
                 threats: warningThreats,
               });
 
@@ -5078,7 +5078,7 @@ if (window.checkExtensionLoaded) {
           logger.warn(
             "⚠️ PROTECTION DISABLED: Would block critical detection rule but showing warning banner instead"
           );
-          showWarningBanner(`CRITICAL THREAT: ${reason}`, {
+          showWarningBanner(`KRITIEKE DREIGING: ${reason}`, {
             threats: criticalBlockingRules.map((rule) => ({
               description: rule.description,
               severity: "critical",
@@ -5226,7 +5226,7 @@ if (window.checkExtensionLoaded) {
           logger.warn(
             "⚠️ PROTECTION DISABLED: Would block critical threats but showing warning banner instead"
           );
-          showWarningBanner(`CRITICAL THREATS DETECTED: ${reason}`, {
+          showWarningBanner(`KRITIEKE DREIGINGEN GEDETECTEERD: ${reason}`, {
             threats: criticalThreats,
           });
           if (!isRerun) {
@@ -5306,7 +5306,7 @@ if (window.checkExtensionLoaded) {
             logger.warn(
               "⚠️ PROTECTION DISABLED: Would block low score but showing warning banner instead"
             );
-            showWarningBanner(`HIGH THREAT: ${reason}`, {
+            showWarningBanner(`HOGE DREIGING: ${reason}`, {
               threats: [{ description: reason, severity: "high" }],
             });
           }
@@ -6269,7 +6269,7 @@ if (window.checkExtensionLoaded) {
 
             const titleSpan = document.createElement("span");
             titleSpan.style.cssText = "font-size:12px;font-weight:600;";
-            titleSpan.textContent = "Protected by " + companyName;
+            titleSpan.textContent = "Beschermd door " + companyName;
 
             // CRITICAL: Register the title span
             registerInjectedElement(titleSpan);
@@ -6280,11 +6280,11 @@ if (window.checkExtensionLoaded) {
               const contactLink = document.createElement("a");
               contactLink.style.cssText =
                 "color:#fff;text-decoration:underline;font-size:11px;cursor:pointer;";
-              contactLink.textContent = "Report as clean/safe";
+              contactLink.textContent = "Melden als veilig";
               contactLink.title =
-                "Report this page as clean/safe to your administrator";
+                "Meld deze pagina als veilig bij je beheerder";
               contactLink.href = `mailto:${supportEmail}?subject=${encodeURIComponent(
-                "Security Review: Possible Clean/Safe Page"
+                "Beveiligingscontrole: mogelijk veilige pagina"
               )}`;
               contactLink.addEventListener("click", (e) => {
                 try {
@@ -6338,13 +6338,13 @@ if (window.checkExtensionLoaded) {
         : "";
 
       // Determine banner type and styling based on analysis data
-      let bannerTitle = "Suspicious Microsoft 365 Login Page";
+      let bannerTitle = "Verdachte Microsoft 365-inlogpagina";
       let bannerIcon = "⚠️";
       let bannerColor = "linear-gradient(135deg, #ff9800, #f57c00)"; // Orange for warnings
 
       // Check for scanning state
       if (analysisData?.severity === "scanning") {
-        bannerTitle = "Security Scan in Progress";
+        bannerTitle = "Beveiligingsscan bezig";
         bannerIcon = "🔍";
         bannerColor = "linear-gradient(135deg, #2196f3, #1976d2)"; // Blue for scanning
       }
@@ -6354,12 +6354,12 @@ if (window.checkExtensionLoaded) {
         reason.toLowerCase().includes("domain squatting") ||
         reason.toLowerCase().includes("typosquat")
       ) {
-        bannerTitle = "⚠️ Suspicious Domain Detected";
+        bannerTitle = "⚠️ Verdacht domein gedetecteerd";
         bannerIcon = "🔗";
         bannerColor = "linear-gradient(135deg, #ff5722, #d84315)"; // Same orange-red as high risk warnings
         // Override reason text for domain squatting to be more user-friendly
         if (analysisData?.protectedDomain) {
-          reason = `This website's domain looks similar to "${analysisData.protectedDomain}" but is NOT the legitimate site. Be careful entering any credentials.`;
+          reason = `Het domein van deze website lijkt op "${analysisData.protectedDomain}", maar is NIET de legitieme site. Wees voorzichtig met het invoeren van inloggegevens.`;
         }
       }
       // Check for rogue app detection
@@ -6368,15 +6368,15 @@ if (window.checkExtensionLoaded) {
         reason.toLowerCase().includes("rogue oauth") ||
         reason.toLowerCase().includes("rogue app")
       ) {
-        bannerTitle = "🚨 CRITICAL SECURITY THREAT";
+        bannerTitle = "🚨 KRITIEKE BEVEILIGINGSDREIGING";
         bannerIcon = "🛡️";
         bannerColor = "linear-gradient(135deg, #f44336, #d32f2f)"; // Red for critical threats
       } else if (analysisData?.severity === "critical") {
-        bannerTitle = "Critical Security Warning";
+        bannerTitle = "Kritieke beveiligingswaarschuwing";
         bannerIcon = "🚨";
         bannerColor = "linear-gradient(135deg, #f44336, #d32f2f)"; // Red for critical
       } else if (analysisData?.severity === "high") {
-        bannerTitle = "High Risk Security Warning";
+        bannerTitle = "Hoog-risico beveiligingswaarschuwing";
         bannerIcon = "⚠️";
         bannerColor = "linear-gradient(135deg, #ff5722, #d84315)"; // Orange-red for high risk
       }
@@ -6430,7 +6430,7 @@ if (window.checkExtensionLoaded) {
         center.appendChild(subtitle);
 
         const dismissButton = document.createElement("button");
-        dismissButton.title = "Dismiss";
+        dismissButton.title = "Sluiten";
         dismissButton.style.position = "absolute";
         dismissButton.style.right = "16px";
         dismissButton.style.top = "50%";
@@ -6611,10 +6611,10 @@ if (window.checkExtensionLoaded) {
         <div style="display: flex; align-items: center; justify-content: center; gap: 16px; position: relative; padding-right: 48px;">
           <span style="font-size: 24px;">✅</span>
           <div>
-            <strong>Verified Microsoft Domain</strong><br>
-            <small>This is an authentic Microsoft login page</small>
+            <strong>Geverifieerd Microsoft-domein</strong><br>
+            <small>Dit is een echte Microsoft-inlogpagina</small>
           </div>
-          <button onclick="if(window.validBadgeTimeoutId){clearTimeout(window.validBadgeTimeoutId);window.validBadgeTimeoutId=null;} this.parentElement.parentElement.remove(); document.body.style.marginTop = '0';" title="Dismiss" style="
+          <button onclick="if(window.validBadgeTimeoutId){clearTimeout(window.validBadgeTimeoutId);window.validBadgeTimeoutId=null;} this.parentElement.parentElement.remove(); document.body.style.marginTop = '0';" title="Sluiten" style="
             position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
             background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
             color: white; padding: 0; border-radius: 4px; cursor: pointer;
@@ -6650,7 +6650,7 @@ if (window.checkExtensionLoaded) {
         badge.innerHTML = `
         <div style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 16px;">✅</span>
-          <span>Verified Microsoft Domain</span>
+          <span>Geverifieerd Microsoft-domein</span>
         </div>
       `;
 

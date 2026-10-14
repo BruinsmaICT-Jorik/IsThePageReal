@@ -1,5 +1,5 @@
 # Check Extension - Intune Detection Script
-# This script verifies that the IsThePageReal by Bruinsma extension is correctly configured
+# This script verifies that the Bruinsma Protect extension is correctly configured
 # in the registry for both Chrome and Edge browsers.
 #
 # IMPORTANT: The settings below MUST match the values in your Deploy-Windows-Chrome-and-Edge.ps1.
@@ -41,7 +41,7 @@ $webhookEvents = @() # This will set the "Event Types" to send to the webhook; d
 
 # Custom Branding Settings
 $companyName = "Bruinsma" # This will set the "Company Name" option in the Custom Branding settings; default is "CyberDrain".
-$productName = "IsThePageReal" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
+$productName = "Bruinsma Protect" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
 $supportEmail = "info@bruinsmakantoor.nl" # This will set the "Support Email" option in the Custom Branding settings; default is blank.
 $supportUrl = "https://bruinsmakantoor.nl/ict/" # This will set the "Support URL" option in the Custom Branding settings; default is blank.
 $privacyPolicyUrl = "" # This will set the "Privacy URL" option in the Custom Branding settings; default is blank.

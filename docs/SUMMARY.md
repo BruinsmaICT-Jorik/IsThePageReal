@@ -9,7 +9,7 @@
 
 ## Deployment
 
-- [Edge uitrol (Bruinsma / IsThePageReal)](edge-deployment.md)
+- [Edge uitrol (Bruinsma / Bruinsma Protect)](edge-deployment.md)
 - [Chrome/Edge Deployment Instructions](deployment/chrome-edge-deployment-instructions/README.md)
   - [Windows](deployment/chrome-edge-deployment-instructions/windows/README.md)
     - [Manual Deployment](deployment/chrome-edge-deployment-instructions/windows/manual-deployment.md)

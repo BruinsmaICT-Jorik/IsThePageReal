@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Access Blocked - IsThePageReal</title>
+    <title>Toegang geblokkeerd - Bruinsma Protect</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -18,8 +18,8 @@
       body {
         font-family: "Gilroy", -apple-system, BlinkMacSystemFont, "Segoe UI",
           Roboto, "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #f77f00 0%, #003049 100%);
-        color: #003049;
+        background: linear-gradient(135deg, #299DCF 0%, #00395F 100%);
+        color: #00395F;
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -55,7 +55,7 @@
       h1 {
         font-size: 32px;
         font-weight: 600;
-        color: #f77f00;
+        color: #299DCF;
         margin-bottom: 16px;
       }
 
@@ -307,100 +307,100 @@
   <body class="loading">
     <div class="container">
       <div class="icon-container">
-        <img id="customLogo" class="company-logo" style="display: none; max-width: 80px; max-height: 80px; border-radius: 50%; object-fit: contain;" alt="Company Logo">
+        <img id="customLogo" class="company-logo" style="display: none; max-width: 80px; max-height: 80px; border-radius: 50%; object-fit: contain;" alt="Bedrijfslogo">
         <div id="defaultIcon" class="icon material-icons">security</div>
       </div>
 
-      <h1>Access Blocked</h1>
+      <h1>Toegang geblokkeerd</h1>
       <p class="subtitle">
-        This website has been blocked by your organization's security policy
+        Deze website is geblokkeerd door het beveiligingsbeleid van jouw organisatie
       </p>
 
       <div class="reason">
-        <div class="reason-title">Reason for blocking:</div>
+        <div class="reason-title">Reden voor blokkering:</div>
         <div class="reason-text" id="blockReason">
-          This website looks like it has tried to steal your login credentials,
-          to prevent you from logging in we've blocked access.
+          Deze website lijkt te proberen jouw inloggegevens te stelen.
+          Om te voorkomen dat je inlogt, is de toegang geblokkeerd.
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" id="goBackBtn">Go Back</button>
+        <button class="btn btn-primary" id="goBackBtn">Terug</button>
         <button class="btn btn-secondary" id="contactAdminBtn">
-          Contact Admin
+          Beheerder contacteren
         </button>
         <button class="btn btn-secondary" id="reportFalsePositiveBtn" style="display: none;">
-          Report False Positive
+          Vals positief melden
         </button>
       </div>
 
       <div class="details">
-        <div class="details-title">Block Details</div>
+        <div class="details-title">Blokkadedetails</div>
         <ul class="details-list">
           <li>
             <span>URL:</span>
             <span id="blockedUrl">--</span>
           </li>
           <li>
-            <span>Category:</span>
-            <span id="threatCategory">Security Threat</span>
+            <span>Categorie:</span>
+            <span id="threatCategory">Beveiligingsdreiging</span>
           </li>
         </ul>
       </div>
 
       <div class="technical-details" id="technicalDetails">
         <div class="technical-details-header">
-          <span>Technical Details</span>
+          <span>Technische details</span>
           <span class="technical-details-icon material-icons">expand_more</span>
         </div>
         <div class="technical-details-content">
           <div class="tech-section">
-            <div class="tech-section-title">Detection Scores</div>
+            <div class="tech-section-title">Detectiescores</div>
             <div class="tech-item">
-              <span>Legitimacy Score:</span>
+              <span>Legitimiteitsscore:</span>
               <span id="techScore">--</span>
             </div>
             <div class="tech-item">
-              <span>Threshold:</span>
+              <span>Drempelwaarde:</span>
               <span id="techThreshold">--</span>
             </div>
           </div>
 
           <div class="tech-section">
-            <div class="tech-section-title">Threat Analysis</div>
+            <div class="tech-section-title">Dreigingsanalyse</div>
             <div class="tech-item">
-              <span>Indicators Found:</span>
+              <span>Gevonden indicatoren:</span>
               <span id="techIndicatorCount">--</span>
             </div>
             <div class="tech-item">
-              <span>Highest Severity:</span>
+              <span>Hoogste ernst:</span>
               <span id="techSeverity">--</span>
             </div>
             <div class="tech-item">
-              <span>Detection Method:</span>
+              <span>Detectiemethode:</span>
               <span id="techDetectionMethod">--</span>
             </div>
           </div>
 
           <div class="tech-section" id="phishingIndicatorsSection">
-            <div class="tech-section-title">Phishing Indicators Detected</div>
+            <div class="tech-section-title">Gedetecteerde phishingindicatoren</div>
             <div id="techPhishingIndicators" style="font-size: 12px; color: #6b7280;">
-              <div style="font-style: italic; color: #9ca3af;">Loading...</div>
+              <div style="font-style: italic; color: #9ca3af;">Laden...</div>
             </div>
           </div>
 
           <div class="tech-section">
-            <div class="tech-section-title">Page Information</div>
+            <div class="tech-section-title">Pagina-informatie</div>
             <div class="tech-item">
-              <span>Page Title:</span>
+              <span>Paginatitel:</span>
               <span id="techPageTitle">--</span>
             </div>
             <div class="tech-item">
-              <span>User Agent:</span>
+              <span>User-agent:</span>
               <span id="techUserAgent" style="font-size: 11px; word-break: break-all;">--</span>
             </div>
             <div class="tech-item">
-              <span>Timestamp:</span>
+              <span>Tijdstip:</span>
               <span id="techTimestamp">--</span>
             </div>
           </div>
@@ -409,10 +409,10 @@
 
       <div class="footer">
         <div id="companyBranding">
-          Protected by <strong id="companyName">Bruinsma</strong>
+          Beschermd door <strong id="companyName">Bruinsma</strong>
         </div>
         <div style="margin-top: 8px">
-          For support, contact your IT administrator
+          Neem voor support contact op met je IT-beheerder
         </div>
       </div>
     </div>

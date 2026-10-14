@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IsThePageReal</title>
+    <title>Bruinsma Protect</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -17,17 +17,17 @@
         <div class="logo-section">
           <img
             src="../images/icon32.png"
-            alt="IsThePageReal Logo"
+            alt="Bruinsma Protect-logo"
             class="logo"
             id="brandingLogo"
           />
           <div class="brand-info">
             <h1 class="extension-title" id="brandingTitle">
-              IsThePageReal
+              Bruinsma Protect
             </h1>
           </div>
         </div>
-        <button class="header-settings-btn" id="openSettings" data-tooltip="Open Extension Settings" aria-label="Open Extension Settings">
+        <button class="header-settings-btn" id="openSettings" data-tooltip="Instellingen openen" aria-label="Instellingen openen">
           <span class="material-icons">settings</span>
         </button>
       </header>
@@ -37,7 +37,6 @@
         <!-- Quick Actions -->
         <section class="quick-actions" style="display: none;">
           <div class="action-grid">
-            <!-- Settings moved to header -->
           </div>
         </section>
 
@@ -47,43 +46,43 @@
           id="blockedNotice"
           style="display: none"
         >
-          <div class="blocked-text">This site was blocked:</div>
+          <div class="blocked-text">Deze site is geblokkeerd:</div>
           <div class="blocked-url" id="blockedUrl"></div>
         </section>
 
         <!-- Current Page Info -->
         <section class="page-info" id="pageInfoSection">
-          <h3 class="section-title">Current Page</h3>
+          <h3 class="section-title">Huidige pagina</h3>
           <div class="page-details">
-            <div class="page-url" id="currentUrl">Loading...</div>
+            <div class="page-url" id="currentUrl">Laden...</div>
             <div class="security-status" id="securityStatus">
               <span class="security-badge" id="securityBadge"
-                >Analyzing...</span
+                >Bezig met analyse...</span
               >
             </div>
           </div>
 
           <div class="threat-summary" id="threatSummary" style="display: none">
-            <h4>Threats Detected</h4>
+            <h4>Gedetecteerde dreigingen</h4>
             <ul id="threatList"></ul>
           </div>
         </section>
 
         <!-- Statistics -->
         <section class="stats-section">
-          <h3 class="section-title">Phishing Protection Statistics</h3>
+          <h3 class="section-title">Phishingbescherming</h3>
           <div class="stats-grid">
             <div class="stat-item">
               <span class="stat-number" id="blockedThreats">0</span>
-              <span class="stat-label">Phishing Blocked</span>
+              <span class="stat-label">Phishing geblokkeerd</span>
             </div>
             <div class="stat-item">
               <span class="stat-number" id="scannedPages">0</span>
-              <span class="stat-label">Login Pages Verified</span>
+              <span class="stat-label">Inlogpagina's gecontroleerd</span>
             </div>
             <div class="stat-item">
               <span class="stat-number" id="securityEvents">0</span>
-              <span class="stat-label">Security Alerts</span>
+              <span class="stat-label">Beveiligingsmeldingen</span>
             </div>
           </div>
         </section>
@@ -91,8 +90,8 @@
         <!-- Detection Debug Section -->
         <section class="debug-section" id="debugSection" style="display: none;">
           <h3 class="section-title">
-            Developer Debug
-            <button class="debug-toggle" id="debugToggle" title="Toggle debug info">
+            Ontwikkelaarsdebug
+            <button class="debug-toggle" id="debugToggle" title="Debuginfo tonen/verbergen">
               <span class="material-icons">bug_report</span>
             </button>
           </h3>
@@ -100,57 +99,57 @@
             <div class="debug-actions">
               <button class="action-btn secondary small" id="retriggerAnalysis">
                 <span class="material-icons">refresh</span>
-                Re-run Analysis
+                Analyse opnieuw uitvoeren
               </button>
               <button class="action-btn secondary small" id="showDetectionDetails">
                 <span class="material-icons">visibility</span>
-                Show Details
+                Details tonen
               </button>
             </div>
 
             <div class="detection-results" id="detectionResults" style="display: none;">
               <div class="detection-section">
-                <h4>M365 Detection</h4>
-                <div class="detection-score" id="m365Score">Not analyzed</div>
+                <h4>M365-detectie</h4>
+                <div class="detection-score" id="m365Score">Niet geanalyseerd</div>
                 <div class="detection-elements" id="m365Elements"></div>
               </div>
 
               <div class="detection-section">
-                <h4>Phishing Indicators</h4>
-                <div class="detection-score" id="phishingScore">Not analyzed</div>
+                <h4>Phishingindicatoren</h4>
+                <div class="detection-score" id="phishingScore">Niet geanalyseerd</div>
                 <div class="detection-threats" id="phishingThreats"></div>
               </div>
 
               <div class="detection-section">
-                <h4>DOM Observer Status</h4>
-                <div class="observer-status" id="observerStatus">Unknown</div>
+                <h4>Status DOM-observer</h4>
+                <div class="observer-status" id="observerStatus">Onbekend</div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Page Source Analysis (moved out of debug section) -->
+        <!-- Page Source Analysis -->
         <section class="debug-section" id="pageSourceSection" style="display: none;">
           <h3 class="section-title">
-            Page Source Analysis
-            <button class="debug-toggle" id="pageSourceToggle" title="Toggle page source info">
+            Pagina broncode
+            <button class="debug-toggle" id="pageSourceToggle" title="Broncodeinfo tonen/verbergen">
               <span class="material-icons">code</span>
             </button>
           </h3>
           <div class="debug-content" id="pageSourceContent">
             <div class="source-info" id="sourceInfo">
-              <div class="source-stats" id="sourceStats">Not analyzed</div>
+              <div class="source-stats" id="sourceStats">Niet geanalyseerd</div>
               <button class="action-btn secondary small" id="showPageSource" style="margin-top: 8px;">
                 <span class="material-icons">code</span>
-                View Source
+                Broncode bekijken
               </button>
             </div>
             <div class="source-content" id="sourceContent" style="display: none;">
               <div class="source-controls">
-                <input type="text" id="sourceSearch" placeholder="Search in source..." class="source-search">
+                <input type="text" id="sourceSearch" placeholder="Zoeken in broncode..." class="source-search">
                 <button class="action-btn secondary small" id="copySource">
                   <span class="material-icons">content_copy</span>
-                  <span class="btn-text">Copy</span>
+                  <span class="btn-text">Kopiëren</span>
                 </button>
               </div>
               <pre id="sourceDisplay" class="source-display"></pre>
@@ -158,32 +157,32 @@
           </div>
         </section>
 
-        <!-- Console Logs (moved out of debug section) -->
+        <!-- Console Logs -->
         <section class="debug-section" id="consoleLogsSection" style="display: none;">
           <h3 class="section-title">
-            Console Logs
-            <button class="debug-toggle" id="consoleLogsToggle" title="Toggle console logs">
+            Consolelogboeken
+            <button class="debug-toggle" id="consoleLogsToggle" title="Consolelogboeken tonen/verbergen">
               <span class="material-icons">terminal</span>
             </button>
           </h3>
           <div class="debug-content" id="consoleLogsContent">
             <div class="source-info" id="consoleInfo">
-              <div class="source-stats" id="consoleStats">No logs captured</div>
+              <div class="source-stats" id="consoleStats">Geen logboeken vastgelegd</div>
               <button class="action-btn secondary small" id="showConsoleLogs" style="margin-top: 8px;">
                 <span class="material-icons">terminal</span>
-                View Logs
+                Logboeken bekijken
               </button>
             </div>
             <div class="source-content" id="consoleContent" style="display: none;">
               <div class="source-controls">
-                <input type="text" id="consoleSearch" placeholder="Search in logs..." class="source-search">
+                <input type="text" id="consoleSearch" placeholder="Zoeken in logboeken..." class="source-search">
                 <button class="action-btn secondary small" id="copyConsoleLogs">
                   <span class="material-icons">content_copy</span>
-                  <span class="btn-text">Copy</span>
+                  <span class="btn-text">Kopiëren</span>
                 </button>
                 <button class="action-btn secondary small" id="refreshConsoleLogs">
                   <span class="material-icons">refresh</span>
-                  <span class="btn-text">Refresh</span>
+                  <span class="btn-text">Vernieuwen</span>
                 </button>
               </div>
               <pre id="consoleDisplay" class="console-display"></pre>
@@ -197,15 +196,15 @@
           id="enterpriseSection"
           style="display: none"
         >
-          <h3 class="section-title">Enterprise</h3>
+          <h3 class="section-title">Zakelijk</h3>
           <div class="enterprise-info">
             <div class="policy-status">
-              <span class="policy-label">Managed by:</span>
-              <span class="policy-value" id="managedBy">Organization</span>
+              <span class="policy-label">Beheerd door:</span>
+              <span class="policy-value" id="managedBy">Organisatie</span>
             </div>
             <div class="compliance-status">
               <span class="compliance-badge" id="complianceBadge"
-                >Compliant</span
+                >Conform beleid</span
               >
             </div>
           </div>
@@ -217,7 +216,7 @@
         <div class="footer-links">
           <a href="#" id="supportLink" class="footer-link">Support</a>
           <a href="#" id="privacyLink" class="footer-link">Privacy</a>
-          <a href="#" id="aboutLink" class="footer-link">About</a>
+          <a href="#" id="aboutLink" class="footer-link">Over</a>
         </div>
         <div class="company-branding" id="companyBranding">
           <span class="company-name" id="companyName">Bruinsma</span>
@@ -228,7 +227,7 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay" style="display: none">
       <div class="loading-spinner"></div>
-      <span class="loading-text">Analyzing page...</span>
+      <span class="loading-text">Pagina analyseren...</span>
     </div>
 
     <!-- Notification Toast -->

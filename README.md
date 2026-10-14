@@ -1,4 +1,4 @@
-# IsThePageReal by Bruinsma
+# Bruinsma Protect
 
 Manifest V3 browser extension that detects phishing sites impersonating Microsoft 365 sign-in pages. This is Bruinsma's branded fork of [Check by CyberDrain](https://github.com/CyberDrain/Check) (AGPL-3.0), intended for customer rollout via Microsoft Edge.
 
@@ -7,7 +7,7 @@ Manifest V3 browser extension that detects phishing sites impersonating Microsof
 Default branding lives in `config/branding.json`:
 
 - **Company:** Bruinsma
-- **Product:** IsThePageReal
+- **Product:** Bruinsma Protect
 - **Primary color:** `#299DCF`
 - **Support:** info@bruinsmakantoor.nl / https://bruinsmakantoor.nl/ict/
 
@@ -41,7 +41,7 @@ Icons use the Bruinsma “b” mark in `images/icon{16,32,48,128}.png`.
 npm run package:edge
 ```
 
-Creates `dist/IsThePageReal-edge.zip` for Edge Add-ons Partner Center or private hosting.
+Creates `dist/Bruinsma Protect-edge.zip` for Edge Add-ons Partner Center or private hosting.
 
 Full rollout steps: [docs/edge-deployment.md](docs/edge-deployment.md).
 
