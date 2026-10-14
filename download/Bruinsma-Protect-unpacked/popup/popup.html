@@ -89,23 +89,30 @@
           </div>
         </section>
 
-        <!-- Statistics -->
-        <section class="stats-section">
-          <h3 class="section-title">Phishingbescherming</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-number" id="blockedThreats">0</span>
-              <span class="stat-label">Phishing geblokkeerd</span>
+        <!-- Weekly brief (spoor E) -->
+        <section class="stats-section weekly-brief" id="weeklyBriefSection">
+          <h3 class="section-title">Deze week</h3>
+          <p class="weekly-brief-story" id="weeklyBriefStory">
+            Bescherming door Bruinsma Protect wordt geladen...
+          </p>
+          <p class="weekly-brief-support" id="weeklyBriefSupport"></p>
+          <details class="weekly-brief-details">
+            <summary>Details tonen</summary>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-number" id="blockedThreats">0</span>
+                <span class="stat-label">Gestopt (7 dgn)</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="scannedPages">0</span>
+                <span class="stat-label">Gecontroleerd (7 dgn)</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="securityEvents">0</span>
+                <span class="stat-label">Meldingen (7 dgn)</span>
+              </div>
             </div>
-            <div class="stat-item">
-              <span class="stat-number" id="scannedPages">0</span>
-              <span class="stat-label">Inlogpagina's gecontroleerd</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number" id="securityEvents">0</span>
-              <span class="stat-label">Beveiligingsmeldingen</span>
-            </div>
-          </div>
+          </details>
         </section>
 
         <!-- Detection Debug Section -->

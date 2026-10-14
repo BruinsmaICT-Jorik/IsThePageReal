@@ -12,6 +12,10 @@ class CheckPopup {
       blockedThreats: 0,
       scannedPages: 0,
       securityEvents: 0,
+      weekBlockedThreats: 0,
+      weekScannedPages: 0,
+      weekSecurityEvents: 0,
+      weekUserReports: 0,
     };
     this.activityItems = [];
     this.isLoading = false;
@@ -53,10 +57,15 @@ class CheckPopup {
     this.elements.blockedNotice = document.getElementById("blockedNotice");
     this.elements.blockedUrl = document.getElementById("blockedUrl");
 
-    // Statistics
+    // Statistics / weekly brief
     this.elements.blockedThreats = document.getElementById("blockedThreats");
     this.elements.scannedPages = document.getElementById("scannedPages");
     this.elements.securityEvents = document.getElementById("securityEvents");
+    this.elements.weeklyBriefStory =
+      document.getElementById("weeklyBriefStory");
+    this.elements.weeklyBriefSupport = document.getElementById(
+      "weeklyBriefSupport"
+    );
 
     // Enterprise section
     this.elements.enterpriseSection =
@@ -590,6 +599,74 @@ class CheckPopup {
     }
   }
 
+  buildWeeklyBrief(stats) {
+    const blocked = stats.weekBlockedThreats || 0;
+    const scanned = stats.weekScannedPages || 0;
+    const reports = stats.weekUserReports || 0;
+    const company = this.brandingConfig?.companyName || "Bruinsma";
+    const product =
+      this.brandingConfig?.productName || "Bruinsma Protect";
+
+    let story;
+    if (blocked === 0) {
+      story = `Deze week heeft ${product} nog geen verdachte inlogpogingen hoeven stoppen. Je bent beschermd zodra het nodig is.`;
+    } else if (blocked === 1) {
+      story = `Deze week is 1 verdachte inlogpoging gestopt door ${product}.`;
+    } else {
+      story = `Deze week zijn ${blocked} verdachte inlogpogingen gestopt door ${product}.`;
+    }
+
+    const supportParts = [];
+    if (scanned > 0) {
+      supportParts.push(
+        scanned === 1
+          ? "1 inlogpagina gecontroleerd"
+          : `${scanned} inlogpagina's gecontroleerd`
+      );
+    }
+    if (reports > 0) {
+      supportParts.push(
+        reports === 1
+          ? "1 melding van jou of een collega"
+          : `${reports} meldingen van jou of collega's`
+      );
+    }
+    if (supportParts.length === 0 && blocked === 0) {
+      supportParts.push(`Beschermd door ${company}`);
+    }
+
+    return {
+      story,
+      support: supportParts.join(" · "),
+    };
+  }
+
+  renderStatistics() {
+    if (this.elements.blockedThreats) {
+      this.elements.blockedThreats.textContent = (
+        this.stats.weekBlockedThreats ?? this.stats.blockedThreats ?? 0
+      ).toLocaleString("nl-NL");
+    }
+    if (this.elements.scannedPages) {
+      this.elements.scannedPages.textContent = (
+        this.stats.weekScannedPages ?? this.stats.scannedPages ?? 0
+      ).toLocaleString("nl-NL");
+    }
+    if (this.elements.securityEvents) {
+      this.elements.securityEvents.textContent = (
+        this.stats.weekSecurityEvents ?? this.stats.securityEvents ?? 0
+      ).toLocaleString("nl-NL");
+    }
+
+    const brief = this.buildWeeklyBrief(this.stats);
+    if (this.elements.weeklyBriefStory) {
+      this.elements.weeklyBriefStory.textContent = brief.story;
+    }
+    if (this.elements.weeklyBriefSupport) {
+      this.elements.weeklyBriefSupport.textContent = brief.support;
+    }
+  }
+
   async loadStatistics() {
     try {
       // First try to get statistics from background script
@@ -600,16 +677,13 @@ class CheckPopup {
             blockedThreats: response.statistics.blockedThreats || 0,
             scannedPages: response.statistics.scannedPages || 0,
             securityEvents: response.statistics.securityEvents || 0,
+            weekBlockedThreats: response.statistics.weekBlockedThreats || 0,
+            weekScannedPages: response.statistics.weekScannedPages || 0,
+            weekSecurityEvents: response.statistics.weekSecurityEvents || 0,
+            weekUserReports: response.statistics.weekUserReports || 0,
           };
 
-          // Update UI
-          this.elements.blockedThreats.textContent =
-            this.stats.blockedThreats.toLocaleString();
-          this.elements.scannedPages.textContent =
-            this.stats.scannedPages.toLocaleString();
-          this.elements.securityEvents.textContent =
-            this.stats.securityEvents.toLocaleString();
-
+          this.renderStatistics();
           console.log("Statistics loaded from background script:", this.stats);
           return;
         }
@@ -639,66 +713,82 @@ class CheckPopup {
 
       const securityEvents = result?.securityEvents || [];
       const accessLogs = result?.accessLogs || [];
+      const weekCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      const inWeek = (entry) => {
+        const ts = Date.parse(entry?.timestamp || "");
+        return !Number.isNaN(ts) && ts >= weekCutoff;
+      };
 
-      // Calculate statistics manually as fallback
       let blockedThreats = 0;
       let scannedPages = 0;
       let securityEventsCount = securityEvents.length;
+      let weekBlockedThreats = 0;
+      let weekScannedPages = 0;
+      let weekSecurityEvents = 0;
+      let weekUserReports = 0;
 
-      // Count blocked threats
       securityEvents.forEach((entry) => {
         const event = entry.event;
         if (!event) return;
+        const weekly = inWeek(entry);
+        if (weekly) weekSecurityEvents++;
 
-        if (
+        const blocked =
           event.type === "threat_blocked" ||
           event.type === "threat_detected" ||
           event.type === "content_threat_detected" ||
           (event.action && event.action.includes("blocked")) ||
           (event.threatLevel &&
-            ["high", "critical"].includes(event.threatLevel))
-        ) {
+            ["high", "critical"].includes(event.threatLevel));
+        if (blocked) {
           blockedThreats++;
+          if (weekly) weekBlockedThreats++;
+        }
+        if (
+          (event.type === "user_suspicious_report" ||
+            event.type === "false_positive_report") &&
+          weekly
+        ) {
+          weekUserReports++;
+        }
+        if (event.type === "legitimate_access") {
+          scannedPages++;
+          if (weekly) weekScannedPages++;
         }
       });
 
-      // Count scanned pages
       accessLogs.forEach((entry) => {
         const event = entry.event;
         if (event && event.type === "page_scanned") {
           scannedPages++;
-        }
-      });
-
-      // Also count legitimate access events as scanned pages
-      securityEvents.forEach((entry) => {
-        const event = entry.event;
-        if (event && event.type === "legitimate_access") {
-          scannedPages++;
+          if (inWeek(entry)) weekScannedPages++;
         }
       });
 
       this.stats = {
-        blockedThreats: blockedThreats,
-        scannedPages: scannedPages,
+        blockedThreats,
+        scannedPages,
         securityEvents: securityEventsCount,
+        weekBlockedThreats,
+        weekScannedPages,
+        weekSecurityEvents,
+        weekUserReports,
       };
 
-      // Update UI
-      this.elements.blockedThreats.textContent =
-        this.stats.blockedThreats.toLocaleString();
-      this.elements.scannedPages.textContent =
-        this.stats.scannedPages.toLocaleString();
-      this.elements.securityEvents.textContent =
-        this.stats.securityEvents.toLocaleString();
-
+      this.renderStatistics();
       console.log("Statistics calculated from fallback method:", this.stats);
     } catch (error) {
       console.error("Failed to load statistics:", error);
-      // Show zero values on error
-      this.elements.blockedThreats.textContent = "0";
-      this.elements.scannedPages.textContent = "0";
-      this.elements.securityEvents.textContent = "0";
+      this.stats = {
+        blockedThreats: 0,
+        scannedPages: 0,
+        securityEvents: 0,
+        weekBlockedThreats: 0,
+        weekScannedPages: 0,
+        weekSecurityEvents: 0,
+        weekUserReports: 0,
+      };
+      this.renderStatistics();
     }
   }
 

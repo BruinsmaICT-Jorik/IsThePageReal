@@ -608,6 +608,46 @@ body {
   padding: 16px;
 }
 
+.weekly-brief-story {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--theme-text-primary);
+  font-weight: 500;
+}
+
+.weekly-brief-support {
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--theme-text-secondary);
+  min-height: 0;
+}
+
+.weekly-brief-support:empty {
+  display: none;
+}
+
+.weekly-brief-details {
+  margin-top: 4px;
+}
+
+.weekly-brief-details summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--theme-text-muted);
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.weekly-brief-details summary:hover {
+  color: var(--theme-primary);
+}
+
+.weekly-brief-details[open] summary {
+  margin-bottom: 12px;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
