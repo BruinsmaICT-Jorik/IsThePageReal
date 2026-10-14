@@ -102,27 +102,24 @@ export class DomainSquattingDetector {
         // - *.example.com
         // - example.com
         
-        // Extract hostname from URL-like patterns
-        const urlMatch = cleaned.match(/^(?:https?:\/\/)?([a-zA-Z0-9][\w\-\.]*[a-zA-Z0-9])/);
-        if (urlMatch) {
-          domain = urlMatch[1];
-          
-          // Remove wildcards
-          domain = domain.replace(/^\*\./, '');
-          
-          // Remove path and query string indicators
-          domain = domain.split('/')[0].split('?')[0].split('#')[0];
-          
-          // Remove regex patterns like (.*)?
-          domain = domain.replace(/\(.*?\)/g, '');
-          
-          // Remove trailing dots or special chars
-          domain = domain.replace(/[^\w\-\.]/g, '').replace(/\.$/, '');
-          
-          // Validate it looks like a domain
-          if (domain && domain.includes('.') && domain.length > 3) {
-            domains.push(domain.toLowerCase());
-          }
+        // Extract hostname from URL-like patterns (incl. https://*.example.com/*)
+        const hostPart = cleaned
+          .replace(/^(?:https?:\/\/)/i, "")
+          .split("/")[0]
+          .split("?")[0]
+          .split("#")[0];
+        // Strip leading wildcards / regex noise: *.example.com, (.*).example.com
+        domain = hostPart
+          .replace(/^\*\./, "")
+          .replace(/^\(\.\*\)\.?/, "")
+          .replace(/\(.*?\)/g, "")
+          .replace(/[^\w\-\.]/g, "")
+          .replace(/^\.+/, "")
+          .replace(/\.$/, "");
+
+        // Validate it looks like a domain
+        if (domain && domain.includes(".") && domain.length > 3) {
+          domains.push(domain.toLowerCase());
         }
       } catch (error) {
         logger.debug(`Could not extract domain from pattern: ${pattern}`, error);
