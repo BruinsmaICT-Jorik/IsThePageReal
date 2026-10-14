@@ -185,6 +185,12 @@ class CheckOptions {
     this.elements.refreshDetectionRules?.addEventListener("click", () =>
       this.refreshDetectionRules()
     );
+
+    // CIPP test
+    this.elements.testCippReport = document.getElementById("testCippReport");
+    this.elements.testCippReport?.addEventListener("click", () =>
+      this.testCippReport()
+    );
     
     // Domain squatting management
     // (View default domains now in Configuration Overview)
@@ -3382,6 +3388,75 @@ class CheckOptions {
     } catch (error) {
       console.error("Failed to export logs:", error);
       this.showToast("Failed to export logs", "error");
+    }
+  }
+
+  async testCippReport() {
+    const button = this.elements.testCippReport;
+    const originalHtml = button?.innerHTML;
+    const cippServerUrl =
+      this.elements.cippServerUrl?.value?.trim() ||
+      document.getElementById("cippServerUrl")?.value?.trim() ||
+      "";
+    const cippTenantId =
+      this.elements.cippTenantId?.value?.trim() ||
+      document.getElementById("cippTenantId")?.value?.trim() ||
+      "";
+
+    if (!cippServerUrl) {
+      this.showToast("Vul eerst een CIPP-server-URL in.", "warning");
+      return;
+    }
+
+    try {
+      if (button) {
+        button.disabled = true;
+        button.innerHTML =
+          '<span class="material-icons">hourglass_empty</span> Bezig met versturen...';
+      }
+
+      const response = await new Promise((resolve) => {
+        chrome.runtime.sendMessage(
+          {
+            type: "TEST_CIPP_REPORT",
+            settings: {
+              cippServerUrl,
+              cippTenantId,
+            },
+          },
+          (result) => {
+            if (chrome.runtime.lastError) {
+              resolve({
+                success: false,
+                error: chrome.runtime.lastError.message,
+              });
+              return;
+            }
+            resolve(result || { success: false, error: "Geen antwoord" });
+          }
+        );
+      });
+
+      if (response?.success) {
+        this.showToast(
+          response.message ||
+            "CIPP-testmelding verstuurd. Controleer CIPP of je request-catcher.",
+          "success"
+        );
+      } else {
+        this.showToast(
+          "CIPP-test mislukt: " + (response?.error || "Onbekende fout"),
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error("CIPP test failed:", error);
+      this.showToast("CIPP-test mislukt: " + error.message, "error");
+    } finally {
+      if (button && originalHtml) {
+        button.disabled = false;
+        button.innerHTML = originalHtml;
+      }
     }
   }
 
