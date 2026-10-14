@@ -1,7 +1,7 @@
 {
   "name": "bruinsma-protect",
-  "version": "1.2.0",
-  "description": "Bruinsma Protect — Manifest V3 browser extension for detecting phishing attacks that impersonate Microsoft 365 sign-in pages.",
+  "version": "1.2.1",
+  "description": "Bruinsma Protect \u2014 Manifest V3 browser extension for detecting phishing attacks that impersonate Microsoft 365 sign-in pages.",
   "main": "index.js",
   "directories": {
     "doc": "docs"

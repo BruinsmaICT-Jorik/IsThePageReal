@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Bruinsma Protect",
-  "version": "1.2.0",
-  "description": "Bescherming tegen phishing die Microsoft 365-inlogpagina's nabootsen — Bruinsma Protect",
+  "version": "1.2.1",
+  "description": "Bescherming tegen phishing die Microsoft 365-inlogpagina's nabootsen \u2014 Bruinsma Protect",
   "permissions": [
     "storage",
     "activeTab",

@@ -125,14 +125,15 @@
                             <p class="setting-description">Tenant-identificatie voor CIPP-meldingen in multi-tenant omgevingen</p>
                         </div>
 
-                        <div class="setting-item">
+                        <div class="setting-item" id="cippTestSettingItem" style="margin-top: 16px; padding: 16px; border: 1px solid var(--theme-border, #e5e7eb); border-radius: 8px; background: var(--theme-bg-secondary, #f9fafb);">
+                            <h4 style="margin: 0 0 8px 0;">CIPP-koppeling testen</h4>
+                            <p class="setting-description" style="margin-bottom: 12px;">Stuurt een dummy phishingmelding naar <code>/api/PublicPhishingCheck</code> met de CIPP-URL en tenant hierboven. Opslaan is niet nodig.</p>
                             <div class="setting-actions">
-                                <button class="btn btn-secondary" id="testCippReport" type="button">
+                                <button class="btn btn-primary" id="testCippReport" type="button">
                                     <span class="material-icons">send</span>
                                     CIPP-test versturen
                                 </button>
                             </div>
-                            <p class="setting-description">Stuurt een dummy phishingmelding naar <code>/api/PublicPhishingCheck</code> met de CIPP-URL en tenant hierboven (opslaan is niet nodig). Handig om de koppeling te controleren zonder phishingpagina.</p>
                         </div>
 
                     </div>
