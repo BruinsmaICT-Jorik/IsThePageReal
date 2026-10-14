@@ -31,6 +31,8 @@ Inhoud die meegaat: `manifest.json`, `scripts/`, `popup/`, `options/`, `config/`
 
 Gebruik managed policy zodat Edge de Bruinsma-extensie forceert en branding locked is.
 
+**Kant-en-klare klant-kit:** [`enterprise/intune/`](../enterprise/intune/) (force-install + CIPP + squatting-voorbeeld).
+
 ### ExtensionSettings (voorbeeld)
 
 ```json

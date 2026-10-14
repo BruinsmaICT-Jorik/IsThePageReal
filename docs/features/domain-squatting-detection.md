@@ -53,20 +53,15 @@ Common suspicious words attackers use: `login`, `secure`, `verify`, `official`, 
 
 ## What Domains Are Protected?
 
-Check protects **30+ popular domains** by default, including:
+**Bruinsma Protect** ships a **Microsoft 365 login-domain baseline** in `rules/detection-rules.json` (o.a. microsoftonline.com, office.com, outlook.com, sharepoint.com, teams.microsoft.com, login.live.com).
 
-**Microsoft Services:**
-- microsoft.com, microsoftonline.com, office.com, outlook.com, onedrive.com, and more
+Extra domeinen kun je toevoegen via:
 
-**Other Popular Services:**
-- google.com, github.com, facebook.com, amazon.com, apple.com, paypal.com, and more
-
-**Plus: Your URL Allowlist**
+1. Managed policy `domainSquatting.protectedDomains`
+2. De [URL Allowlist](../settings/detection-rules.md#url-allowlist-regex-or-url-with-wildcards) (domeinen worden automatisch gemerged)
 
 {% hint style="info" %}
-**Unified Protection:** Check uses your [URL Allowlist](../settings/detection-rules.md#url-allowlist-regex-or-url-with-wildcards) for double protection. Any domains you add there are automatically protected from squatting attempts too!
-
-For example, if you add `https://yourcompany.com/*` to your allowlist, Check will also protect against fake domains like `yourcompany.net` or `your-company.com`.
+**Unified Protection:** Bruinsma Protect merget de M365-baseline, optionele policy-domeinen en allowlist-domeinen. Voorbeeld: met `https://klantdomein.nl/*` in de allowlist wordt ook `klantd0mein.nl`-achtige squatting meegenomen.
 {% endhint %}
 
 ## How It Works in Practice

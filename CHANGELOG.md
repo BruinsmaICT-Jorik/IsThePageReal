@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fase 1 — snelle winst (1.2.2)
+- Microsoft 365 **domain-squatting baseline** in `rules/detection-rules.json`; runtime merge met policy `protectedDomains` + urlAllowlist.
+- Domain squatting standaard **ingeschakeld** in defaults/schema.
+- CIPP/webhook `source` en User-Agent: **Bruinsma Protect**.
+- Intune klant-kit: `enterprise/intune/` + CIPP-voorbeelden in Edge/Chrome managed policy.
+- AVG/privacy-notitie: `docs/privacy-avg.md` (popup Privacy-link).
+- Resterende options/popup toasts en debugteksten naar het Nederlands.
+
 ### Bruinsma Protect + Nederlandse UI
 - Productnaam gewijzigd naar **Bruinsma Protect**.
 - Gebruikersgerichte teksten in popup, options, blocked page en waarschuwingsbanners naar het Nederlands.

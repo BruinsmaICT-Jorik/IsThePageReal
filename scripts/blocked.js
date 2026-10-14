@@ -156,7 +156,7 @@ async function reportFalsePositive() {
       version: "1.0",
       type: "false_positive_report",
       timestamp: new Date().toISOString(),
-      source: "Check Extension",
+      source: "Bruinsma Protect",
       extensionVersion: chrome.runtime.getManifest().version,
       data: {
         reportedUrl: document.getElementById("blockedUrl").textContent,
@@ -661,7 +661,7 @@ async function loadBranding() {
   const currentCompanyName = document.getElementById("companyName").textContent;
   if (!currentCompanyName || currentCompanyName.trim() === "") {
     console.log("No company name set, using final fallback");
-    document.getElementById("companyName").textContent = "Check";
+    document.getElementById("companyName").textContent = "Bruinsma";
     document.title = "Access Blocked - Check";
   }
 

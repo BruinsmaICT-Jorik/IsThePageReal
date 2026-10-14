@@ -142,7 +142,15 @@ export class DomainSquattingDetector {
       const runtimeDomainSquatting = runtimeConfig?.domainSquatting || {};
 
       this.enabled = runtimeDomainSquatting.enabled === true;
-      this.protectedDomains = rulesDomainSquatting.protected_domains || [];
+      const rulesProtected = rulesDomainSquatting.protected_domains || [];
+      const runtimeProtected =
+        runtimeDomainSquatting.protectedDomains ||
+        runtimeDomainSquatting.protected_domains ||
+        [];
+      // Baseline from rules + optional extra domains from managed policy
+      this.protectedDomains = [
+        ...new Set([...rulesProtected, ...runtimeProtected]),
+      ];
       this.deviationThreshold =
         runtimeDomainSquatting.deviationThreshold ||
         rulesDomainSquatting.deviation_threshold ||
@@ -173,7 +181,7 @@ export class DomainSquattingDetector {
       // Extract domains from URL allowlist patterns
       const allowlistDomains = this.extractDomainsFromAllowlist(urlAllowlist);
       if (allowlistDomains.length > 0) {
-        // Merge with protected domains from rules (avoid duplicates)
+        // Merge with protected domains from rules/policy (avoid duplicates)
         const allDomains = [...new Set([...this.protectedDomains, ...allowlistDomains])];
         this.protectedDomains = allDomains;
         logger.log(`Added ${allowlistDomains.length} domains from URL allowlist`);

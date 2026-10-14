@@ -112,7 +112,7 @@ export class ConfigManager {
           updateInterval: 24,
           enableDebugLogging: false,
           domainSquatting: {
-            enabled: false,
+            enabled: true,
             deviationThreshold: 2,
             algorithms: {
               levenshtein: true,
@@ -131,7 +131,8 @@ export class ConfigManager {
             companyName: "Bruinsma",
             productName: "Bruinsma Protect",
             supportUrl: "https://bruinsmakantoor.nl/ict/",
-            privacyPolicyUrl: "https://bruinsmakantoor.nl/",
+            privacyPolicyUrl:
+              "https://github.com/BruinsmaICT-Jorik/IsThePageReal/blob/main/docs/privacy-avg.md",
             aboutUrl: "https://bruinsmakantoor.nl/ict/over-ons/",
             primaryColor: "#299DCF",
             logoUrl: "images/icon48.png",
@@ -303,9 +304,9 @@ export class ConfigManager {
       customRulesUrl: "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
       updateInterval: 24, // hours
 
-      // Domain squatting runtime settings
+      // Domain squatting runtime settings (baseline MS domains live in rules/detection-rules.json)
       domainSquatting: {
-        enabled: false,
+        enabled: true,
         deviationThreshold: 2,
         algorithms: {
           levenshtein: true,
@@ -351,7 +352,7 @@ export class ConfigManager {
       // Company branding
       companyName: "Bruinsma",
       productName: "Bruinsma Protect",
-      version: "1.2.0",
+      version: "1.2.2",
 
       // Visual branding
       primaryColor: "#299DCF",

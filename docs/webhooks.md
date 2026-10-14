@@ -38,7 +38,7 @@ All webhook payloads follow a consistent structure:
   "version": "1.0",
   "type": "<event_type>",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "user": { /* optional user profile */ },
   "browser": { /* optional browser context */ },
@@ -73,7 +73,7 @@ General phishing detection events.
   "version": "1.0",
   "type": "detection_alert",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://phishing-site.example.com",
@@ -105,7 +105,7 @@ User-submitted false positive reports from blocked pages.
   "version": "1.0",
   "type": "false_positive_report",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://legitimate-site.example.com",
@@ -136,7 +136,7 @@ Sent when a page is blocked.
   "version": "1.0",
   "type": "page_blocked",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://malicious-site.example.com",
@@ -167,7 +167,7 @@ OAuth rogue application detection events.
   "version": "1.0",
   "type": "rogue_app_detected",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://login.microsoftonline.com/...",
@@ -203,7 +203,7 @@ General threat detection events.
   "version": "1.0",
   "type": "threat_detected",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://suspicious-site.example.com",
@@ -235,7 +235,7 @@ Legitimate page validation events.
   "version": "1.0",
   "type": "validation_event",
   "timestamp": "2025-11-05T22:00:00.000Z",
-  "source": "Check Extension",
+      "source": "Bruinsma Protect",
   "extensionVersion": "1.0.0",
   "data": {
     "url": "https://login.microsoftonline.com",

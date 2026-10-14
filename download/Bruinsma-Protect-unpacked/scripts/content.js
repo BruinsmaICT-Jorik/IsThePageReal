@@ -6980,7 +6980,7 @@ if (window.checkExtensionLoaded) {
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent,
         extensionVersion: chrome.runtime.getManifest().version,
-        source: "CheckExtension",
+        source: "Bruinsma Protect",
         ...reportData,
       };
 

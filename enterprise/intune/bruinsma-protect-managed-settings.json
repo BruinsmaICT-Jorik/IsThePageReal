@@ -1,0 +1,36 @@
+{
+  "showNotifications": true,
+  "enableValidPageBadge": true,
+  "validPageBadgeTimeout": 5,
+  "enablePageBlocking": true,
+  "enableCippReporting": true,
+  "cippServerUrl": "https://REPLACE_WITH_CIPP_HOST",
+  "cippTenantId": "REPLACE_WITH_CUSTOMER_TENANT_ID_OR_DOMAIN",
+  "customRulesUrl": "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
+  "updateInterval": 24,
+  "enableDebugLogging": false,
+  "urlAllowlist": [
+    "https://*.klantdomein.nl/*"
+  ],
+  "domainSquatting": {
+    "enabled": true,
+    "protectedDomains": [
+      "klantdomein.nl"
+    ]
+  },
+  "customBranding": {
+    "companyName": "Bruinsma",
+    "productName": "Bruinsma Protect",
+    "supportEmail": "info@bruinsmakantoor.nl",
+    "supportUrl": "https://bruinsmakantoor.nl/ict/",
+    "privacyPolicyUrl": "https://github.com/BruinsmaICT-Jorik/IsThePageReal/blob/main/docs/privacy-avg.md",
+    "aboutUrl": "https://bruinsmakantoor.nl/ict/over-ons/",
+    "primaryColor": "#299DCF",
+    "logoUrl": "https://bruinsmakantoor.nl/wp-content/uploads/2024/02/favicon_kantoor.png"
+  },
+  "genericWebhook": {
+    "enabled": false,
+    "url": "",
+    "events": []
+  }
+}

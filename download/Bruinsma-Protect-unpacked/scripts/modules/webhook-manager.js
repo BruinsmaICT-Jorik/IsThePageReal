@@ -59,7 +59,7 @@ export class WebhookManager {
       version: "1.0",
       type: webhookType,
       timestamp: new Date().toISOString(),
-      source: "Check Extension",
+      source: "Bruinsma Protect",
       extensionVersion:
         metadata.extensionVersion || chrome.runtime.getManifest().version,
       data: {},
@@ -378,7 +378,7 @@ export class WebhookManager {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "User-Agent": `Check/${
+          "User-Agent": `BruinsmaProtect/${
             metadata.extensionVersion || chrome.runtime.getManifest().version
           }`,
           "X-Webhook-Type": webhookType,

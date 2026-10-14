@@ -860,7 +860,7 @@ class CheckPopup {
       // Phishing threats
       phishing_page: "Phishing Page",
       fake_login: "Nep-inlogpagina",
-      credential_harvesting: "Credential harvesting",
+      credential_harvesting: "Diefstal van inloggegevens",
       microsoft_impersonation: "Microsoft Impersonation",
       o365_phishing: "Office 365 Phishing",
       login_spoofing: "Login Page Spoofing",
@@ -974,9 +974,9 @@ class CheckPopup {
       case "suspicious_redirect":
         return `Suspicious redirect blocked on ${new URL(event.url).hostname}`;
       case "form_submission":
-        return "Form submission monitored";
+        return "Formulierverzending bewaakt";
       case "script_injection":
-        return "Security script injected";
+        return "Beveiligingsscript geïnjecteerd";
       case "page_scanned":
         return `Page scanned for threats`;
       case "blocked_page_viewed":
@@ -1346,7 +1346,7 @@ class CheckPopup {
         if (!wakeupSuccess) {
           console.error("Check: Failed to wake up background script");
           this.showNotification(
-            "Extension background script is not responding. Try reloading the extension.",
+            "Backgroundscript reageert niet. Herlaad de extensie en probeer opnieuw.",
             "error"
           );
           return;
@@ -1369,7 +1369,7 @@ class CheckPopup {
 
           if (response && response.success) {
             this.showNotification(
-              "Analysis re-triggered successfully",
+              "Analyse opnieuw gestart",
               "success"
             );
             // Refresh page info after a short delay
@@ -1377,13 +1377,13 @@ class CheckPopup {
               this.loadCurrentPageInfo();
             }, 1000);
           } else {
-            this.showNotification("Failed to re-trigger analysis", "error");
+            this.showNotification("Opnieuw starten van analyse mislukt", "error");
           }
         }
       );
     } catch (error) {
       console.error("Failed to retrigger analysis:", error);
-      this.showNotification("Error re-triggering analysis", "error");
+      this.showNotification("Fout bij opnieuw starten van analyse", "error");
     }
   }
 
@@ -1427,7 +1427,7 @@ class CheckPopup {
         { type: "GET_DETECTION_DETAILS" },
         (response) => {
           if (chrome.runtime.lastError) {
-            this.showNotification("Failed to get detection details", "error");
+            this.showNotification("Ophalen van detectiedetails mislukt", "error");
             return;
           }
 
@@ -1443,13 +1443,13 @@ class CheckPopup {
             // Store debug data for potential use if page gets blocked
             this.storeCurrentDebugData(response.details);
           } else {
-            this.showNotification("No detection details available", "warning");
+            this.showNotification("Geen detectiedetails beschikbaar", "warning");
           }
         }
       );
     } catch (error) {
       console.error("Failed to get detection details:", error);
-      this.showNotification("Error getting detection details", "error");
+      this.showNotification("Fout bij ophalen van detectiedetails", "error");
     }
   }
 
@@ -1524,7 +1524,7 @@ class CheckPopup {
           .join(", ");
         this.elements.phishingThreats.textContent = `Threats: ${threatList}`;
       } else {
-        this.elements.phishingThreats.textContent = "No threats detected";
+        this.elements.phishingThreats.textContent = "Geen dreigingen gedetecteerd";
       }
     }
 
@@ -1569,7 +1569,7 @@ class CheckPopup {
       this.elements.sourceStats.textContent = statsText;
       this.pageSourceContent = content; // Store for display
     } else {
-      this.elements.sourceStats.textContent = "No source captured";
+      this.elements.sourceStats.textContent = "Geen bron vastgelegd";
       this.pageSourceContent = null;
     }
   }
@@ -1590,7 +1590,7 @@ class CheckPopup {
           "Hide Source"
         );
       } else {
-        this.showNotification("No page source available", "warning");
+        this.showNotification("Geen paginabron beschikbaar", "warning");
       }
     }
   }
@@ -1638,7 +1638,7 @@ class CheckPopup {
 
   copySourceToClipboard() {
     if (!this.pageSourceContent) {
-      this.showNotification("No source to copy", "warning");
+      this.showNotification("Geen bron om te kopiëren", "warning");
       return;
     }
 
@@ -1683,7 +1683,7 @@ class CheckPopup {
 
   async loadConsoleLogs() {
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to get logs from", "warning");
+      this.showNotification("Geen actief tabblad voor logboeken", "warning");
       return;
     }
 
@@ -1724,15 +1724,15 @@ class CheckPopup {
 
         // If no stored data found, show appropriate message
         this.elements.consoleStats.textContent =
-          "No logs available for blocked page";
+          "Geen logboeken beschikbaar voor geblokkeerde pagina";
         this.elements.consoleDisplay.textContent =
-          "No console logs available for this blocked page.";
+          "Geen consolelogboeken beschikbaar voor deze geblokkeerde pagina.";
         return;
       } catch (error) {
         console.error("Failed to load console logs for blocked page:", error);
-        this.elements.consoleStats.textContent = "Error loading logs";
+        this.elements.consoleStats.textContent = "Fout bij laden van logboeken";
         this.elements.consoleDisplay.textContent =
-          "Error loading console logs for blocked page.";
+          "Fout bij laden van consolelogboeken voor geblokkeerde pagina.";
         return;
       }
     }
@@ -1744,10 +1744,10 @@ class CheckPopup {
         { type: "GET_CONSOLE_LOGS" },
         (response) => {
           if (chrome.runtime.lastError) {
-            this.showNotification("Failed to get console logs", "error");
-            this.elements.consoleStats.textContent = "Logs unavailable";
+            this.showNotification("Ophalen van consolelogboeken mislukt", "error");
+            this.elements.consoleStats.textContent = "Logboeken niet beschikbaar";
             this.elements.consoleDisplay.textContent =
-              "No console logs available - content script may not be active.";
+              "Geen consolelogboeken beschikbaar — contentscript is mogelijk niet actief.";
             return;
           }
 
@@ -1758,22 +1758,22 @@ class CheckPopup {
           } else {
             this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
             this.elements.consoleDisplay.textContent =
-              "No console logs captured yet.";
+              "Nog geen consolelogboeken vastgelegd.";
           }
         }
       );
     } catch (error) {
       console.error("Failed to get console logs:", error);
-      this.showNotification("Error getting console logs", "error");
-      this.elements.consoleStats.textContent = "Error loading logs";
-      this.elements.consoleDisplay.textContent = "Error loading console logs.";
+      this.showNotification("Fout bij ophalen van consolelogboeken", "error");
+      this.elements.consoleStats.textContent = "Fout bij laden van logboeken";
+      this.elements.consoleDisplay.textContent = "Fout bij laden van consolelogboeken.";
     }
   }
 
   displayConsoleLogs(logs) {
     if (!logs || logs.length === 0) {
       this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
-      this.elements.consoleDisplay.textContent = "No console logs available.";
+      this.elements.consoleDisplay.textContent = "Geen consolelogboeken beschikbaar.";
       return;
     }
 
@@ -1844,14 +1844,14 @@ class CheckPopup {
 
   copyConsoleLogsToClipboard() {
     if (!this.consoleLogsContent) {
-      this.showNotification("No logs to copy", "warning");
+      this.showNotification("Geen logboeken om te kopiëren", "warning");
       return;
     }
 
     navigator.clipboard
       .writeText(this.consoleLogsContent)
       .then(() => {
-        this.showNotification("Console logs copied to clipboard", "success");
+        this.showNotification("Consolelogboeken gekopieerd naar klembord", "success");
       })
       .catch(() => {
         // Fallback for older browsers
@@ -1861,12 +1861,12 @@ class CheckPopup {
         textArea.select();
         document.execCommand("copy");
         document.body.removeChild(textArea);
-        this.showNotification("Console logs copied to clipboard", "success");
+        this.showNotification("Consolelogboeken gekopieerd naar klembord", "success");
       });
   }
 
   async refreshConsoleLogs() {
-    this.showNotification("Refreshing console logs...", "info");
+    this.showNotification("Consolelogboeken vernieuwen...", "info");
     await this.loadConsoleLogs();
   }
 
@@ -2116,13 +2116,13 @@ class CheckPopup {
           this.pageSourceContent = storedDebugData.pageSource;
         }
 
-        this.showNotification("Debug data loaded from blocked page", "info");
+        this.showNotification("Debuggegevens van geblokkeerde pagina geladen", "info");
       } else {
         console.log("No stored debug data found for blocked URL:", originalUrl);
         this.elements.consoleStats.textContent =
-          "No logs available for blocked page";
+          "Geen logboeken beschikbaar voor geblokkeerde pagina";
         this.elements.sourceStats.textContent =
-          "No source available for blocked page";
+          "Geen bron beschikbaar voor geblokkeerde pagina";
       }
     } catch (error) {
       console.error("Failed to load debug data for blocked page:", error);
