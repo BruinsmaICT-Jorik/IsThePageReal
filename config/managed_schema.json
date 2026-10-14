@@ -27,6 +27,13 @@
       "type": "boolean",
       "default": true
     },
+    "safeStartUrl": {
+      "title": "Safe Microsoft 365 Start URL",
+      "description": "URL opened by the ‘Ga naar echte Microsoft 365’ button on the blocked page and in the popup. Use the organisation’s preferred safe entry point (e.g. https://www.office.com or a company portal).",
+      "type": "string",
+      "format": "uri",
+      "default": "https://www.office.com"
+    },
     "enableCippReporting": {
       "title": "CIPP Reporting Enabled",
       "description": "Enable reporting to CIPP server",
@@ -105,6 +112,7 @@
             "enum": [
               "detection_alert",
               "false_positive_report",
+              "user_suspicious_report",
               "page_blocked",
               "rogue_app_detected",
               "threat_detected",

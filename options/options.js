@@ -927,6 +927,7 @@ class CheckOptions {
     // Extension settings
     this.elements.enablePageBlocking =
       document.getElementById("enablePageBlocking");
+    this.elements.safeStartUrl = document.getElementById("safeStartUrl");
     this.elements.enableCippReporting = document.getElementById(
       "enableCippReporting"
     );
@@ -940,6 +941,10 @@ class CheckOptions {
     if (this.elements.enablePageBlocking) {
       this.elements.enablePageBlocking.checked =
         this.config?.enablePageBlocking !== false;
+    }
+    if (this.elements.safeStartUrl) {
+      this.elements.safeStartUrl.value =
+        this.config?.safeStartUrl || "https://www.office.com";
     }
     if (this.elements.enableCippReporting) {
       this.elements.enableCippReporting.checked =
@@ -1215,6 +1220,8 @@ class CheckOptions {
       const formData = {
       // Extension settings
       enablePageBlocking: this.elements.enablePageBlocking?.checked !== false,
+      safeStartUrl:
+        this.elements.safeStartUrl?.value?.trim() || "https://www.office.com",
       enableCippReporting: this.elements.enableCippReporting?.checked || false,
       cippServerUrl: this.elements.cippServerUrl?.value || "",
       cippTenantId: this.elements.cippTenantId?.value || "",
@@ -2674,6 +2681,7 @@ class CheckOptions {
       showNotifications: this.elements.showNotifications,
       enableValidPageBadge: this.elements.enableValidPageBadge,
       enablePageBlocking: this.elements.enablePageBlocking,
+      safeStartUrl: this.elements.safeStartUrl,
       enableCippReporting: this.elements.enableCippReporting,
       cippServerUrl: this.elements.cippServerUrl,
       cippTenantId: this.elements.cippTenantId,

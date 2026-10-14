@@ -1399,6 +1399,93 @@ class CheckBackground {
           }
           break;
 
+        case "SUBMIT_USER_REPORT":
+          try {
+            const reportType = message.reportType;
+            const data = message.data || {};
+            if (
+              reportType !== "false_positive_report" &&
+              reportType !== "user_suspicious_report"
+            ) {
+              sendResponse({
+                success: false,
+                error: "Ongeldig rapporttype",
+              });
+              break;
+            }
+
+            const webhookType =
+              reportType === "false_positive_report"
+                ? this.webhookManager.webhookTypes.FALSE_POSITIVE
+                : this.webhookManager.webhookTypes.USER_SUSPICIOUS;
+
+            const config = await this.configManager.getConfig();
+            let userProfile = null;
+            try {
+              userProfile = await this.getCurrentProfile();
+            } catch (_) {
+              userProfile = null;
+            }
+
+            const result = await this.webhookManager.sendWebhook(
+              webhookType,
+              {
+                url: data.reportedUrl || data.url,
+                reportedUrl: data.reportedUrl || data.url,
+                reason:
+                  data.reportedReason ||
+                  data.reason ||
+                  (reportType === "false_positive_report"
+                    ? "Gebruiker meldt mogelijk vals alarm"
+                    : "Gebruiker meldt verdachte pagina"),
+                reportedReason: data.reportedReason,
+                detectionDetails: data.detectionDetails || {},
+                userComments: data.userComments || null,
+                pageTitle: data.pageTitle || null,
+                domain: data.domain || null,
+                referrer: data.referrer || null,
+                severity:
+                  reportType === "user_suspicious_report" ? "high" : "info",
+                category: "user_report",
+              },
+              {
+                userProfile,
+                tenantId: config?.cippTenantId || null,
+              }
+            );
+
+            // Also log locally for activity / MSP follow-up
+            await this.logEvent(
+              {
+                type:
+                  reportType === "false_positive_report"
+                    ? "false_positive_report"
+                    : "user_suspicious_report",
+                url: data.reportedUrl || data.url,
+                reason: data.reportedReason || data.reason,
+                timestamp: new Date().toISOString(),
+              },
+              sender.tab?.id
+            );
+
+            const delivered =
+              result?.success === true ||
+              (Array.isArray(result?.results) &&
+                result.results.some((r) => r.success));
+
+            sendResponse({
+              success: true,
+              delivered: !!delivered,
+              message: delivered
+                ? "Melding verstuurd"
+                : "Melding lokaal vastgelegd (geen webhook/CIPP geconfigureerd)",
+            });
+          } catch (error) {
+            logger.error("Check: Failed to submit user report:", error);
+            sendResponse({ success: false, error: error.message });
+          }
+          break;
+
         case "GET_POLICIES":
           try {
             // Test managed storage directly

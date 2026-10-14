@@ -11,6 +11,7 @@
 
 - [Edge uitrol (Bruinsma / Bruinsma Protect)](edge-deployment.md)
 - [Privacy & AVG](privacy-avg.md)
+- [Menselijke momenten (fase 2)](human-moments.md)
 - [Chrome/Edge Deployment Instructions](deployment/chrome-edge-deployment-instructions/README.md)
   - [Windows](deployment/chrome-edge-deployment-instructions/windows/README.md)
     - [Manual Deployment](deployment/chrome-edge-deployment-instructions/windows/manual-deployment.md)

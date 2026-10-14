@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bruinsma blokkeert de toegang tot deze pagina</title>
+    <title>Bruinsma Protect — verdachte inlogpagina gestopt</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,10 +16,9 @@
       }
 
       body {
-        font-family: "Gilroy", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #299DCF 0%, #00395F 100%);
-        color: #00395F;
+        font-family: "Gilroy", "Segoe UI", system-ui, sans-serif;
+        background: linear-gradient(145deg, #00395f 0%, #299dcf 55%, #e8f4fa 100%);
+        color: #00395f;
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -28,117 +27,223 @@
       }
 
       .container {
-        background: white;
+        background: #fff;
         border-radius: 16px;
-        padding: 40px;
-        max-width: 600px;
+        padding: 36px 40px;
+        max-width: 640px;
         width: 100%;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        box-shadow: 0 20px 40px rgba(0, 57, 95, 0.18);
+      }
+
+      .icon-container {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .company-logo {
+        max-width: 72px;
+        max-height: 72px;
+        border-radius: 50%;
+        object-fit: contain;
+        background: white;
+        padding: 4px;
+        border: 1px solid #e5e7eb;
       }
 
       .icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-        border: 2px solid #d1d5db;
+        width: 72px;
+        height: 72px;
+        background: linear-gradient(135deg, #e8f4fa 0%, #d1e9f5 100%);
+        border: 2px solid #299dcf;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 30px;
-        font-size: 40px;
-        color: #6b7280;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-size: 36px;
+        color: #299dcf;
       }
 
       h1 {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 600;
-        color: #299DCF;
-        margin-bottom: 16px;
+        color: #00395f;
+        margin-bottom: 10px;
+        text-align: center;
+        line-height: 1.25;
       }
 
       .subtitle {
-        font-size: 18px;
-        color: #6b7280;
-        margin-bottom: 30px;
+        font-size: 16px;
+        color: #4b5563;
+        margin-bottom: 24px;
         line-height: 1.5;
+        text-align: center;
+      }
+
+      .coach {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-bottom: 20px;
+      }
+
+      .coach-title {
+        font-weight: 600;
+        color: #0c4a6e;
+        margin-bottom: 10px;
+        font-size: 15px;
+      }
+
+      .coach-steps {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .coach-steps li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: #334155;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .step-num {
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #299dcf;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1px;
       }
 
       .reason {
         background: #fef2f2;
         border: 1px solid #fecaca;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 30px;
-        text-align: left;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin-bottom: 20px;
       }
 
       .reason-title {
         font-weight: 600;
         color: #991b1b;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
+        font-size: 14px;
       }
 
       .reason-text {
         color: #7f1d1d;
         line-height: 1.5;
+        font-size: 14px;
+      }
+
+      .tip {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 22px;
+        font-size: 14px;
+        color: #78350f;
+        line-height: 1.45;
+      }
+
+      .tip-label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 4px;
+        color: #92400e;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
       }
 
       .actions {
         display: flex;
-        gap: 12px;
-        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .actions-secondary {
+        display: flex;
+        gap: 10px;
         flex-wrap: wrap;
+        justify-content: stretch;
       }
 
       .btn {
-        padding: 12px 24px;
+        padding: 12px 20px;
         border-radius: 8px;
         font-weight: 500;
         text-decoration: none;
         cursor: pointer;
         border: none;
         font-size: 14px;
-        transition: all 0.2s ease;
+        transition: background 0.15s ease, border-color 0.15s ease;
+        font-family: inherit;
       }
 
       .btn-primary {
-        background: #f77f00;
+        background: #299dcf;
         color: white;
+        width: 100%;
+        font-size: 15px;
+        padding: 14px 20px;
       }
 
       .btn-primary:hover {
-        background: #e56f00;
+        background: #2189b5;
       }
 
       .btn-secondary {
         background: #f3f4f6;
         color: #374151;
         border: 1px solid #d1d5db;
+        flex: 1;
+        min-width: 120px;
       }
 
       .btn-secondary:hover {
         background: #e5e7eb;
       }
 
+      .btn:disabled {
+        opacity: 0.7;
+        cursor: default;
+      }
+
       .details {
-        margin-top: 30px;
-        padding-top: 20px;
+        margin-top: 24px;
+        padding-top: 18px;
         border-top: 1px solid #e5e7eb;
-        text-align: left;
       }
 
       .details-title {
         font-weight: 600;
         color: #374151;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
+        font-size: 14px;
       }
 
       .details-list {
         list-style: none;
-        font-size: 14px;
+        font-size: 13px;
         color: #6b7280;
       }
 
@@ -146,11 +251,16 @@
         padding: 4px 0;
         display: flex;
         justify-content: space-between;
+        gap: 12px;
       }
 
-      /* Technical Details Collapsible */
+      .details-list li span:last-child {
+        text-align: right;
+        word-break: break-all;
+      }
+
       .technical-details {
-        margin-top: 20px;
+        margin-top: 16px;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
         overflow: hidden;
@@ -166,7 +276,7 @@
         font-weight: 600;
         color: #374151;
         user-select: none;
-        transition: background-color 0.2s ease;
+        font-size: 14px;
       }
 
       .technical-details-header:hover {
@@ -212,6 +322,7 @@
       .tech-item {
         display: flex;
         justify-content: space-between;
+        gap: 12px;
         padding: 4px 0;
         font-size: 13px;
         color: #6b7280;
@@ -225,113 +336,133 @@
         font-weight: 500;
       }
 
-      .tech-badge.high { background: #fef2f2; color: #dc2626; }
-      .tech-badge.medium { background: #fef3c7; color: #d97706; }
-      .tech-badge.low { background: #f0fdf4; color: #16a34a; }
-      .tech-badge.critical { background: #450a0a; color: #fecaca; }
+      .tech-badge.high {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+      .tech-badge.medium {
+        background: #fef3c7;
+        color: #d97706;
+      }
+      .tech-badge.low {
+        background: #f0fdf4;
+        color: #16a34a;
+      }
+      .tech-badge.critical {
+        background: #450a0a;
+        color: #fecaca;
+      }
 
       .footer {
-        margin-top: 40px;
-        padding-top: 20px;
+        margin-top: 28px;
+        padding-top: 16px;
         border-top: 1px solid #e5e7eb;
         font-size: 12px;
         color: #9ca3af;
+        text-align: center;
+        line-height: 1.5;
       }
 
-      .company-logo {
-        max-width: 80px;
-        max-height: 80px;
-        width: auto;
-        height: auto;
-        border-radius: 50%;
-        object-fit: contain;
-        background: white;
-        padding: 4px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e5e7eb;
+      body.loading .container {
+        opacity: 0;
       }
 
-      .icon-container {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
+      .container {
+        opacity: 1;
+        transition: opacity 0.2s ease-in;
       }
 
       @media (max-width: 480px) {
         .container {
-          padding: 30px 20px;
+          padding: 28px 18px;
         }
 
         h1 {
-          font-size: 24px;
+          font-size: 22px;
         }
 
-        .subtitle {
-          font-size: 16px;
-        }
-
-        .actions {
+        .actions-secondary {
           flex-direction: column;
         }
 
-        .btn {
+        .btn-secondary {
           width: 100%;
         }
-
       }
-
-      /* Anti-flicker: Hide content until fully loaded */
-      body.loading .container {
-          opacity: 0;
-      }
-
-      .container {
-          opacity: 1;
-          transition: opacity 0.2s ease-in;
-      }
-
-      .footer {
-          margin-top: 40px;
-          padding-top: 20px;
-          border-top: 1px solid #e5e7eb;
-          font-size: 12px;
-          color: #9ca3af;
-      }
-
     </style>
   </head>
   <body class="loading">
     <div class="container">
       <div class="icon-container">
-        <img id="customLogo" class="company-logo" style="display: none; max-width: 80px; max-height: 80px; border-radius: 50%; object-fit: contain;" alt="Bedrijfslogo">
-        <div id="defaultIcon" class="icon material-icons">security</div>
+        <img
+          id="customLogo"
+          class="company-logo"
+          style="display: none"
+          alt="Bedrijfslogo"
+        />
+        <div id="defaultIcon" class="icon material-icons">shield</div>
       </div>
 
-      <h1>Toegang geblokkeerd</h1>
-      <p class="subtitle">
-        Deze website is geblokkeerd door Bruinsma Protect
+      <h1 id="pageTitle">We hebben een verdachte inlogpagina gestopt</h1>
+      <p class="subtitle" id="pageSubtitle">
+        Bruinsma Protect beschermt jouw Microsoft 365-gegevens. Log hier niet
+        in.
       </p>
 
+      <div class="coach">
+        <div class="coach-title">Wat kun je nu het beste doen?</div>
+        <ol class="coach-steps">
+          <li>
+            <span class="step-num">1</span>
+            <span>Vul hier geen wachtwoord of code in.</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span
+              >Ga via de knop hieronder naar de echte Microsoft
+              365-omgeving.</span
+            >
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span
+              >Twijfel je of was dit via een mail/link? Neem contact op met
+              Bruinsma.</span
+            >
+          </li>
+        </ol>
+      </div>
+
       <div class="reason">
-        <div class="reason-title">Reden voor blokkering:</div>
+        <div class="reason-title">Waarom is dit gestopt?</div>
         <div class="reason-text" id="blockReason">
-          Deze website lijkt te proberen jouw inloggegevens te stelen door zich voor te doen als een valide login pagina.
-          Om te voorkomen dat je inlogt, is de toegang geblokkeerd.
+          Deze pagina lijkt Microsoft 365 na te bootsen om jouw inloggegevens te
+          stelen. Bruinsma Protect heeft de toegang geblokkeerd om jouw
+          organisatie te beschermen.
         </div>
       </div>
 
+      <div class="tip" id="awarenessTip">
+        <span class="tip-label">Tip van Bruinsma</span>
+        <span id="awarenessTipText"
+          >Typ office.com zelf in de adresbalk in plaats van op een link in een
+          mail te klikken.</span
+        >
+      </div>
+
       <div class="actions">
-        <button class="btn btn-primary" id="goBackBtn">Terug</button>
-        <button class="btn btn-secondary" id="contactAdminBtn">
-          Contact met Bruinsma
+        <button class="btn btn-primary" id="safeStartBtn">
+          Ga naar echte Microsoft 365
         </button>
-        <button class="btn btn-secondary" id="reportFalsePositiveBtn" style="display: none;">
-          Vals alarm melden
-        </button>
+        <div class="actions-secondary">
+          <button class="btn btn-secondary" id="goBackBtn">Terug</button>
+          <button class="btn btn-secondary" id="contactAdminBtn">
+            Contact met Bruinsma
+          </button>
+          <button class="btn btn-secondary" id="reportFalsePositiveBtn">
+            Was dit een fout?
+          </button>
+        </div>
       </div>
 
       <div class="details">
@@ -383,9 +514,14 @@
           </div>
 
           <div class="tech-section" id="phishingIndicatorsSection">
-            <div class="tech-section-title">Gedetecteerde phishingindicatoren</div>
-            <div id="techPhishingIndicators" style="font-size: 12px; color: #6b7280;">
-              <div style="font-style: italic; color: #9ca3af;">Laden...</div>
+            <div class="tech-section-title">
+              Gedetecteerde phishingindicatoren
+            </div>
+            <div
+              id="techPhishingIndicators"
+              style="font-size: 12px; color: #6b7280"
+            >
+              <div style="font-style: italic; color: #9ca3af">Laden...</div>
             </div>
           </div>
 
@@ -397,7 +533,11 @@
             </div>
             <div class="tech-item">
               <span>User-agent:</span>
-              <span id="techUserAgent" style="font-size: 11px; word-break: break-all;">--</span>
+              <span
+                id="techUserAgent"
+                style="font-size: 11px; word-break: break-all"
+                >--</span
+              >
             </div>
             <div class="tech-item">
               <span>Tijdstip:</span>
@@ -409,10 +549,11 @@
 
       <div class="footer">
         <div id="companyBranding">
-          Beschermd door <strong id="companyName">Bruinsma Kantoor & ICT</strong>
+          Beschermd door <strong id="companyName">Bruinsma</strong>
         </div>
         <div style="margin-top: 8px">
-          Deze extensie is met grote zorgvuldigheid samengesteld. Het analyseert het patroon van een pagina en blokkeert zodra deze pagina zich voordoet als een Microsoft login pagina. Heb je er vragen over? Neem contact op met Bruinsma op 0523-272121
+          Vragen? Bel Bruinsma op 0523-272121 of mail
+          info@bruinsmakantoor.nl
         </div>
       </div>
     </div>

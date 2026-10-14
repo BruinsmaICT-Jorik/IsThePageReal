@@ -6,6 +6,7 @@ export class WebhookManager {
     this.webhookTypes = {
       DETECTION_ALERT: "detection_alert",
       FALSE_POSITIVE: "false_positive_report",
+      USER_SUSPICIOUS: "user_suspicious_report",
       PAGE_BLOCKED: "page_blocked",
       ROGUE_APP: "rogue_app_detected",
       THREAT_DETECTED: "threat_detected",
@@ -22,9 +23,10 @@ export class WebhookManager {
 
     const webhooks = [];
 
-    // Check CIPP webhook
+    // Check CIPP webhook (automated detections + user suspicious reports)
     if (
-      webhookType === this.webhookTypes.DETECTION_ALERT &&
+      (webhookType === this.webhookTypes.DETECTION_ALERT ||
+        webhookType === this.webhookTypes.USER_SUSPICIOUS) &&
       config.enableCippReporting
     ) {
       webhooks.push({
@@ -42,7 +44,13 @@ export class WebhookManager {
     const genericWebhook = config.genericWebhook;
     if (genericWebhook && genericWebhook.enabled && genericWebhook.url) {
       const events = genericWebhook.events || [];
-      if (events.includes(webhookType)) {
+      // User suspicious reports also match threat_detected / detection_alert subscriptions
+      const matches =
+        events.includes(webhookType) ||
+        (webhookType === this.webhookTypes.USER_SUSPICIOUS &&
+          (events.includes("detection_alert") ||
+            events.includes("threat_detected")));
+      if (matches) {
         webhooks.push({
           url: genericWebhook.url,
           enabled: true,
@@ -71,6 +79,9 @@ export class WebhookManager {
         break;
       case this.webhookTypes.FALSE_POSITIVE:
         basePayload.data = this.buildFalsePositivePayload(data);
+        break;
+      case this.webhookTypes.USER_SUSPICIOUS:
+        basePayload.data = this.buildUserSuspiciousPayload(data);
         break;
       case this.webhookTypes.PAGE_BLOCKED:
         basePayload.data = this.buildPageBlockedPayload(data);
@@ -168,19 +179,44 @@ export class WebhookManager {
 
   buildFalsePositivePayload(data) {
     return {
-      url: data.blockedUrl || data.url,
+      url: data.blockedUrl || data.url || data.reportedUrl,
       severity: "info",
-      reason: data.blockReason || data.reason || "User reported false positive",
+      reason:
+        data.blockReason ||
+        data.reportedReason ||
+        data.reason ||
+        "Gebruiker meldt mogelijk vals alarm",
       reportTimestamp: data.timestamp || new Date().toISOString(),
       userAgent: data.userAgent || null,
       browserInfo: data.browserInfo || {},
       screenResolution: data.screenResolution || {},
       detectionDetails: data.detectionDetails || {},
-      userComments: data.comments || null,
+      userComments: data.comments || data.userComments || null,
       context: {
         referrer: null,
         pageTitle: null,
         domain: null,
+      },
+    };
+  }
+
+  buildUserSuspiciousPayload(data) {
+    return {
+      url: data.url || data.reportedUrl,
+      severity: "high",
+      reason:
+        data.reason ||
+        data.reportedReason ||
+        "Gebruiker meldt verdachte pagina",
+      reportTimestamp: data.timestamp || new Date().toISOString(),
+      userAgent: data.userAgent || navigator?.userAgent || null,
+      category: "user_report",
+      detectionMethod: "user_report",
+      userComments: data.comments || data.userComments || null,
+      context: {
+        referrer: data.referrer || null,
+        pageTitle: data.pageTitle || null,
+        domain: data.domain || null,
       },
     };
   }

@@ -34,9 +34,21 @@
 
       <!-- Main Content -->
       <main class="popup-main">
-        <!-- Quick Actions -->
-        <section class="quick-actions" style="display: none;">
+        <!-- Quick Actions: veilige gids + melden -->
+        <section class="quick-actions" id="quickActions">
           <div class="action-grid">
+            <button class="action-btn primary" id="openSafeM365" type="button">
+              <span class="material-icons btn-icon">verified_user</span>
+              <span class="btn-text">Ga naar echte Microsoft 365</span>
+            </button>
+            <button
+              class="action-btn secondary"
+              id="reportSuspicious"
+              type="button"
+            >
+              <span class="material-icons btn-icon">report</span>
+              <span class="btn-text">Dit lijkt verdacht</span>
+            </button>
           </div>
         </section>
 
@@ -48,6 +60,15 @@
         >
           <div class="blocked-text">Deze site is geblokkeerd:</div>
           <div class="blocked-url" id="blockedUrl"></div>
+          <button
+            class="action-btn primary"
+            id="openSafeM365FromBlocked"
+            type="button"
+            style="margin-top: 12px; width: 100%"
+          >
+            <span class="material-icons btn-icon">verified_user</span>
+            <span class="btn-text">Ga naar echte Microsoft 365</span>
+          </button>
         </section>
 
         <!-- Current Page Info -->

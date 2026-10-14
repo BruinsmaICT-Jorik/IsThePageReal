@@ -6,6 +6,16 @@
 // Store detection details globally for false positive reporting
 let globalDetectionDetails = null;
 let webhookConfig = null;
+let safeStartUrl = "https://www.office.com";
+let supportEmail = "info@bruinsmakantoor.nl";
+
+const AWARENESS_TIPS = [
+  "Typ office.com zelf in de adresbalk in plaats van op een link in een mail te klikken.",
+  "Echte Microsoft-inlog staat op microsoftonline.com of office.com — niet op een rare of net-niet-juiste website.",
+  "Vraagt iemand onverwacht om opnieuw in te loggen? Even checken via Bruinsma of je IT-contact.",
+  "Deel nooit een eenmalige code of wachtwoord via mail, chat of telefoon als jij het gesprek niet bent begonnen.",
+  "Twijfel je over een link? Open Microsoft 365 via de knop hierboven — niet via de verdachte pagina.",
+];
 
 // Parse URL parameters to get block details with enhanced defanging
 function parseUrlParams() {
@@ -53,11 +63,11 @@ function parseUrlParams() {
 
       // Update threat category based on type or rule description
       if (details.type === "domain_squatting") {
-        document.getElementById("threatCategory").textContent = "Domain Squatting";
-        // Custom messaging for domain squatting
+        document.getElementById("threatCategory").textContent =
+          "Verdacht lookalike-domein";
         if (details.protectedDomain) {
-          document.getElementById("blockReason").textContent = 
-            `This website's domain closely resembles "${details.protectedDomain}" but is NOT the legitimate site. Entering your credentials here could compromise your account.`;
+          document.getElementById("blockReason").textContent =
+            `Dit webadres lijkt sterk op “${details.protectedDomain}”, maar is níet de echte site. Inloggen hier kan je account in gevaar brengen.`;
         }
       } else if (details.ruleDescription) {
         document.getElementById("threatCategory").textContent =
@@ -136,79 +146,98 @@ function goBack() {
   }
 }
 
-async function reportFalsePositive() {
-  console.log("reportFalsePositive function called");
-  
-  const reportBtn = document.getElementById("reportFalsePositiveBtn");
-  
-  if (!webhookConfig || !webhookConfig.url) {
-    console.error("No webhook configured");
+function openSafeStart() {
+  const url = safeStartUrl || "https://www.office.com";
+  try {
+    window.location.href = url;
+  } catch (error) {
+    console.error("Failed to open safe start URL:", error);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+}
+
+function pickAwarenessTip() {
+  const tipEl = document.getElementById("awarenessTipText");
+  if (!tipEl || !AWARENESS_TIPS.length) {
     return;
   }
-  
+  const index = Math.floor(Math.random() * AWARENESS_TIPS.length);
+  tipEl.textContent = AWARENESS_TIPS[index];
+}
+
+function getOriginalBlockedUrl() {
+  if (globalDetectionDetails?.url) {
+    return globalDetectionDetails.url;
+  }
+  const shown = document.getElementById("blockedUrl")?.textContent || "";
+  return shown.replace(/\[:\]/g, ":");
+}
+
+async function reportFalsePositive() {
+  const reportBtn = document.getElementById("reportFalsePositiveBtn");
+  if (!reportBtn) {
+    return;
+  }
+
   try {
     reportBtn.disabled = true;
-    reportBtn.textContent = "Sending...";
-    reportBtn.style.background = "#6b7280";
-    reportBtn.style.color = "white";
-    
-    const payload = {
-      version: "1.0",
-      type: "false_positive_report",
-      timestamp: new Date().toISOString(),
-      source: "Bruinsma Protect",
-      extensionVersion: chrome.runtime.getManifest().version,
-      data: {
-        reportedUrl: document.getElementById("blockedUrl").textContent,
-        reportedReason: document.getElementById("blockReason").textContent,
-        reportTimestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        browserInfo: {
-          platform: navigator.platform,
-          language: navigator.language,
-          vendor: navigator.vendor,
-          cookiesEnabled: navigator.cookieEnabled,
-          onLine: navigator.onLine
-        },
-        screenResolution: {
-          width: window.screen.width,
-          height: window.screen.height,
-          availWidth: window.screen.availWidth,
-          availHeight: window.screen.availHeight,
-          colorDepth: window.screen.colorDepth
-        },
-        detectionDetails: globalDetectionDetails || {},
-        userComments: null
-      }
+    reportBtn.textContent = "Bezig met melden...";
+
+    const reportData = {
+      reportedUrl: getOriginalBlockedUrl(),
+      reportedReason: document.getElementById("blockReason")?.textContent || "",
+      detectionDetails: globalDetectionDetails || {},
+      userComments: null,
     };
-    
-    console.log("Sending false positive report to:", webhookConfig.url);
-    console.log("Report payload:", payload);
-    
-    const response = await fetch(webhookConfig.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Webhook-Type": "false_positive_report",
-        "X-Webhook-Version": "1.0"
-      },
-      body: JSON.stringify(payload)
+
+    const response = await new Promise((resolve) => {
+      if (typeof chrome === "undefined" || !chrome.runtime?.sendMessage) {
+        resolve({ success: false, error: "Extensie niet beschikbaar" });
+        return;
+      }
+      chrome.runtime.sendMessage(
+        {
+          type: "SUBMIT_USER_REPORT",
+          reportType: "false_positive_report",
+          data: reportData,
+        },
+        (result) => {
+          if (chrome.runtime.lastError) {
+            resolve({
+              success: false,
+              error: chrome.runtime.lastError.message,
+            });
+            return;
+          }
+          resolve(result || { success: false, error: "Geen antwoord" });
+        }
+      );
     });
-    
-    if (response.ok) {
-      console.log("False positive report sent successfully");
-      reportBtn.textContent = "Report Sent Successfully";
+
+    if (response?.success) {
+      reportBtn.textContent = "Bedankt — melding verstuurd";
       reportBtn.style.background = "#16a34a";
       reportBtn.style.color = "white";
-    } else {
-      console.warn("False positive report failed with HTTP status:", response.status, response.statusText);
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      reportBtn.style.borderColor = "#16a34a";
+      return;
     }
+
+    // Fallback: open mail to Bruinsma support
+    const subject = encodeURIComponent(
+      "Bruinsma Protect — mogelijk vals alarm"
+    );
+    const body = encodeURIComponent(
+      `Hallo Bruinsma,\n\nIk denk dat Bruinsma Protect een veilige pagina heeft geblokkeerd.\n\nURL: ${reportData.reportedUrl}\nReden: ${reportData.reportedReason}\n\nMet vriendelijke groet`
+    );
+    window.location.href = `mailto:${supportEmail}?subject=${subject}&body=${body}`;
+    reportBtn.textContent = "Mail naar Bruinsma geopend";
+    reportBtn.disabled = false;
   } catch (error) {
     console.error("Failed to send false positive report:", error);
-    reportBtn.textContent = `Failed: ${error.message}`;
+    reportBtn.textContent = "Melden mislukt — bel Bruinsma";
     reportBtn.style.background = "#dc2626";
     reportBtn.style.color = "white";
+    reportBtn.disabled = false;
   }
 }
 
@@ -226,9 +255,7 @@ function contactAdmin() {
               "Failed to get branding from background:",
               chrome.runtime.lastError.message
             );
-            alert(
-              "No support contact information has been configured by your administrator."
-            );
+            openMailto(supportEmail);
             return;
           }
 
@@ -245,23 +272,17 @@ function contactAdmin() {
             openMailto(response.branding.supportEmail);
           } else {
             console.log("No branded support email available");
-            alert(
-              "No support contact information has been configured by your administrator."
-            );
+            openMailto(supportEmail);
           }
         }
       );
     } else {
-      console.log("Chrome runtime not available, no support contact available");
-      alert(
-        "No support contact information has been configured by your administrator."
-      );
+      console.log("Chrome runtime not available, using default support email");
+      openMailto(supportEmail);
     }
   } catch (error) {
     console.error("Error accessing branding config:", error);
-    alert(
-      "No support contact information has been configured by your administrator."
-    );
+    openMailto(supportEmail);
   }
 }
 
@@ -513,14 +534,29 @@ async function loadBranding() {
         storageResult.companyName || storageResult.productName || "Bruinsma Protect";
       console.log("Setting company name from background to:", companyName);
       document.getElementById("companyName").textContent = companyName;
-      document.title = `Bruinsma blokkeert de toegang tot deze pagina`;
+      document.title =
+        "Bruinsma Protect — verdachte inlogpagina gestopt";
 
-      // Update product name if available
-      if (storageResult.productName) {
-        console.log("Setting product name:", storageResult.productName);
-        document.querySelector(
-          "h1"
-        ).textContent = `Access Blocked by ${storageResult.productName}`;
+      const features = storageResult.features || {};
+      const pageTitle = document.getElementById("pageTitle");
+      if (pageTitle) {
+        pageTitle.textContent =
+          features.blockedPageTitle ||
+          "We hebben een verdachte inlogpagina gestopt";
+      }
+      const pageSubtitle = document.getElementById("pageSubtitle");
+      if (pageSubtitle && features.blockedPageMessage) {
+        pageSubtitle.textContent = features.blockedPageMessage;
+      }
+      if (features.safeStartUrl) {
+        safeStartUrl = features.safeStartUrl;
+      }
+      if (storageResult.supportEmail) {
+        supportEmail = storageResult.supportEmail;
+      }
+      const safeStartBtn = document.getElementById("safeStartBtn");
+      if (safeStartBtn && features.safeStartLabel) {
+        safeStartBtn.textContent = features.safeStartLabel;
       }
 
       // Handle logo display - use custom logo or default branding
@@ -599,37 +635,18 @@ async function loadBranding() {
         document.head.appendChild(style);
       }
 
-      // Check if support email is available and hide/show contact button accordingly
+      // Contact + "was dit een fout?" blijven altijd beschikbaar (MSP-moment)
       const contactBtn = document.getElementById("contactAdminBtn");
-      if (storageResult.supportEmail && storageResult.supportEmail.trim()) {
-        console.log("Support email available, showing contact button");
-        if (contactBtn) {
-          contactBtn.style.display = "inline-block";
-        }
-      } else {
-        console.log("No support email available, hiding contact button");
-        if (contactBtn) {
-          contactBtn.style.display = "none";
-        }
+      if (contactBtn) {
+        contactBtn.style.display = "inline-block";
       }
-      
-      // Check if false positive webhook is configured and show button accordingly
       const falsePositiveBtn = document.getElementById("reportFalsePositiveBtn");
+      if (falsePositiveBtn) {
+        falsePositiveBtn.style.display = "inline-block";
+      }
       const genericWebhook = storageResult.genericWebhook;
       if (genericWebhook && genericWebhook.enabled && genericWebhook.url) {
-        const events = genericWebhook.events || [];
-        if (events.includes("false_positive_report")) {
-          console.log("False positive webhook configured, showing report button");
-          webhookConfig = { url: genericWebhook.url };
-          if (falsePositiveBtn) {
-            falsePositiveBtn.style.display = "inline-block";
-          }
-          return;
-        }
-      }
-      console.log("No false positive webhook configured, hiding report button");
-      if (falsePositiveBtn) {
-        falsePositiveBtn.style.display = "none";
+        webhookConfig = { url: genericWebhook.url };
       }
 
       return; // Exit early if we loaded from background script
@@ -662,22 +679,29 @@ async function loadBranding() {
   if (!currentCompanyName || currentCompanyName.trim() === "") {
     console.log("No company name set, using final fallback");
     document.getElementById("companyName").textContent = "Bruinsma";
-    document.title = "Access Blocked - Check";
+    document.title = "Bruinsma Protect — verdachte inlogpagina gestopt";
   }
 
-  // Hide contact button by default if no background config was loaded
-  const contactBtn = document.getElementById("contactAdminBtn");
-  if (
-    contactBtn &&
-    (!brandingResult ||
-      !brandingResult.success ||
-      !brandingResult.branding ||
-      !brandingResult.branding.supportEmail)
-  ) {
-    console.log(
-      "No branded config loaded or no support email, hiding contact button"
-    );
-    contactBtn.style.display = "none";
+  // Also load runtime safeStartUrl from merged config
+  try {
+    const configResult = await new Promise((resolve) => {
+      if (typeof chrome === "undefined" || !chrome.runtime?.sendMessage) {
+        resolve(null);
+        return;
+      }
+      chrome.runtime.sendMessage({ type: "GET_CONFIG" }, (response) => {
+        if (chrome.runtime.lastError) {
+          resolve(null);
+          return;
+        }
+        resolve(response);
+      });
+    });
+    if (configResult?.success && configResult.config?.safeStartUrl) {
+      safeStartUrl = configResult.config.safeStartUrl;
+    }
+  } catch (configError) {
+    console.warn("Could not load safeStartUrl from config:", configError);
   }
 
   console.log(
@@ -691,6 +715,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded, initializing page");
 
   // Add event listeners for buttons (CSP compliant)
+  document.getElementById("safeStartBtn")?.addEventListener("click", openSafeStart);
   document.getElementById("goBackBtn").addEventListener("click", goBack);
   document
     .getElementById("contactAdminBtn")
@@ -698,6 +723,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("reportFalsePositiveBtn")
     .addEventListener("click", reportFalsePositive);
+
+  pickAwarenessTip();
 
   // Add technical details toggle listener
   const techDetailsHeader = document.querySelector(".technical-details-header");

@@ -34,6 +34,12 @@ class CheckPopup {
 
     // Action buttons
     this.elements.openSettings = document.getElementById("openSettings");
+    this.elements.openSafeM365 = document.getElementById("openSafeM365");
+    this.elements.reportSuspicious = document.getElementById("reportSuspicious");
+    this.elements.openSafeM365FromBlocked = document.getElementById(
+      "openSafeM365FromBlocked"
+    );
+    this.elements.quickActions = document.getElementById("quickActions");
 
     // Page info
     this.elements.pageInfoSection = document.getElementById("pageInfoSection");
@@ -131,6 +137,15 @@ class CheckPopup {
     // Action button listeners
     this.elements.openSettings.addEventListener("click", () =>
       this.openSettings()
+    );
+    this.elements.openSafeM365?.addEventListener("click", () =>
+      this.openSafeMicrosoft365()
+    );
+    this.elements.openSafeM365FromBlocked?.addEventListener("click", () =>
+      this.openSafeMicrosoft365()
+    );
+    this.elements.reportSuspicious?.addEventListener("click", () =>
+      this.reportSuspiciousPage()
     );
 
     // Footer link listeners
@@ -438,6 +453,19 @@ class CheckPopup {
     // Update company name
     this.elements.companyName.textContent =
       this.brandingConfig.companyName || "Bruinsma";
+
+    const features = this.brandingConfig.features || {};
+    const safeLabel =
+      features.safeStartLabel || "Ga naar echte Microsoft 365";
+    for (const btn of [
+      this.elements.openSafeM365,
+      this.elements.openSafeM365FromBlocked,
+    ]) {
+      const textEl = btn?.querySelector(".btn-text");
+      if (textEl) {
+        textEl.textContent = safeLabel;
+      }
+    }
 
     // Update link URLs with fallbacks
     if (this.brandingConfig.supportUrl) {
@@ -1077,6 +1105,106 @@ class CheckPopup {
       );
     } catch (error) {
       console.error("Check: Failed to open settings:", error);
+    }
+  }
+
+  getSafeStartUrl() {
+    const fromConfig = this.config?.safeStartUrl;
+    const fromBranding = this.brandingConfig?.features?.safeStartUrl;
+    return fromConfig || fromBranding || "https://www.office.com";
+  }
+
+  openSafeMicrosoft365() {
+    const url = this.getSafeStartUrl();
+    try {
+      chrome.tabs.create({ url }, () => {
+        if (chrome.runtime.lastError) {
+          this.showNotification(
+            "Kon Microsoft 365 niet openen: " + chrome.runtime.lastError.message,
+            "error"
+          );
+          return;
+        }
+        window.close();
+      });
+    } catch (error) {
+      this.showNotification(
+        "Kon Microsoft 365 niet openen: " + error.message,
+        "error"
+      );
+    }
+  }
+
+  async reportSuspiciousPage() {
+    if (!this.currentTab?.url) {
+      this.showNotification("Geen actieve pagina om te melden", "warning");
+      return;
+    }
+
+    const url = this.currentTab.url;
+    if (
+      url.startsWith("chrome://") ||
+      url.startsWith("edge://") ||
+      url.startsWith("about:") ||
+      url.startsWith("chrome-extension://")
+    ) {
+      this.showNotification(
+        "Deze browserpagina kan niet als verdacht worden gemeld",
+        "warning"
+      );
+      return;
+    }
+
+    try {
+      this.showNotification("Melding versturen...", "info");
+      let domain = null;
+      try {
+        domain = new URL(url).hostname;
+      } catch (_) {
+        domain = null;
+      }
+
+      const response = await new Promise((resolve) => {
+        chrome.runtime.sendMessage(
+          {
+            type: "SUBMIT_USER_REPORT",
+            reportType: "user_suspicious_report",
+            data: {
+              reportedUrl: url,
+              url,
+              reportedReason: "Gebruiker meldt: dit lijkt verdacht",
+              pageTitle: this.currentTab.title || null,
+              domain,
+            },
+          },
+          (result) => {
+            if (chrome.runtime.lastError) {
+              resolve({
+                success: false,
+                error: chrome.runtime.lastError.message,
+              });
+              return;
+            }
+            resolve(result || { success: false, error: "Geen antwoord" });
+          }
+        );
+      });
+
+      if (response?.success) {
+        this.showNotification(
+          response.delivered
+            ? "Bedankt — melding is verstuurd naar Bruinsma"
+            : "Bedankt — melding is vastgelegd",
+          "success"
+        );
+      } else {
+        this.showNotification(
+          "Melden mislukt: " + (response?.error || "onbekende fout"),
+          "error"
+        );
+      }
+    } catch (error) {
+      this.showNotification("Melden mislukt: " + error.message, "error");
     }
   }
 
