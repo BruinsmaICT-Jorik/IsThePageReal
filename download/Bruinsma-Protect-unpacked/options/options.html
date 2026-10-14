@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruinsma Protect - Instellingen</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="options-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="../images/icon48.png" alt="Bruinsma Protect-logo" class="sidebar-logo" id="sidebarLogo">
+                            <div class="sidebar-title">
+                <h2 id="sidebarTitle">Bruinsma Protect</h2>
+            </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#general" class="menu-item active" data-section="general">
+                    <span class="menu-icon material-icons">settings</span>
+                    <span class="menu-text">Algemeen</span>
+                </a></li>
+                <li><a href="#detection" class="menu-item" data-section="detection">
+                    <span class="menu-icon material-icons">search</span>
+                    <span class="menu-text">Detectieregels</span>
+                </a></li>
+                <li><a href="#logs" class="menu-item" data-section="logs">
+                    <span class="menu-icon material-icons">assignment</span>
+                    <span class="menu-text">Activiteitenlogboek</span>
+                </a></li>
+                <li><a href="#branding" class="menu-item" data-section="branding">
+                    <span class="menu-icon material-icons">palette</span>
+                    <span class="menu-text">Branding</span>
+                </a></li>
+                <li><a href="#about" class="menu-item" data-section="about">
+                    <span class="menu-icon material-icons">info</span>
+                    <span class="menu-text">Over</span>
+                </a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-mobile-toggle">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Navigatiemenu openen">
+                        <span class="material-icons">menu</span>
+                    </button>
+                    <div class="header-mobile-logo">
+                        <img src="../images/icon48.png" alt="Bruinsma Protect-logo" class="mobile-logo" id="mobileLogo">
+                        <span class="mobile-logo-text" id="mobileLogoText">Bruinsma Protect</span>
+                    </div>
+                </div>
+                <div class="header-title-section">
+                    <h1 id="pageTitle">Algemene instellingen</h1>
+                    <p class="header-subtitle" id="pageSubtitle">Stel het gedrag van phishingbescherming en detectiefuncties in</p>
+                    <div class="policy-badge" id="policyBadge" style="display: none;">
+                        <span class="material-icons">business</span>
+                        <span class="badge-text">Beheerd via beleid</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="darkModeToggle" title="Donkere modus aan/uit">
+                        <span class="material-icons" id="darkModeIcon">dark_mode</span>
+                    </button>
+                    <button class="btn btn-primary" id="saveSettings">Instellingen opslaan</button>
+                </div>
+            </header>
+
+            <!-- Mobile Title Section -->
+            <div class="mobile-title-section">
+                <h1 id="mobileTitleText">Algemene instellingen</h1>
+                <p class="header-subtitle" id="mobileSubtitleText">Stel het gedrag van phishingbescherming en detectiefuncties in</p>
+            </div>
+
+            <!-- General Section -->
+            <section id="general-section" class="settings-section active">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>Extensie-instellingen</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="enablePageBlocking" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Paginablokkering inschakelen
+                            </label>
+                            <p class="setting-description">Blokkeer toegang tot gedetecteerde phishingpagina's</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="forceMainThreadPhishingProcessing" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Phishingdetectie forceren op hoofdthread
+                            </label>
+                            <p class="setting-description">Voor debugging: schakelt de achtergrondworker uit en voert phishingdetectie uit op de hoofdthread (logs zijn nauwkeuriger, prestaties kunnen lager zijn).</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="enableCippReporting" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                CIPP-rapportage inschakelen
+                            </label>
+                            <p class="setting-description">Stuur detectiegebeurtenissen naar een CIPP-server voor monitoring</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                CIPP-server-URL
+                                <input type="url" id="cippServerUrl" class="setting-input" placeholder="https://jouw-cipp-server.nl">
+                            </label>
+                            <p class="setting-description">URL van je CIPP-server voor rapportage van Microsoft 365-inlogdetecties</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Tenant-ID/domein
+                                <input type="text" id="cippTenantId" class="setting-input" placeholder="contoso.onmicrosoft.com of tenant-guid">
+                            </label>
+                            <p class="setting-description">Tenant-identificatie voor CIPP-meldingen in multi-tenant omgevingen</p>
+                        </div>
+
+                        <div class="setting-item" id="cippTestSettingItem" style="margin-top: 16px; padding: 16px; border: 1px solid var(--theme-border, #e5e7eb); border-radius: 8px; background: var(--theme-bg-secondary, #f9fafb);">
+                            <h4 style="margin: 0 0 8px 0;">CIPP-koppeling testen</h4>
+                            <p class="setting-description" style="margin-bottom: 12px;">Stuurt een dummy phishingmelding naar <code>/api/PublicPhishingCheck</code> met de CIPP-URL en tenant hierboven. Opslaan is niet nodig.</p>
+                            <div class="setting-actions">
+                                <button class="btn btn-primary" id="testCippReport" type="button">
+                                    <span class="material-icons">send</span>
+                                    CIPP-test versturen
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Generieke webhook</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="genericWebhookEnabled" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Generieke webhook inschakelen
+                            </label>
+                            <p class="setting-description">Stuur gebeurtenissen naar een eigen webhook-endpoint</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Webhook-URL
+                                <input type="url" id="genericWebhookUrl" class="setting-input" placeholder="https://webhook.voorbeeld.nl/endpoint">
+                            </label>
+                            <p class="setting-description">URL die de webhook-payloads ontvangt</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Te versturen gebeurtenistypen</label>
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_detection_alert" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Detectiemeldingen
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_false_positive_report" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Vals-positief-meldingen
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_page_blocked" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Pagina geblokkeerd
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_rogue_app_detected" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Rogue app gedetecteerd
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_domain_squatting_detected" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Domeinsquatting gedetecteerd
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_threat_detected" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Dreiging gedetecteerd
+                                </label>
+                                <label class="setting-label">
+                                    <input type="checkbox" id="webhookEvent_validation_event" class="setting-checkbox">
+                                    <span class="checkbox-custom"></span>
+                                    Validatiegebeurtenissen
+                                </label>
+                            </div>
+                            <p class="setting-description">Selecteer welke gebeurtenistypen naar de webhook worden gestuurd</p>
+                        </div>
+
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Gebruikersinterface</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="showNotifications" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Meldingen tonen
+                            </label>
+                            <p class="setting-description">Toon beveiligingsmeldingen en waarschuwingen</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="enableValidPageBadge" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Badge voor geldige pagina tonen
+                            </label>
+                            <p class="setting-description">Toon een verificatiebadge op legitieme Microsoft 365-inlogpagina's</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Time-out geldige-pagina-badge (seconden)
+                                <input type="number" id="validPageBadgeTimeout" class="setting-input" min="0" max="300" step="1" value="5" required>
+                            </label>
+                            <p class="setting-description">Automatische verdwijntijd van de badge in seconden. Zet op 0 voor geen time-out (badge blijft zichtbaar tot handmatig sluiten).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Detection Section -->
+            <section id="detection-section" class="settings-section">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>Detectieconfiguratie</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Configuratie-URL
+                                <input type="url" id="customRulesUrl" class="setting-input" placeholder="https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json">
+                            </label>
+                            <p class="setting-description">URL om detectieconfiguratie op te halen (laat leeg voor standaard)</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Update-interval (uren)
+                                <input type="number" id="updateInterval" class="setting-input" min="1" max="168" value="24">
+                            </label>
+                            <p class="setting-description">Hoe vaak detectieregels worden bijgewerkt</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                URL-allowlist (regex of URL met wildcards)
+                                <textarea id="urlAllowlist" class="setting-textarea" rows="6" placeholder="Voer URL's of regex-patronen in, één per regel:&#10;&#10;Eenvoudige URL's met wildcards:&#10;https://google.com/*&#10;https://*.microsoft.com/*&#10;&#10;Geavanceerde regex-patronen:&#10;^https://trusted\.example\.com/.*"></textarea>
+            </label>
+                            <p class="setting-description">Voeg URL's of regex-patronen toe die van detectie worden uitgesloten. Gebruik eenvoudige URL's met * (bijv. https://google.com/*) of geavanceerde regex. Deze worden toegevoegd aan de uitsluitingsregels zonder de hele ruleset te vervangen. <strong>Deze allowlist beschermt de geëxtraheerde domeinen ook tegen typosquatting, homoglyphs en andere domeinsquatting.</strong></p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="domainSquattingEnabled" class="setting-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Domeinsquattingdetectie inschakelen
+                            </label>
+                            <p class="setting-description">Schakel typosquatting-, homoglyph- en combosquattingdetectie in of uit. Beschermde domeinen komen uit detectieregels en je URL-allowlist.</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-actions">
+                                <button class="btn btn-secondary" id="refreshDetectionRules">
+                                    <span class="material-icons">refresh</span>
+                                    Regels nu bijwerken
+                                </button>
+                            </div>
+                            <p class="setting-description">Werk detectieregels handmatig bij vanaf de externe bron</p>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="config-header">
+                            <h3>Configuratie-overzicht</h3>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-secondary small" id="expandCollapseAll">
+                                    <span class="material-icons">unfold_more</span>
+                                    Alles uitklappen
+                                </button>
+                                <button class="btn btn-secondary small" id="toggleConfigView">
+                                    <span class="material-icons">code</span>
+                                    Ruwe JSON tonen
+                                </button>
+                            </div>
+                        </div>
+                        <div id="configDisplay" class="config-display">
+                            <div class="config-loading">Configuratie laden...</div>
+                            <div id="configSummary" class="config-summary" style="display:none;">
+                                <h4>Phishingindicatoren met codegestuurde logica</h4>
+                                <div id="codeDrivenIndicators"></div>
+                                <h4>Overige belangrijke instellingen</h4>
+                                <ul id="configKeySettings"></ul>
+                            </div>
+                        </div>
+                        <p class="setting-description">Alleen-lezen weergave van de huidige detectieregels en configuratie</p>
+                    </div>
+
+                    <div class="setting-group" id="rulePlaygroundGroup">
+                        <div class="config-header">
+                            <h3>Regel-playground (bèta)</h3>
+                            <button class="btn btn-secondary small" id="loadCurrentRulesBtn" title="Huidige regels in editor laden">
+                                <span class="material-icons">download</span>
+                                Huidige laden
+                            </button>
+                        </div>
+                        <p class="setting-description">Prototypeer en test detectieregels lokaal. Wijzigingen worden NIET opgeslagen tenzij je het regelsbestand handmatig bijwerkt.</p>
+                        <div class="playground-grid">
+                            <div class="playground-column">
+                                <label class="setting-label stacked-label">Kandidaatregels JSON
+                                    <textarea id="playgroundRulesInput" class="playground-textarea" data-playground-input="true" spellcheck="false" placeholder="Plak een regelobject of een array / gedeelte van detection-rules.json..."></textarea>
+                                </label>
+                                <div class="playground-inline-actions">
+                                    <button class="btn btn-secondary" id="validateRulesBtn"><span class="material-icons">check</span> Valideren</button>
+                                    <button class="btn btn-secondary" id="sanitizeRulesBtn"><span class="material-icons">cleaning_services</span> Opschonen</button>
+                                    <button class="btn btn-secondary" id="copyRulesBtn"><span class="material-icons">content_copy</span> Kopiëren</button>
+                                </div>
+                            </div>
+                            <div class="playground-column">
+                                <label class="setting-label">Test-URL
+                                    <input type="url" id="playgroundTestUrl" class="setting-input" data-playground-input="true" placeholder="https://voorbeeld.nl/phish" />
+                                </label>
+                                <label class="setting-label stacked-label"> Voorbeeld-HTML (geen live ophalen)
+                                    <textarea id="playgroundHtmlInput" class="playground-textarea small" data-playground-input="true" spellcheck="false" placeholder="Plak hier voorbeeld-HTML om een scan te simuleren..."></textarea>
+                                </label>
+                                <div class="playground-inline-actions">
+                                    <button class="btn btn-primary" id="runRuleTestBtn"><span class="material-icons">play_arrow</span> Regels testen</button>
+                                    <button class="btn btn-secondary" id="clearPlaygroundBtn"><span class="material-icons">clear</span> Wissen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="playground-results" id="playgroundResults" aria-live="polite">
+                            <div class="playground-placeholder">Nog geen test uitgevoerd. Plak regels en klik op Regels testen.</div>
+                        </div>
+                        <p class="setting-description">De playground gebruikt waar mogelijk dezelfde regelmatching als het contentscript. Sommige complexe regeltypen worden mogelijk niet volledig gesimuleerd.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section id="logs-section" class="settings-section">
+                <div class="logs-controls">
+                    <div class="logs-filters">
+                        <label class="setting-label">
+                            <input type="checkbox" id="enableDeveloperConsoleLogging" class="setting-checkbox">
+                            <span class="checkbox-custom"></span>
+                            Ontwikkelaarsmodus (debuglogging)
+                        </label>
+                        <label class="setting-label">
+                            <input type="checkbox" id="simulateEnterpriseMode" class="setting-checkbox">
+                            <span class="checkbox-custom"></span>
+                            Enterprise-beleid simuleren (alleen voor ontwikkelaars)
+                        </label>
+                        <select id="logFilter" class="setting-select" title="Filter activiteitenlogboek op type">
+                            <option value="all">Alle gebeurtenissen</option>
+                            <option value="security">Beveiligingsgebeurtenissen</option>
+                            <option value="url_access">URL-toegang</option>
+                            <option value="threat_detected">Gedetecteerde dreigingen</option>
+                            <option value="page_scanned">Paginascans</option>
+                            <option value="debug">Debuggebeurtenissen</option>
+                        </select>
+                        <button class="btn btn-primary" id="refreshLogs">Vernieuwen</button>
+                        <button class="btn btn-secondary" id="clearLogs">Logboek wissen</button>
+                        <button class="btn btn-secondary" id="exportLogs">Logboek exporteren</button>
+                    </div>
+                </div>
+
+                <div class="logs-container">
+                    <div class="logs-header">
+                        <div class="log-column-header timestamp">Tijdstip</div>
+                        <div class="log-column-header event-type">Gebeurtenistype</div>
+                        <div class="log-column-header url">URL/domein</div>
+                        <div class="log-column-header threat-level">Dreigingsniveau</div>
+                        <div class="log-column-header action">Actie</div>
+                        <div class="log-column-header details">Details</div>
+                        <div class="log-column-header expand"></div>
+                    </div>
+                    <div class="logs-list" id="logsList">
+                        <div class="log-entry">
+                            <div class="log-column timestamp">Laden...</div>
+                            <div class="log-column event-type">system</div>
+                            <div class="log-column url">-</div>
+                            <div class="log-column threat-level">-</div>
+                            <div class="log-column action">-</div>
+                            <div class="log-column details">Activiteitenlogboek laden...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Branding Section -->
+            <section id="branding-section" class="settings-section">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>Bedrijfsgegevens</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Bedrijfsnaam
+                                <input type="text" id="companyName" class="setting-input" placeholder="Jouw bedrijfsnaam">
+                            </label>
+                            <p class="setting-description">Bedrijfsnaam die in de extensie wordt getoond</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Productnaam
+                                <input type="text" id="productName" class="setting-input" placeholder="Aangepaste extensienaam">
+                            </label>
+                            <p class="setting-description">Aangepaste naam voor de extensie</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Support-e-mail
+                                <input type="email" id="supportEmail" class="setting-input" placeholder="info@bruinsmakantoor.nl">
+                            </label>
+                            <p class="setting-description">E-mailadres voor gebruikersondersteuning</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Support-URL
+                                <input type="url" id="supportUrl" class="setting-input" placeholder="https://bruinsmakantoor.nl/ict/">
+                            </label>
+                            <p class="setting-description">URL die wordt geopend via de knop Support in de popup</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Privacy-URL
+                                <input type="url" id="privacyPolicyUrl" class="setting-input" placeholder="https://bruinsmakantoor.nl/">
+                            </label>
+                            <p class="setting-description">URL die wordt geopend via de knop Privacy in de popup</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Over-URL
+                                <input type="url" id="aboutUrl" class="setting-input" placeholder="https://bruinsmakantoor.nl/ict/over-ons/">
+                            </label>
+                            <p class="setting-description">URL die wordt geopend via de knop Over (laat leeg voor de ingebouwde Over-pagina)</p>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Visuele aanpassing</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Primair kleur
+                                <input type="color" id="primaryColor" class="setting-color" value="#299DCF">
+                            </label>
+                            <p class="setting-description">Hoofdkleur van het thema van de extensie</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Logo-URL
+                                <input type="url" id="logoUrl" class="setting-input" placeholder="https://jouwbedrijf.nl/logo.png">
+                            </label>
+                            <p class="setting-description">URL naar jullie bedrijfslogo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="branding-preview">
+                    <h3>Voorbeeld</h3>
+                    <div class="preview-popup" id="brandingPreview">
+                        <div class="preview-header">
+                            <img src="../images/icon32.png" alt="Bruinsma Protect-logo" class="preview-logo" id="previewLogo">
+                            <span class="preview-title" id="previewTitle">Bruinsma Protect</span>
+                        </div>
+                        <div class="preview-content">
+                            <p>Zo ziet jullie branding eruit in de extensie-popup.</p>
+                            <button class="preview-button" id="previewButton">Voorbeeldknop</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about-section" class="settings-section">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <div class="about-split-container">
+                            <div class="about-left-panel">
+                                <h3>Over Bruinsma Protect</h3>
+                                <div class="cyberdrain-info">
+                                    <div class="company-logo">
+                                        <img src="../images/icon48.png" alt="Bruinsma Protect-logo" class="company-logo-img">
+                                    </div>
+                                    <div class="product-description">
+                                        <p><strong>Bruinsma Protect</strong> is de browserextensie van Bruinsma voor realtime bescherming tegen Microsoft 365-phishing. De extensie detecteert en blokkeert verdachte inlogpagina's voordat inloggegevens kunnen worden gestolen.</p>
+                                        <p>Organisaties kunnen de extensie centraal beheren via Edge/Intune-beleid, logging en optionele webhook- of CIPP-rapportage.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="about-divider"></div>
+
+                            <div class="about-right-panel">
+                                <h3>Door Bruinsma</h3>
+                                <div class="cyberdrain-info">
+                                    <div class="company-logo">
+                                        <img src="../images/bruinsma-light-square.svg" alt="Bruinsma" class="company-logo-img cyberdrain-shield-light">
+                                        <img src="../images/bruinsma-dark-square.svg" alt="Bruinsma" class="company-logo-img cyberdrain-shield-dark">
+                                    </div>
+                                    <div class="company-description">
+                                        <p><strong>Bruinsma</strong> is jouw partner voor fysieke en digitale werkomgevingen. Bruinsma ICT ondersteunt organisaties met Microsoft 365, cyberweerbaarheid en betrouwbaar ICT-beheer.</p>
+                                        <p>Gebaseerd op open-source Check (AGPL-3.0) van CyberDrain, uitgebracht als Bruinsma Protect voor klanten.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-section-spacer"></div>
+
+                        <div class="links-grid">
+                                    <a href="https://bruinsmakantoor.nl/ict/" target="_blank" class="link-card">
+                                        <div class="link-icon">
+                                            <span class="material-icons">language</span>
+                                        </div>
+                                        <div class="link-content">
+                                            <h4>Bruinsma ICT</h4>
+                                            <p>Support en informatie</p>
+                                        </div>
+                                        <span class="material-icons link-arrow">open_in_new</span>
+                                    </a>
+
+                                    <a href="https://github.com/BruinsmaICT-Jorik/IsThePageReal" target="_blank" class="link-card">
+                                        <div class="link-icon">
+                                            <span class="material-icons">code</span>
+                                        </div>
+                                        <div class="link-content">
+                                            <h4>GitHub-repository</h4>
+                                            <p>Broncode van deze fork</p>
+                                        </div>
+                                        <span class="material-icons link-arrow">open_in_new</span>
+                                    </a>
+
+                                    <a href="mailto:info@bruinsmakantoor.nl" class="link-card">
+                                        <div class="link-icon">
+                                            <span class="material-icons">mail</span>
+                                        </div>
+                                        <div class="link-content">
+                                            <h4>Contact</h4>
+                                            <p>info@bruinsmakantoor.nl</p>
+                                        </div>
+                                        <span class="material-icons link-arrow">open_in_new</span>
+                                    </a>
+
+                                    <a href="https://github.com/CyberDrain/Check" target="_blank" class="link-card">
+                                        <div class="link-icon">
+                                            <span class="material-icons">history</span>
+                                        </div>
+                                        <div class="link-content">
+                                            <h4>Upstream Check</h4>
+                                            <p>Origineel project (AGPL-3.0)</p>
+                                        </div>
+                                        <span class="material-icons link-arrow">open_in_new</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="version-info-section">
+                            <div class="version-info">
+                                <div class="version-item">
+                                    <span class="version-label">Extensieversie:</span>
+                                    <span class="version-value" id="extensionVersion">1.0.0</span>
+                                </div>
+                                <div class="version-item">
+                                    <span class="version-label">Versie detectieregels:</span>
+                                    <span class="version-value" id="rulesVersion">Laden...</span>
+                                </div>
+                                <div class="version-item">
+                                    <span class="version-label">Laatst bijgewerkt:</span>
+                                    <span class="version-value" id="lastUpdated">Laden...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+        <div class="modal">
+            <h3 class="modal-title" id="modalTitle">Actie bevestigen</h3>
+            <p class="modal-message" id="modalMessage">Weet je zeker dat je wilt doorgaan?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modalCancel">Annuleren</button>
+                <button class="btn btn-primary" id="modalConfirm">Bevestigen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/browser-polyfill-inline.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>

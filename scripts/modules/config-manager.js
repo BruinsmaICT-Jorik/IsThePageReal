@@ -108,11 +108,11 @@ export class ConfigManager {
           cippServerUrl: "",
           cippTenantId: "",
           customRulesUrl:
-            "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+            "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
           updateInterval: 24,
           enableDebugLogging: false,
           domainSquatting: {
-            enabled: false,
+            enabled: true,
             deviationThreshold: 2,
             algorithms: {
               levenshtein: true,
@@ -128,14 +128,14 @@ export class ConfigManager {
 
           // Custom branding (matches managed_schema.json structure)
           customBranding: {
-            companyName: "CyberDrain",
-            productName: "Check Enterprise",
-            supportUrl: "",
-            privacyPolicyUrl: "",
-            aboutUrl: "",
-            primaryColor: "#F77F00",
-            logoUrl:
-              "https://cyberdrain.com/images/favicon_hu_20e77b0e20e363e.png",
+            companyName: "Bruinsma",
+            productName: "Bruinsma Protect",
+            supportUrl: "https://bruinsmakantoor.nl/ict/",
+            privacyPolicyUrl:
+              "https://github.com/BruinsmaICT-Jorik/IsThePageReal/blob/main/docs/privacy-avg.md",
+            aboutUrl: "https://bruinsmakantoor.nl/ict/over-ons/",
+            primaryColor: "#299DCF",
+            logoUrl: "images/icon48.png",
           },
         };
       }
@@ -301,12 +301,12 @@ export class ConfigManager {
       enableDebugLogging: false,
 
       // Custom rules - centralized at top level
-      customRulesUrl: "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+      customRulesUrl: "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/rules/detection-rules.json",
       updateInterval: 24, // hours
 
-      // Domain squatting runtime settings
+      // Domain squatting runtime settings (baseline MS domains live in rules/detection-rules.json)
       domainSquatting: {
-        enabled: false,
+        enabled: true,
         deviationThreshold: 2,
         algorithms: {
           levenshtein: true,
@@ -350,21 +350,21 @@ export class ConfigManager {
   getDefaultBrandingConfig() {
     return {
       // Company branding
-      companyName: "Check",
-      productName: "Check",
-      version: "1.0.0",
+      companyName: "Bruinsma",
+      productName: "Bruinsma Protect",
+      version: "1.2.2",
 
       // Visual branding
-      primaryColor: "#F77F00",
-      secondaryColor: "#64748b",
-      logoUrl: "images/logo.png",
-      faviconUrl: "images/favicon.ico",
+      primaryColor: "#299DCF",
+      secondaryColor: "#00395F",
+      logoUrl: "images/icon48.png",
+      faviconUrl: "images/icon16.png",
 
       // Contact information
-      supportEmail: "",
-      supportUrl: "",
-      privacyPolicyUrl: "",
-      aboutUrl: "",
+      supportEmail: "info@bruinsmakantoor.nl",
+      supportUrl: "https://bruinsmakantoor.nl/ict/",
+      privacyPolicyUrl: "https://bruinsmakantoor.nl/",
+      aboutUrl: "https://bruinsmakantoor.nl/ict/over-ons/",
       termsOfServiceUrl: "",
 
       // Customizable text

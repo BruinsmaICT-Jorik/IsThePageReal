@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fase 1 — snelle winst (1.2.2)
+- Microsoft 365 **domain-squatting baseline** in `rules/detection-rules.json`; runtime merge met policy `protectedDomains` + urlAllowlist.
+- Domain squatting standaard **ingeschakeld** in defaults/schema.
+- CIPP/webhook `source` en User-Agent: **Bruinsma Protect**.
+- Intune klant-kit: `enterprise/intune/` + CIPP-voorbeelden in Edge/Chrome managed policy.
+- AVG/privacy-notitie: `docs/privacy-avg.md` (popup Privacy-link).
+- Resterende options/popup toasts en debugteksten naar het Nederlands.
+
+### Bruinsma Protect + Nederlandse UI
+- Productnaam gewijzigd naar **Bruinsma Protect**.
+- Gebruikersgerichte teksten in popup, options, blocked page en waarschuwingsbanners naar het Nederlands.
+- Downloadpakket: `download/Bruinsma-Protect-for-edge.zip`.
+
+### Bruinsma branding (Bruinsma Protect)
+- Rebranded extension to **Bruinsma Protect** (name, icons, colors, About/UI defaults).
+- Updated `config/branding.json`, manifests, popup/options defaults, and enterprise Edge policy template.
+- Added `npm run package:edge` and `docs/edge-deployment.md` for Edge Add-ons / Intune rollout.
+- Default rules URL and support links point to the BruinsmaICT-Jorik/Bruinsma Protect fork.
+- AGPL attribution to upstream Check by CyberDrain retained in About.
+
 ### d02e0d1 - Merge branch 'main' of https://github.com/CyberDrain/Check
 - Contributor: John Duprey
 - Date: 2025-08-29T14:27:08+02:00

@@ -473,7 +473,7 @@ class CheckBackground {
 
   getDefaultPolicy() {
     return {
-      BrandingName: "CyberDrain Check Phishing Protection",
+      BrandingName: "Bruinsma Protect",
       BrandingImage: "",
       ExtraAllowlist: [],
       CIPPReportingServer: "",
@@ -1688,6 +1688,18 @@ class CheckBackground {
           }
           break;
 
+        case "TEST_CIPP_REPORT":
+          try {
+            const result = await this.handleTestCippReport(
+              message.settings || {}
+            );
+            sendResponse(result);
+          } catch (error) {
+            logger.error("Check: Failed to send CIPP test report:", error);
+            sendResponse({ success: false, error: error.message });
+          }
+          break;
+
         case "send_webhook":
           try {
             if (!message.webhookType || !message.data) {
@@ -2337,6 +2349,118 @@ class CheckBackground {
       logger.error("Failed to send detection alert webhook:", error);
       throw error;
     }
+  }
+
+  // Send a dummy CIPP payload for Options "CIPP-test versturen"
+  async handleTestCippReport(settings = {}) {
+    const config = await this.configManager.getConfig();
+    const cippServerUrl = String(
+      settings.cippServerUrl ?? config?.cippServerUrl ?? ""
+    ).trim();
+    const cippTenantId = String(
+      settings.cippTenantId ?? config?.cippTenantId ?? ""
+    ).trim();
+
+    if (!cippServerUrl) {
+      return {
+        success: false,
+        error: "Vul eerst een CIPP-server-URL in.",
+      };
+    }
+
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(cippServerUrl);
+    } catch (_) {
+      return {
+        success: false,
+        error: "CIPP-server-URL is ongeldig. Gebruik https://...",
+      };
+    }
+
+    if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+      return {
+        success: false,
+        error: "CIPP-server-URL moet met http:// of https:// beginnen.",
+      };
+    }
+
+    const endpoint =
+      cippServerUrl.replace(/\/+$/, "") + "/api/PublicPhishingCheck";
+    const userProfile = await this.getCurrentProfile();
+    const extensionVersion = chrome.runtime.getManifest().version;
+
+    const dummyPayload = {
+      type: "phishing_blocked",
+      severity: "high",
+      threatLevel: "high",
+      url: "https://login-microsoft-test.bruinsma-protect.example/common/oauth2",
+      reason:
+        "Bruinsma Protect CIPP-testmelding (geen echte dreiging). Verstuurd via Options → CIPP-test versturen.",
+      score: 12,
+      threshold: 85,
+      detectionMethod: "manual_cipp_test",
+      rule: "bruinsma-protect-cipp-test",
+      ruleDescription: "Handmatige CIPP-integratietest",
+      category: "phishing",
+      confidence: 1,
+      matchedRules: ["bruinsma-protect-cipp-test"],
+      isTest: true,
+      source: "BruinsmaProtect",
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      extensionVersion,
+      context: {
+        referrer: null,
+        pageTitle: "Bruinsma Protect CIPP-test",
+        domain: "login-microsoft-test.bruinsma-protect.example",
+        redirectTo: null,
+      },
+    };
+
+    const metadata = {
+      config: {
+        ...config,
+        enableCippReporting: true,
+        cippServerUrl,
+        cippTenantId,
+      },
+      userProfile,
+      extensionVersion,
+      tenantId: cippTenantId || null,
+      isPrivateIP: false,
+    };
+
+    logger.log(`Sending CIPP test report to ${endpoint}`);
+
+    const result = await this.webhookManager.sendSingleWebhook(
+      this.webhookManager.webhookTypes.DETECTION_ALERT,
+      dummyPayload,
+      metadata,
+      {
+        url: endpoint,
+        enabled: true,
+        type: "cipp",
+        tenantId: cippTenantId || null,
+      }
+    );
+
+    if (result.success) {
+      logger.log("✅ CIPP test report sent successfully");
+      return {
+        success: true,
+        endpoint,
+        status: result.status,
+        message: `Testmelding verstuurd naar ${endpoint}`,
+      };
+    }
+
+    logger.warn("⚠️ CIPP test report failed:", result.error);
+    return {
+      success: false,
+      endpoint,
+      error: result.error || "Versturen van CIPP-test mislukt",
+    };
   }
 
   // Map severity levels to standardized CIPP severity scale

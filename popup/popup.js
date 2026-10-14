@@ -194,7 +194,7 @@ class CheckPopup {
 
   async initialize() {
     try {
-      this.showLoading("Initializing...");
+      this.showLoading("Initialiseren...");
       console.log("Check: Initializing popup...");
       const backgroundReady = await this.waitForBackgroundScript();
       console.log("Check: Background script ready:", backgroundReady);
@@ -208,14 +208,14 @@ class CheckPopup {
           enableDebugLogging: false,
         };
         console.log("Still loading");
-        this.brandingConfig = { companyName: "Check", productName: "Check" };
+        this.brandingConfig = { companyName: "Bruinsma", productName: "Bruinsma Protect" };
         this.applyBranding();
         console.log("Applying default branding");
 
         // Initialize theme even in fallback mode
         await this.initializeTheme();
 
-        this.showNotification("Extension running in limited mode", "warning");
+        this.showNotification("Extensie draait in beperkte modus", "warning");
         this.hideLoading();
         return;
       }
@@ -264,7 +264,7 @@ class CheckPopup {
       this.hideLoading();
     } catch (error) {
       console.error("Check: Failed to initialize popup:", error);
-      this.showNotification("Failed to initialize extension", "error");
+      this.showNotification("Initialiseren van de extensie is mislukt", "error");
       this.hideLoading();
     }
   }
@@ -379,24 +379,24 @@ class CheckPopup {
       // Fallback to default branding if background script fails
       console.warn("Popup: Using fallback branding configuration");
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "Bruinsma Protect",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
       };
     } catch (error) {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "Bruinsma Protect",
         logoUrl: "images/icon32.png",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
       };
     }
   }
@@ -406,7 +406,7 @@ class CheckPopup {
 
     // Update title
     this.elements.brandingTitle.textContent =
-      this.brandingConfig.productName || "Check";
+      this.brandingConfig.productName || "Bruinsma Protect";
 
     // Update logo with fallback handling
     if (this.brandingConfig.logoUrl) {
@@ -437,7 +437,7 @@ class CheckPopup {
 
     // Update company name
     this.elements.companyName.textContent =
-      this.brandingConfig.companyName || "CyberDrain";
+      this.brandingConfig.companyName || "Bruinsma";
 
     // Update link URLs with fallbacks
     if (this.brandingConfig.supportUrl) {
@@ -719,7 +719,7 @@ class CheckPopup {
     }
 
     if (!this.currentTab || !this.currentTab.url) {
-      this.elements.currentUrl.textContent = "No active tab";
+      this.elements.currentUrl.textContent = "Geen actief tabblad";
       return;
     }
 
@@ -729,7 +729,7 @@ class CheckPopup {
       this.elements.currentUrl.textContent = url.hostname + url.pathname;
 
       // Request page analysis from background with retry
-      this.showSecurityBadge("analyzing", "Analyzing...");
+      this.showSecurityBadge("analyzing", "Bezig met analyse...");
 
       try {
         const response = await this.sendMessage({
@@ -740,11 +740,11 @@ class CheckPopup {
         if (response && response.success && response.analysis) {
           this.updateSecurityStatus(response.analysis);
         } else {
-          this.showSecurityBadge("neutral", "Analysis unavailable");
+          this.showSecurityBadge("neutral", "Analyse niet beschikbaar");
         }
       } catch (error) {
         console.warn("Check: Failed to get URL analysis after retries:", error);
-        this.showSecurityBadge("neutral", "Analysis unavailable");
+        this.showSecurityBadge("neutral", "Analyse niet beschikbaar");
       }
 
       // Get page info from content script with safe wrapper
@@ -768,8 +768,8 @@ class CheckPopup {
       }
     } catch (error) {
       console.error("Failed to load page info:", error);
-      this.elements.currentUrl.textContent = "Invalid URL";
-      this.showSecurityBadge("neutral", "No Analysis Available");
+      this.elements.currentUrl.textContent = "Ongeldige URL";
+      this.showSecurityBadge("neutral", "Geen analyse beschikbaar");
     }
   }
 
@@ -782,26 +782,26 @@ class CheckPopup {
 
     // Handle different verdict types with improved status display
     if (isBlocked) {
-      this.showSecurityBadge("danger", "Blocked");
+      this.showSecurityBadge("danger", "Geblokkeerd");
       this.showThreats(analysis.threats);
     } else if (isSuspicious) {
-      this.showSecurityBadge("warning", "Suspicious");
+      this.showSecurityBadge("warning", "Verdacht");
       this.showThreats(analysis.threats);
     } else if (
       analysis.verdict === "trusted" ||
       analysis.verdict === "trusted-extra"
     ) {
-      this.showSecurityBadge("safe", "Trusted Login Domain");
+      this.showSecurityBadge("safe", "Vertrouwd inlogdomein");
       this.hideThreats();
     } else if (analysis.verdict === "ms-login-unknown") {
-      this.showSecurityBadge("warning", "MS Login - Unknown Domain");
+      this.showSecurityBadge("warning", "MS-inlog - onbekend domein");
       this.hideThreats();
     } else if (analysis.verdict === "not-evaluated") {
-      this.showSecurityBadge("neutral", "Not Microsoft Login");
+      this.showSecurityBadge("neutral", "Geen Microsoft-inlog");
       this.hideThreats();
     } else {
       // For general Microsoft domains or other safe sites - show neutral, no badge
-      this.showSecurityBadge("neutral", "No Action Required");
+      this.showSecurityBadge("neutral", "Geen actie nodig");
       this.hideThreats();
     }
 
@@ -827,7 +827,7 @@ class CheckPopup {
 
     if (!isEnabled) {
       protectionStatus.innerHTML =
-        '<span class="protection-badge disabled">⚠️ Protection Disabled</span>';
+        '<span class="protection-badge disabled">⚠️ Bescherming uitgeschakeld</span>';
       protectionStatus.style.display = "block";
     } else {
       protectionStatus.style.display = "none";
@@ -859,8 +859,8 @@ class CheckPopup {
     const threatDisplayNames = {
       // Phishing threats
       phishing_page: "Phishing Page",
-      fake_login: "Fake Login Page",
-      credential_harvesting: "Credential Harvesting",
+      fake_login: "Nep-inlogpagina",
+      credential_harvesting: "Diefstal van inloggegevens",
       microsoft_impersonation: "Microsoft Impersonation",
       o365_phishing: "Office 365 Phishing",
       login_spoofing: "Login Page Spoofing",
@@ -874,7 +874,7 @@ class CheckPopup {
 
       // Domain threats
       typosquatting: "Typosquatting Domain",
-      suspicious_domain: "Suspicious Domain",
+      suspicious_domain: "Verdacht domein",
       homograph_attack: "Homograph Attack",
       punycode_abuse: "Punycode Abuse",
 
@@ -896,8 +896,8 @@ class CheckPopup {
       clipboard_access: "Clipboard Access",
 
       // Generic categories
-      content_threat_detected: "Content Threat",
-      threat_detected: "Security Threat",
+      content_threat_detected: "Contentdreiging",
+      threat_detected: "Beveiligingsdreiging",
       suspicious_activity: "Suspicious Activity",
       policy_violation: "Policy Violation",
     };
@@ -974,9 +974,9 @@ class CheckPopup {
       case "suspicious_redirect":
         return `Suspicious redirect blocked on ${new URL(event.url).hostname}`;
       case "form_submission":
-        return "Form submission monitored";
+        return "Formulierverzending bewaakt";
       case "script_injection":
-        return "Security script injected";
+        return "Beveiligingsscript geïnjecteerd";
       case "page_scanned":
         return `Page scanned for threats`;
       case "blocked_page_viewed":
@@ -993,15 +993,15 @@ class CheckPopup {
 
   getEventDisplayName(eventType) {
     const eventDisplayNames = {
-      url_access: "Page Scanned",
-      content_threat_detected: "Content Threat Detected",
-      threat_detected: "Security Threat Detected",
+      url_access: "Pagina gescand",
+      content_threat_detected: "Contentdreiging gedetecteerd",
+      threat_detected: "Beveiligingsdreiging gedetecteerd",
       form_submission: "Form Monitored",
       script_injection: "Security Script Injected",
-      page_scanned: "Page Scanned",
-      blocked_page_viewed: "Blocked Content Viewed",
-      threat_blocked: "Threat Blocked",
-      threat_detected_no_action: "Threat Detected",
+      page_scanned: "Pagina gescand",
+      blocked_page_viewed: "Geblokkeerde inhoud bekeken",
+      threat_blocked: "Dreiging geblokkeerd",
+      threat_detected_no_action: "Dreiging gedetecteerd",
       legitimate_access: "Legitimate Access",
       phishing_page: "Phishing Page Blocked",
       fake_login: "Fake Login Blocked",
@@ -1051,8 +1051,8 @@ class CheckPopup {
 
   updateComplianceStatus(isCompliant) {
     this.elements.complianceBadge.textContent = isCompliant
-      ? "Compliant"
-      : "Non-Compliant";
+      ? "Conform beleid"
+      : "Niet conform beleid";
     this.elements.complianceBadge.className = isCompliant
       ? "compliance-badge"
       : "compliance-badge non-compliant";
@@ -1202,7 +1202,7 @@ class CheckPopup {
     });
   }
 
-  showLoading(text = "Loading...") {
+  showLoading(text = "Laden...") {
     this.isLoading = true;
     this.elements.loadingOverlay.style.display = "flex";
     if (this.elements.loadingOverlay.querySelector(".loading-text")) {
@@ -1330,12 +1330,12 @@ class CheckPopup {
 
   async retriggerAnalysis() {
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to analyze", "warning");
+      this.showNotification("Geen actief tabblad om te analyseren", "warning");
       return;
     }
 
     try {
-      this.showNotification("Re-triggering analysis...", "info");
+      this.showNotification("Analyse opnieuw starten...", "info");
 
       // First, ensure background script is awake (wake it up with a ping)
       const backgroundReady = await this.checkBackgroundScript();
@@ -1346,7 +1346,7 @@ class CheckPopup {
         if (!wakeupSuccess) {
           console.error("Check: Failed to wake up background script");
           this.showNotification(
-            "Extension background script is not responding. Try reloading the extension.",
+            "Backgroundscript reageert niet. Herlaad de extensie en probeer opnieuw.",
             "error"
           );
           return;
@@ -1361,7 +1361,7 @@ class CheckPopup {
           if (chrome.runtime.lastError) {
             console.error("Check: Failed to communicate with page:", chrome.runtime.lastError);
             this.showNotification(
-              "Failed to communicate with page. Content script may not be loaded on this page.",
+              "Communicatie met de pagina mislukt. Het contentscript is mogelijk niet geladen op deze pagina.",
               "error"
             );
             return;
@@ -1369,7 +1369,7 @@ class CheckPopup {
 
           if (response && response.success) {
             this.showNotification(
-              "Analysis re-triggered successfully",
+              "Analyse opnieuw gestart",
               "success"
             );
             // Refresh page info after a short delay
@@ -1377,13 +1377,13 @@ class CheckPopup {
               this.loadCurrentPageInfo();
             }, 1000);
           } else {
-            this.showNotification("Failed to re-trigger analysis", "error");
+            this.showNotification("Opnieuw starten van analyse mislukt", "error");
           }
         }
       );
     } catch (error) {
       console.error("Failed to retrigger analysis:", error);
-      this.showNotification("Error re-triggering analysis", "error");
+      this.showNotification("Fout bij opnieuw starten van analyse", "error");
     }
   }
 
@@ -1416,7 +1416,7 @@ class CheckPopup {
     }
 
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to analyze", "warning");
+      this.showNotification("Geen actief tabblad om te analyseren", "warning");
       return;
     }
 
@@ -1427,7 +1427,7 @@ class CheckPopup {
         { type: "GET_DETECTION_DETAILS" },
         (response) => {
           if (chrome.runtime.lastError) {
-            this.showNotification("Failed to get detection details", "error");
+            this.showNotification("Ophalen van detectiedetails mislukt", "error");
             return;
           }
 
@@ -1443,13 +1443,13 @@ class CheckPopup {
             // Store debug data for potential use if page gets blocked
             this.storeCurrentDebugData(response.details);
           } else {
-            this.showNotification("No detection details available", "warning");
+            this.showNotification("Geen detectiedetails beschikbaar", "warning");
           }
         }
       );
     } catch (error) {
       console.error("Failed to get detection details:", error);
-      this.showNotification("Error getting detection details", "error");
+      this.showNotification("Fout bij ophalen van detectiedetails", "error");
     }
   }
 
@@ -1524,7 +1524,7 @@ class CheckPopup {
           .join(", ");
         this.elements.phishingThreats.textContent = `Threats: ${threatList}`;
       } else {
-        this.elements.phishingThreats.textContent = "No threats detected";
+        this.elements.phishingThreats.textContent = "Geen dreigingen gedetecteerd";
       }
     }
 
@@ -1569,7 +1569,7 @@ class CheckPopup {
       this.elements.sourceStats.textContent = statsText;
       this.pageSourceContent = content; // Store for display
     } else {
-      this.elements.sourceStats.textContent = "No source captured";
+      this.elements.sourceStats.textContent = "Geen bron vastgelegd";
       this.pageSourceContent = null;
     }
   }
@@ -1590,7 +1590,7 @@ class CheckPopup {
           "Hide Source"
         );
       } else {
-        this.showNotification("No page source available", "warning");
+        this.showNotification("Geen paginabron beschikbaar", "warning");
       }
     }
   }
@@ -1638,14 +1638,14 @@ class CheckPopup {
 
   copySourceToClipboard() {
     if (!this.pageSourceContent) {
-      this.showNotification("No source to copy", "warning");
+      this.showNotification("Geen bron om te kopiëren", "warning");
       return;
     }
 
     navigator.clipboard
       .writeText(this.pageSourceContent)
       .then(() => {
-        this.showNotification("Source copied to clipboard", "success");
+        this.showNotification("Broncode gekopieerd naar klembord", "success");
       })
       .catch(() => {
         // Fallback for older browsers
@@ -1655,7 +1655,7 @@ class CheckPopup {
         textArea.select();
         document.execCommand("copy");
         document.body.removeChild(textArea);
-        this.showNotification("Source copied to clipboard", "success");
+        this.showNotification("Broncode gekopieerd naar klembord", "success");
       });
   }
 
@@ -1683,7 +1683,7 @@ class CheckPopup {
 
   async loadConsoleLogs() {
     if (!this.currentTab || !this.currentTab.url) {
-      this.showNotification("No active tab to get logs from", "warning");
+      this.showNotification("Geen actief tabblad voor logboeken", "warning");
       return;
     }
 
@@ -1724,15 +1724,15 @@ class CheckPopup {
 
         // If no stored data found, show appropriate message
         this.elements.consoleStats.textContent =
-          "No logs available for blocked page";
+          "Geen logboeken beschikbaar voor geblokkeerde pagina";
         this.elements.consoleDisplay.textContent =
-          "No console logs available for this blocked page.";
+          "Geen consolelogboeken beschikbaar voor deze geblokkeerde pagina.";
         return;
       } catch (error) {
         console.error("Failed to load console logs for blocked page:", error);
-        this.elements.consoleStats.textContent = "Error loading logs";
+        this.elements.consoleStats.textContent = "Fout bij laden van logboeken";
         this.elements.consoleDisplay.textContent =
-          "Error loading console logs for blocked page.";
+          "Fout bij laden van consolelogboeken voor geblokkeerde pagina.";
         return;
       }
     }
@@ -1744,10 +1744,10 @@ class CheckPopup {
         { type: "GET_CONSOLE_LOGS" },
         (response) => {
           if (chrome.runtime.lastError) {
-            this.showNotification("Failed to get console logs", "error");
-            this.elements.consoleStats.textContent = "Logs unavailable";
+            this.showNotification("Ophalen van consolelogboeken mislukt", "error");
+            this.elements.consoleStats.textContent = "Logboeken niet beschikbaar";
             this.elements.consoleDisplay.textContent =
-              "No console logs available - content script may not be active.";
+              "Geen consolelogboeken beschikbaar — contentscript is mogelijk niet actief.";
             return;
           }
 
@@ -1756,24 +1756,24 @@ class CheckPopup {
             // Store debug data with the new console logs
             this.storeCurrentDebugData();
           } else {
-            this.elements.consoleStats.textContent = "No logs captured";
+            this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
             this.elements.consoleDisplay.textContent =
-              "No console logs captured yet.";
+              "Nog geen consolelogboeken vastgelegd.";
           }
         }
       );
     } catch (error) {
       console.error("Failed to get console logs:", error);
-      this.showNotification("Error getting console logs", "error");
-      this.elements.consoleStats.textContent = "Error loading logs";
-      this.elements.consoleDisplay.textContent = "Error loading console logs.";
+      this.showNotification("Fout bij ophalen van consolelogboeken", "error");
+      this.elements.consoleStats.textContent = "Fout bij laden van logboeken";
+      this.elements.consoleDisplay.textContent = "Fout bij laden van consolelogboeken.";
     }
   }
 
   displayConsoleLogs(logs) {
     if (!logs || logs.length === 0) {
-      this.elements.consoleStats.textContent = "No logs captured";
-      this.elements.consoleDisplay.textContent = "No console logs available.";
+      this.elements.consoleStats.textContent = "Geen logboeken vastgelegd";
+      this.elements.consoleDisplay.textContent = "Geen consolelogboeken beschikbaar.";
       return;
     }
 
@@ -1844,14 +1844,14 @@ class CheckPopup {
 
   copyConsoleLogsToClipboard() {
     if (!this.consoleLogsContent) {
-      this.showNotification("No logs to copy", "warning");
+      this.showNotification("Geen logboeken om te kopiëren", "warning");
       return;
     }
 
     navigator.clipboard
       .writeText(this.consoleLogsContent)
       .then(() => {
-        this.showNotification("Console logs copied to clipboard", "success");
+        this.showNotification("Consolelogboeken gekopieerd naar klembord", "success");
       })
       .catch(() => {
         // Fallback for older browsers
@@ -1861,12 +1861,12 @@ class CheckPopup {
         textArea.select();
         document.execCommand("copy");
         document.body.removeChild(textArea);
-        this.showNotification("Console logs copied to clipboard", "success");
+        this.showNotification("Consolelogboeken gekopieerd naar klembord", "success");
       });
   }
 
   async refreshConsoleLogs() {
-    this.showNotification("Refreshing console logs...", "info");
+    this.showNotification("Consolelogboeken vernieuwen...", "info");
     await this.loadConsoleLogs();
   }
 
@@ -2116,13 +2116,13 @@ class CheckPopup {
           this.pageSourceContent = storedDebugData.pageSource;
         }
 
-        this.showNotification("Debug data loaded from blocked page", "info");
+        this.showNotification("Debuggegevens van geblokkeerde pagina geladen", "info");
       } else {
         console.log("No stored debug data found for blocked URL:", originalUrl);
         this.elements.consoleStats.textContent =
-          "No logs available for blocked page";
+          "Geen logboeken beschikbaar voor geblokkeerde pagina";
         this.elements.sourceStats.textContent =
-          "No source available for blocked page";
+          "Geen bron beschikbaar voor geblokkeerde pagina";
       }
     } catch (error) {
       console.error("Failed to load debug data for blocked page:", error);

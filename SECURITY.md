@@ -4,7 +4,7 @@ This project is an open source Chrome extension and we take its security serious
 
 ## Reporting a Vulnerability
 
-Email details to [security@check.com](mailto:security@check.com). Please include steps to reproduce, extension version, browser version, and any relevant logs. You may request our PGP key for encrypted communication. Avoid publicly disclosing the issue until we confirm a fix.
+Email details to [info@bruinsmakantoor.nl](mailto:info@bruinsmakantoor.nl). Please include steps to reproduce, extension version, browser version, and any relevant logs. Avoid publicly disclosing the issue until we confirm a fix.
 
 ## Disclosure Guidelines
 
@@ -21,7 +21,7 @@ Email details to [security@check.com](mailto:security@check.com). Please include
 
 ## Contact
 
-- Email: [security@check.com](mailto:security@check.com)
+- Email: [info@bruinsmakantoor.nl](mailto:info@bruinsmakantoor.nl)
 - GitHub Security Advisories: use the repository's "Report a vulnerability" feature.
 
-Thank you for helping keep Check by CyberDrain secure.
+Thank you for helping keep Bruinsma Protect secure. Based on Check by CyberDrain (AGPL-3.0).

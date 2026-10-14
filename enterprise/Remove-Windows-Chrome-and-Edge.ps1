@@ -1,11 +1,11 @@
 # Define extension details (same as install-check.ps1)
 # Chrome
-$chromeExtensionId = "benimdeioplgkhanklclahllklceahbe"
+$chromeExtensionId = "REPLACE_WITH_CHROME_EXTENSION_ID"
 $chromeManagedStorageKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\$chromeExtensionId\policy"
 $chromeExtensionSettingsKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionSettings\$chromeExtensionId"
 
 # Edge
-$edgeExtensionId = "knepjpocdagponkonnbggpcnhnaikajg"
+$edgeExtensionId = "REPLACE_WITH_EDGE_EXTENSION_ID"
 $edgeManagedStorageKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\$edgeExtensionId\policy"
 $edgeExtensionSettingsKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionSettings\$edgeExtensionId"
 

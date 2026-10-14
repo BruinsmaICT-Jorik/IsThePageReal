@@ -1,6 +1,6 @@
-# Check Extension - Enterprise Deployment
+# Bruinsma Protect — Enterprise Deployment
 
-This folder contains enterprise deployment resources for the Check Microsoft 365 Phishing Protection extension.
+Enterprise-uitrolbestanden voor **Bruinsma Protect** (Microsoft 365 phishingbescherming).
 
 ## Browser Support
 
@@ -9,13 +9,14 @@ This folder contains enterprise deployment resources for the Check Microsoft 365
 
 ## Contents
 
+- `intune/` - **Bruinsma klant-kit** (Intune force-install + CIPP managed settings)
 - `admx/` - Group Policy Administrative Templates (Chrome/Edge)
    - `Check-Extension.admx` - Policy definitions file
    - `en-US` - English language resources
       - `Check-Extension.adml` - XML configuration file for Check
 - `macos-linux/` - Unix-based deployment (macOS & Linux)
    - Configuration Profiles for macOS
-   - Browser policy files for Linux
+   - Browser policy files for Linux (incl. Edge CIPP/squatting template)
    - Universal deployment scripts
 - `firefox/` - Firefox-specific deployments (all platforms)
    - `policies.json` - Template for Firefox enterprise policy management
@@ -25,10 +26,12 @@ This folder contains enterprise deployment resources for the Check Microsoft 365
 
 ## Quick Links
 
+- **Intune klant-kit (Bruinsma)**: See [`intune/README.md`](intune/README.md)
 - **Chrome/Edge Deployment**: See `Deploy-Windows-Chrome-and-Edge.ps1` for Windows, `macos-linux/` for macOS/Linux
 - **Firefox Deployment**: See `firefox/policies.json` template and [Firefox Deployment Guide](../docs/deployment/firefox-deployment.md)
 - **Configuration Schema**: See `../config/managed_schema.json` for all available settings
-- **Webhook Configuration**: See `../docs/webhooks.md` for webhook payloads and supported event types
+- **Webhook / CIPP**: See `../docs/webhooks.md` (`source`: Bruinsma Protect)
+- **Privacy / AVG**: See `../docs/privacy-avg.md`
 
 ## Security Considerations
 

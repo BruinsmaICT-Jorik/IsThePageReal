@@ -10,7 +10,7 @@
 
 Write-Host ""
 Write-Host "======================================================" -ForegroundColor DarkCyan
-Write-Host "  Check by CyberDrain - Intune Deployment Setup" -ForegroundColor DarkCyan
+Write-Host "  Bruinsma Protect - Intune Deployment Setup" -ForegroundColor DarkCyan
 Write-Host "======================================================" -ForegroundColor DarkCyan
 Write-Host ""
 Write-Host "This script will download the latest Check extension scripts from GitHub"
@@ -18,7 +18,7 @@ Write-Host "and walk you through configuring each setting for your environment."
 Write-Host ""
 
 # GitHub raw URLs for the template scripts
-$baseUrl = "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/enterprise"
+$baseUrl = "https://raw.githubusercontent.com/BruinsmaICT-Jorik/IsThePageReal/refs/heads/main/enterprise"
 $scripts = @{
     Deploy = @{ Url = "$baseUrl/Deploy-Windows-Chrome-and-Edge.ps1"; FileName = "Deploy-Windows-Chrome-and-Edge.ps1" }
     Remove = @{ Url = "$baseUrl/Remove-Windows-Chrome-and-Edge.ps1"; FileName = "Remove-Windows-Chrome-and-Edge.ps1" }
@@ -169,13 +169,13 @@ Write-Host ""
 Write-Host "--- Custom Branding Settings ---" -ForegroundColor Cyan
 Write-Host ""
 
-$cfg_companyName = Read-Setting -Name "companyName" -Description "Company name" -Default "CyberDrain"
-$cfg_productName = Read-Setting -Name "productName" -Description "Product name" -Default "Check - Phishing Protection"
-$cfg_supportEmail = Read-Setting -Name "supportEmail" -Description "Support email address" -Default ""
-$cfg_supportUrl = Read-Setting -Name "supportUrl" -Description "Support URL" -Default ""
+$cfg_companyName = Read-Setting -Name "companyName" -Description "Company name" -Default "Bruinsma"
+$cfg_productName = Read-Setting -Name "productName" -Description "Product name" -Default "Bruinsma Protect"
+$cfg_supportEmail = Read-Setting -Name "supportEmail" -Description "Support email address" -Default "info@bruinsmakantoor.nl"
+$cfg_supportUrl = Read-Setting -Name "supportUrl" -Description "Support URL" -Default "https://bruinsmakantoor.nl/ict/"
 $cfg_privacyPolicyUrl = Read-Setting -Name "privacyPolicyUrl" -Description "Privacy policy URL" -Default ""
 $cfg_aboutUrl = Read-Setting -Name "aboutUrl" -Description "About URL" -Default ""
-$cfg_primaryColor = Read-Setting -Name "primaryColor" -Description "Primary color (hex code)" -Default "#F77F00"
+$cfg_primaryColor = Read-Setting -Name "primaryColor" -Description "Primary color (hex code)" -Default "#299DCF"
 $cfg_logoUrl = Read-Setting -Name "logoUrl" -Description "Logo URL (https, recommended 48x48, max 128x128)" -Default ""
 Write-Host ""
 
@@ -231,13 +231,13 @@ $replacements = @(
     @{ Pattern = '$enableDebugLogging = 0 #';        Value = "`$enableDebugLogging = $cfg_enableDebugLogging #" }
     @{ Pattern = '$enableGenericWebhook = 0 #';      Value = "`$enableGenericWebhook = $cfg_enableGenericWebhook #" }
     @{ Pattern = '$webhookUrl = "" #';               Value = "`$webhookUrl = $(Format-SingleQuoted $cfg_webhookUrl) #" }
-    @{ Pattern = '$companyName = "CyberDrain" #';    Value = "`$companyName = $(Format-SingleQuoted $cfg_companyName) #" }
-    @{ Pattern = '$productName = "Check - Phishing Protection" #'; Value = "`$productName = $(Format-SingleQuoted $cfg_productName) #" }
-    @{ Pattern = '$supportEmail = "" #';             Value = "`$supportEmail = $(Format-SingleQuoted $cfg_supportEmail) #" }
-    @{ Pattern = '$supportUrl = "" #';               Value = "`$supportUrl = $(Format-SingleQuoted $cfg_supportUrl) #" }
+    @{ Pattern = '$companyName = "Bruinsma" #';    Value = "`$companyName = $(Format-SingleQuoted $cfg_companyName) #" }
+    @{ Pattern = '$productName = "Bruinsma Protect" #'; Value = "`$productName = $(Format-SingleQuoted $cfg_productName) #" }
+    @{ Pattern = '$supportEmail = "info@bruinsmakantoor.nl" #';             Value = "`$supportEmail = $(Format-SingleQuoted $cfg_supportEmail) #" }
+    @{ Pattern = '$supportUrl = "https://bruinsmakantoor.nl/ict/" #';               Value = "`$supportUrl = $(Format-SingleQuoted $cfg_supportUrl) #" }
     @{ Pattern = '$privacyPolicyUrl = "" #';         Value = "`$privacyPolicyUrl = $(Format-SingleQuoted $cfg_privacyPolicyUrl) #" }
     @{ Pattern = '$aboutUrl = "" #';                 Value = "`$aboutUrl = $(Format-SingleQuoted $cfg_aboutUrl) #" }
-    @{ Pattern = '$primaryColor = "#F77F00" #';      Value = "`$primaryColor = $(Format-SingleQuoted $cfg_primaryColor) #" }
+    @{ Pattern = '$primaryColor = "#299DCF" #';      Value = "`$primaryColor = $(Format-SingleQuoted $cfg_primaryColor) #" }
     @{ Pattern = '$logoUrl = "" #';                  Value = "`$logoUrl = $(Format-SingleQuoted $cfg_logoUrl) #" }
 )
 

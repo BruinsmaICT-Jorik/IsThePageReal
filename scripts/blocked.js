@@ -156,7 +156,7 @@ async function reportFalsePositive() {
       version: "1.0",
       type: "false_positive_report",
       timestamp: new Date().toISOString(),
-      source: "Check Extension",
+      source: "Bruinsma Protect",
       extensionVersion: chrome.runtime.getManifest().version,
       data: {
         reportedUrl: document.getElementById("blockedUrl").textContent,
@@ -510,10 +510,10 @@ async function loadBranding() {
 
       // Apply branding from background script
       const companyName =
-        storageResult.companyName || storageResult.productName || "Check";
+        storageResult.companyName || storageResult.productName || "Bruinsma Protect";
       console.log("Setting company name from background to:", companyName);
       document.getElementById("companyName").textContent = companyName;
-      document.title = `Access Blocked - ${companyName}`;
+      document.title = `Bruinsma blokkeert de toegang tot deze pagina`;
 
       // Update product name if available
       if (storageResult.productName) {
@@ -645,10 +645,10 @@ async function loadBranding() {
         const brandingConfig = await response.json();
         console.log("Loaded branding from file:", brandingConfig);
 
-        const companyName = brandingConfig.companyName || "Check";
+        const companyName = brandingConfig.companyName || "Bruinsma Protect";
         console.log("Setting company name from file to:", companyName);
         document.getElementById("companyName").textContent = companyName;
-        document.title = `Access Blocked - ${companyName}`;
+        document.title = `Bruinsma blokkeert de toegang tot deze pagina`;
       }
     } catch (fetchError) {
       console.warn("Could not load branding.json:", fetchError);
@@ -661,7 +661,7 @@ async function loadBranding() {
   const currentCompanyName = document.getElementById("companyName").textContent;
   if (!currentCompanyName || currentCompanyName.trim() === "") {
     console.log("No company name set, using final fallback");
-    document.getElementById("companyName").textContent = "Check";
+    document.getElementById("companyName").textContent = "Bruinsma";
     document.title = "Access Blocked - Check";
   }
 

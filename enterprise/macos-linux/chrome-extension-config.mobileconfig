@@ -17,11 +17,11 @@
                 <integer>1</integer>
                 <key>ExtensionInstallForcelist</key>
                 <array>
-                    <string>benimdeioplgkhanklclahllklceahbe;https://clients2.google.com/service/update2/crx</string>
+                    <string>REPLACE_WITH_CHROME_EXTENSION_ID;https://clients2.google.com/service/update2/crx</string>
                 </array>
                 <key>ExtensionSettings</key>
                 <dict>
-                    <key>benimdeioplgkhanklclahllklceahbe</key>
+                    <key>REPLACE_WITH_CHROME_EXTENSION_ID</key>
                     <dict>
                         <key>installation_mode</key>
                         <string>force_installed</string>

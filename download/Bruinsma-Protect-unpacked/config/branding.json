@@ -1,0 +1,157 @@
+{
+  "companyName": "Bruinsma",
+  "productName": "Bruinsma Protect",
+  "supportUrl": "https://bruinsmakantoor.nl/ict/",
+  "privacyPolicyUrl": "https://github.com/BruinsmaICT-Jorik/IsThePageReal/blob/main/docs/privacy-avg.md",
+  "aboutUrl": "https://bruinsmakantoor.nl/ict/over-ons/",
+  "version": "1.2.2",
+  "description": "Bescherming tegen phishing die Microsoft 365-inlogpagina's nabootsen \u2014 Bruinsma Protect voor jouw organisatie",
+  "branding": {
+    "primaryColor": "#299DCF",
+    "primaryHover": "#2189B5",
+    "primaryLight": "rgba(41, 157, 207, 0.12)",
+    "primaryDark": "#1A7399",
+    "secondaryColor": "#00395F",
+    "secondaryHover": "#004B7A",
+    "secondaryLight": "rgba(0, 57, 95, 0.1)",
+    "secondaryDark": "#050517",
+    "accentColor": "#F76E30",
+    "successColor": "#28A745",
+    "warningColor": "#F76E30",
+    "errorColor": "#DC3545",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#9CA3AF",
+    "textMuted": "#6B7280",
+    "textInverse": "#00395F",
+    "bgPrimary": "#00395F",
+    "bgSecondary": "rgba(255, 255, 255, 0.05)",
+    "bgSurface": "rgba(255, 255, 255, 0.03)",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "borderHover": "rgba(41, 157, 207, 0.35)"
+  },
+  "assets": {
+    "logoUrl": "images/icon48.png",
+    "iconUrl": "images/icon32.png",
+    "faviconUrl": "images/icon16.png",
+    "bannerUrl": "images/bruinsma-wordmark.png",
+    "screenshotUrls": [
+      "images/screenshot1.png",
+      "images/screenshot2.png",
+      "images/screenshot3.png"
+    ]
+  },
+  "customization": {
+    "showCompanyBranding": true,
+    "allowUserCustomization": true,
+    "enableWhiteLabeling": true,
+    "customCssEnabled": true,
+    "customIconsEnabled": true
+  },
+  "features": {
+    "welcomeMessage": "Welkom bij Bruinsma Protect \u2014 phishingbescherming voor Microsoft 365",
+    "tagline": "Herkenbare phishingdetectie voor Microsoft 365-inlogpagina's door Bruinsma",
+    "securityBadgeText": "Beschermd door Bruinsma",
+    "blockedPageTitle": "Phishingpoging geblokkeerd door Bruinsma Protect",
+    "blockedPageMessage": "Deze pagina lijkt een phishingpoging die Microsoft 365-inloggegevens wil stelen. Bruinsma Protect heeft de toegang geblokkeerd om jouw organisatie te beschermen."
+  },
+  "customText": {
+    "extensionDescription": "Bruinsma Protect detecteert en blokkeert phishingpogingen die Microsoft 365-inlogpagina's nabootsen, met policybeheer en logging voor organisaties.",
+    "securityFeatures": [
+      "Realtime Microsoft 365 phishingdetectie",
+      "Verificatie van verdachte inlogpagina's",
+      "Beveiligingsbadges op legitieme pagina's",
+      "Enterprise policy-afdwinging",
+      "Auditlogging voor securityrapportage",
+      "Aanpasbare detectieregels"
+    ],
+    "enterpriseFeatures": [
+      "Group Policy (GPO) ondersteuning",
+      "Microsoft Intune-integratie",
+      "Centrale beheermogelijkheden",
+      "Security compliance-rapportage",
+      "Aangepaste phishingdetectieregels",
+      "Support via Bruinsma ICT"
+    ]
+  },
+  "socialMedia": {
+    "twitter": "",
+    "linkedin": "https://www.linkedin.com/company/bruinsma-kantoor",
+    "youtube": "",
+    "github": "https://github.com/BruinsmaICT-Jorik/IsThePageReal"
+  },
+  "whiteLabel": {
+    "enabled": true,
+    "allowCustomColors": true,
+    "allowCustomLogos": true,
+    "allowCustomText": true,
+    "allowCustomIcons": true,
+    "allowCustomCss": true,
+    "preserveAttribution": true,
+    "customizableElements": [
+      "extension_name",
+      "company_name",
+      "logo",
+      "colors",
+      "contact_info",
+      "support_links",
+      "custom_css"
+    ]
+  },
+  "licensing": {
+    "licenseKey": "",
+    "licensedTo": "Bruinsma",
+    "licenseType": "enterprise",
+    "licenseExpiry": null,
+    "maxUsers": null,
+    "features": [
+      "unlimited_users",
+      "white_labeling",
+      "enterprise_support",
+      "compliance_reporting",
+      "custom_rules",
+      "api_access"
+    ]
+  },
+  "deployment": {
+    "supportedPlatforms": [
+      "Chrome",
+      "Chromium",
+      "Microsoft Edge",
+      "Brave",
+      "Opera"
+    ],
+    "minimumVersion": "88",
+    "manifestVersion": 3,
+    "deploymentMethods": [
+      "Group Policy (GPO)",
+      "Microsoft Intune",
+      "Edge Add-ons (sideload / force install)",
+      "Manual Installation"
+    ]
+  },
+  "analytics": {
+    "enabled": false,
+    "trackingId": "",
+    "events": [
+      "extension_installed",
+      "threat_blocked",
+      "page_scanned",
+      "settings_changed"
+    ],
+    "anonymizeData": true,
+    "respectDoNotTrack": true
+  },
+  "updates": {
+    "autoUpdateEnabled": true,
+    "updateChannel": "stable",
+    "updateCheckInterval": 86400000
+  },
+  "metadata": {
+    "created": "2024-01-01T00:00:00Z",
+    "modified": "2026-10-14T00:00:00Z",
+    "author": "Bruinsma ICT",
+    "maintainer": "info@bruinsmakantoor.nl",
+    "schema_version": "1.0",
+    "upstream": "Gebaseerd op Check by CyberDrain (AGPL-3.0)"
+  }
+}

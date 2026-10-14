@@ -6,21 +6,21 @@
 /* Theme Variables */
 :root {
   /* Primary Theme Colors */
-  --theme-primary: #F77F00;
-  --theme-primary-hover: #E56F00;
-  --theme-primary-light: rgba(247, 127, 0, 0.1);
-  --theme-primary-dark: #D96800;
+  --theme-primary: #299DCF;
+  --theme-primary-hover: #2189B5;
+  --theme-primary-light: rgba(41, 157, 207, 0.12);
+  --theme-primary-dark: #1A7399;
 
   /* Secondary Theme Colors */
-  --theme-secondary: #005C63;
-  --theme-secondary-hover: #007580;
-  --theme-secondary-light: rgba(0, 92, 99, 0.1);
-  --theme-secondary-dark: #004851;
+  --theme-secondary: #00395F;
+  --theme-secondary-hover: #004B7A;
+  --theme-secondary-light: rgba(0, 57, 95, 0.1);
+  --theme-secondary-dark: #050517;
 
   /* Supporting Colors */
-  --theme-accent: #005C63;
-  --theme-success: #005C63;
-  --theme-warning: #F77F00;
+  --theme-accent: #F76E30;
+  --theme-success: #28A745;
+  --theme-warning: #F76E30;
   --theme-error: #DC2626;
 }
 
@@ -39,7 +39,7 @@
 
   /* Border Colors */
   --theme-border: #E5E7EB;
-  --theme-border-hover: rgba(247, 127, 0, 0.3);
+  --theme-border-hover: rgba(41, 157, 207, 0.35);
 
   /* Shadows */
   --theme-shadow: rgba(0, 0, 0, 0.1);
@@ -60,7 +60,7 @@
 
   /* Border Colors */
   --theme-border: #4B5563;
-  --theme-border-hover: rgba(247, 127, 0, 0.3);
+  --theme-border-hover: rgba(41, 157, 207, 0.35);
 
   /* Shadows */
   --theme-shadow: rgba(0, 0, 0, 0.3);
@@ -82,7 +82,7 @@
 
     /* Border Colors */
     --theme-border: #4B5563;
-    --theme-border-hover: rgba(247, 127, 0, 0.3);
+    --theme-border-hover: rgba(41, 157, 207, 0.35);
 
     /* Shadows */
     --theme-shadow: rgba(0, 0, 0, 0.3);
@@ -104,7 +104,7 @@
 
   /* Border Colors */
   --theme-border: #E5E7EB;
-  --theme-border-hover: rgba(247, 127, 0, 0.3);
+  --theme-border-hover: rgba(41, 157, 207, 0.35);
 
   /* Shadows */
   --theme-shadow: rgba(0, 0, 0, 0.1);
@@ -389,7 +389,7 @@ body {
 .action-btn.primary:hover {
   background: var(--theme-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(247, 127, 0, 0.3);
+  box-shadow: 0 6px 16px rgba(41, 157, 207, 0.35);
 }
 
 .action-btn.primary.disabled {

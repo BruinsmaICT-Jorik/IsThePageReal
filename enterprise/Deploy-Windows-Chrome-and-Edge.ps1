@@ -1,12 +1,15 @@
 # Define extension details
 # Chrome
-$chromeExtensionId = "benimdeioplgkhanklclahllklceahbe"
+# TODO: vervang door jullie eigen Chrome Web Store ID als jullie ook Chrome publiceren.
+$chromeExtensionId = "REPLACE_WITH_CHROME_EXTENSION_ID"
 $chromeUpdateUrl = "https://clients2.google.com/service/update2/crx"
 $chromeManagedStorageKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\$chromeExtensionId\policy"
 $chromeExtensionSettingsKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionSettings\$chromeExtensionId"
 
 #Edge
-$edgeExtensionId = "knepjpocdagponkonnbggpcnhnaikajg"
+# TODO: vervang door jullie eigen Edge Add-ons extension ID na publicatie van Bruinsma Protect.
+# Placeholder: laat force-install niet op de upstream CyberDrain-store-ID staan in productie.
+$edgeExtensionId = "REPLACE_WITH_EDGE_EXTENSION_ID"
 $edgeUpdateUrl = "https://edge.microsoft.com/extensionwebstorebase/v1/crx"
 $edgeManagedStorageKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\$edgeExtensionId\policy"
 $edgeExtensionSettingsKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionSettings\$edgeExtensionId"
@@ -31,13 +34,13 @@ $webhookUrl = "" # This will set the "Webhook URL" option; default is blank; if 
 $webhookEvents = @() # This will set the "Event Types" to send to the webhook; default is blank; if you set $enableGenericWebhook to 1, you can specify which events to send. Available events: "detection_alert", "false_positive_report", "page_blocked", "rogue_app_detected", "threat_detected", "validation_event". Example: @("detection_alert", "page_blocked", "threat_detected").
 
 # Custom Branding Settings
-$companyName = "CyberDrain" # This will set the "Company Name" option in the Custom Branding settings; default is "CyberDrain".
-$productName = "Check - Phishing Protection" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
-$supportEmail = "" # This will set the "Support Email" option in the Custom Branding settings; default is blank.
-$supportUrl = "" # This will set the "Support URL" option in the Custom Branding settings; default is blank.
+$companyName = "Bruinsma" # This will set the "Company Name" option in the Custom Branding settings; default is "CyberDrain".
+$productName = "Bruinsma Protect" # This will set the "Product Name" option in the Custom Branding settings; default is "Check - Phishing Protection".
+$supportEmail = "info@bruinsmakantoor.nl" # This will set the "Support Email" option in the Custom Branding settings; default is blank.
+$supportUrl = "https://bruinsmakantoor.nl/ict/" # This will set the "Support URL" option in the Custom Branding settings; default is blank.
 $privacyPolicyUrl = "" # This will set the "Privacy URL" option in the Custom Branding settings; default is blank.
 $aboutUrl = "" # This will set the "About URL" option in the Custom Branding settings; default is blank.
-$primaryColor = "#F77F00" # This will set the "Primary Color" option in the Custom Branding settings; default is "#F77F00"; must be a valid hex color code (e.g., #FFFFFF).
+$primaryColor = "#299DCF" # This will set the "Primary Color" option in the Custom Branding settings; default is "#F77F00"; must be a valid hex color code (e.g., #FFFFFF).
 $logoUrl = "" # This will set the "Logo URL" option in the Custom Branding settings; default is blank. Must be a valid URL including the protocol (e.g., https://example.com/logo.png); protocol must be https; recommended size is 48x48 pixels with a maximum of 128x128.
 
 # Extension Settings

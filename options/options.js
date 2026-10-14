@@ -185,6 +185,12 @@ class CheckOptions {
     this.elements.refreshDetectionRules?.addEventListener("click", () =>
       this.refreshDetectionRules()
     );
+
+    // CIPP test
+    this.elements.testCippReport = document.getElementById("testCippReport");
+    this.elements.testCippReport?.addEventListener("click", () =>
+      this.testCippReport()
+    );
     
     // Domain squatting management
     // (View default domains now in Configuration Overview)
@@ -286,7 +292,7 @@ class CheckOptions {
       if (this.hasUnsavedChanges) {
         e.preventDefault();
         e.returnValue =
-          "You have unsaved changes. Are you sure you want to leave?";
+          "Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je wilt weggaan?";
       }
     });
   }
@@ -325,11 +331,11 @@ class CheckOptions {
       this.handleHashChange();
       // Update branding preview
       this.updateBrandingPreview();
-      this.showToast("Settings loaded successfully", "success");
+      this.showToast("Instellingen geladen", "success");
     } catch (error) {
       console.error("Failed to initialize options page:", error);
       this.showToast(
-        "Failed to load some settings - using defaults where possible",
+        "Sommige instellingen konden niet worden geladen — standaardwaarden gebruikt",
         "warning"
       );
     }
@@ -415,7 +421,7 @@ class CheckOptions {
         showNotifications: true,
         enableValidPageBadge: false,
         customRulesUrl:
-          "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+          "https://raw.githubusercontent.com/BruinsmaICT-Jorik/Bruinsma Protect/refs/heads/main/rules/detection-rules.json",
         updateInterval: 24,
         enableDebugLogging: false,
         enableDeveloperConsoleLogging: false,
@@ -492,23 +498,23 @@ class CheckOptions {
       // Fallback to default branding if background script fails
       console.warn("Options: Using fallback branding configuration");
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "Bruinsma Protect",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
         logoUrl: "images/icon48.png",
       };
     } catch (error) {
       console.error("Error loading branding configuration:", error);
       this.brandingConfig = {
-        companyName: "CyberDrain",
-        productName: "Check",
+        companyName: "Bruinsma",
+        productName: "Bruinsma Protect",
         supportUrl: "",
         privacyPolicyUrl: "",
         aboutUrl: "",
-        primaryColor: "#F77F00",
+        primaryColor: "#299DCF",
         logoUrl: "images/icon48.png",
       };
     }
@@ -576,14 +582,14 @@ class CheckOptions {
   parsePlaygroundRules(silent = false) {
     const raw = this.getPlaygroundRulesRaw();
     if (!raw) {
-      if (!silent) this.showToast("No rules JSON provided", "warning");
+      if (!silent) this.showToast("Geen regels-JSON opgegeven", "warning");
       return null;
     }
     try {
       const parsed = JSON.parse(raw);
       return parsed;
     } catch (e) {
-      if (!silent) this.showToast("Invalid JSON: " + e.message, "error");
+      if (!silent) this.showToast("Ongeldige JSON: " + e.message, "error");
       return null;
     }
   }
@@ -633,22 +639,22 @@ class CheckOptions {
     try {
       const sanitized = JSON.stringify(parsed, null, 2);
       this.elements.playgroundRulesInput.value = sanitized;
-      this.showToast("Rules formatted", "success");
+      this.showToast("Regels opgemaakt", "success");
     } catch (e) {
-      this.showToast("Failed to sanitize: " + e.message, "error");
+      this.showToast("Opschonen mislukt: " + e.message, "error");
     }
   }
 
   copyPlaygroundRules() {
     const raw = this.getPlaygroundRulesRaw();
     if (!raw) {
-      this.showToast("Nothing to copy", "warning");
+      this.showToast("Niets om te kopiëren", "warning");
       return;
     }
     navigator.clipboard.writeText(raw).then(() => {
-      this.showToast("Copied to clipboard", "success");
+      this.showToast("Gekopieerd naar klembord", "success");
     }).catch(err => {
-      this.showToast("Copy failed: " + err.message, "error");
+      this.showToast("Kopiëren mislukt: " + err.message, "error");
     });
   }
 
@@ -665,9 +671,9 @@ class CheckOptions {
       const response = await fetch(chrome.runtime.getURL('rules/detection-rules.json'));
       const json = await response.json();
       this.elements.playgroundRulesInput.value = JSON.stringify(json, null, 2);
-      this.showToast('Loaded full rules file', 'success');
+      this.showToast('Volledig regelsbestand geladen', 'success');
     } catch (e) {
-      this.showToast('Failed to load rules: ' + e.message, 'error');
+      this.showToast('Laden van regels mislukt: ' + e.message, 'error');
     }
   }
 
@@ -678,13 +684,13 @@ class CheckOptions {
 
     const testUrl = (this.elements.playgroundTestUrl?.value || '').trim();
     if (!testUrl) {
-      this.showToast('Provide a Test URL', 'warning');
+      this.showToast('Vul een test-URL in', 'warning');
       return;
     }
 
     let htmlSource = (this.elements.playgroundHtmlInput?.value || '').trim();
     if (!htmlSource) {
-      this.showToast('Provide HTML source', 'warning');
+      this.showToast('Vul HTML-bron in', 'warning');
       return;
     }
 
@@ -709,7 +715,7 @@ class CheckOptions {
       } else if (parsed && parsed.rules) { // legacy/alternate key
         fullRulesConfig = { phishing_indicators: parsed.rules.filter(r => r && (r.pattern || r.regex)).map(normalizeRule), blocking_rules: parsed.blocking_rules || {} };
       } else {
-        this.showToast('No usable rules found in input', 'warning');
+        this.showToast('Geen bruikbare regels in de invoer gevonden', 'warning');
         return;
       }
 
@@ -753,15 +759,15 @@ class CheckOptions {
         }
         if (synthesized.length) {
           fullRulesConfig.phishing_indicators.push(...synthesized);
-          this.showToast(`Synthesized ${synthesized.length} indicators from rules[] for testing`, 'info');
+          this.showToast(`${synthesized.length} indicatoren uit rules[] samengesteld voor test`, 'info');
         }
       }
       if (!fullRulesConfig.phishing_indicators.length) {
-        this.showToast('No phishing_indicators found. Ensure JSON has phishing_indicators array with objects containing a pattern field.', 'warning');
+        this.showToast('Geen phishing_indicators gevonden. Zorg dat de JSON een phishing_indicators-array heeft met objecten met een pattern-veld.', 'warning');
         return;
       }
     } catch (e) {
-      this.showToast('Failed to prepare rules: ' + e.message, 'error');
+      this.showToast('Voorbereiden van regels mislukt: ' + e.message, 'error');
       return;
     }
 
@@ -866,12 +872,12 @@ class CheckOptions {
   applyBranding() {
     // Update sidebar branding
     document.getElementById("sidebarTitle").textContent =
-      this.brandingConfig?.productName || "Check";
+      this.brandingConfig?.productName || "Bruinsma Protect";
 
     // Update mobile logo text
     const mobileLogoText = document.getElementById("mobileLogoText");
     if (mobileLogoText) {
-      mobileLogoText.textContent = this.brandingConfig?.productName || "Check";
+      mobileLogoText.textContent = this.brandingConfig?.productName || "Bruinsma Protect";
     }
 
     // Function to set logo src with fallback
@@ -1045,7 +1051,7 @@ class CheckOptions {
       this.brandingConfig?.privacyPolicyUrl || "";
     this.elements.aboutUrl.value = this.brandingConfig?.aboutUrl || "";
     this.elements.primaryColor.value =
-    this.brandingConfig?.primaryColor || "#F77F00";
+    this.brandingConfig?.primaryColor || "#299DCF";
     this.elements.logoUrl.value = this.brandingConfig?.logoUrl || "";
   }
 
@@ -1066,31 +1072,31 @@ class CheckOptions {
     // Update page title and subtitle
     const sectionInfo = {
       general: {
-        title: "General Settings",
+        title: "Algemene instellingen",
         subtitle:
-          "Configure basic phishing protection behavior and detection features",
+          "Stel het gedrag van phishingbescherming en detectiefuncties in",
       },
       detection: {
-        title: "Detection Rules",
-        subtitle: "Load custom detection rules for phishing protection",
+        title: "Detectieregels",
+        subtitle: "Beheer detectieregels voor phishingbescherming",
       },
       logs: {
-        title: "Activity Logs",
-        subtitle: "View security events and extension activity",
+        title: "Activiteitenlogboek",
+        subtitle: "Bekijk beveiligingsgebeurtenissen en extensieactiviteit",
       },
       branding: {
-        title: "Branding & White Labeling",
-        subtitle: "Customize the extension's appearance and branding",
+        title: "Branding",
+        subtitle: "Pas de uitstraling en branding van de extensie aan",
       },
       about: {
-        title: "About Check, a product by CyberDrain",
+        title: "Over Bruinsma Protect",
         subtitle:
-          "Enterprise-grade protection against Microsoft 365 phishing attacks",
+          "Bescherming tegen Microsoft 365-phishing voor jouw organisatie",
       },
     };
 
     const info = sectionInfo[sectionName] || {
-      title: "Settings",
+      title: "Instellingen",
       subtitle: "",
     };
     this.elements.pageTitle.textContent = info.title;
@@ -1185,7 +1191,7 @@ class CheckOptions {
         }
       } catch (brandingError) {
         console.error("Failed to save branding config:", brandingError);
-        this.showToast("Failed to save branding settings", "warning");
+        this.showToast("Opslaan van branding mislukt", "warning");
       }
 
       if (response && response.success) {
@@ -1193,13 +1199,13 @@ class CheckOptions {
         this.originalConfig = JSON.parse(JSON.stringify(newConfig));
         this.hasUnsavedChanges = false;
         this.updateSaveButton();
-        this.showToast("Settings saved successfully", "success");
+        this.showToast("Instellingen opgeslagen", "success");
       } else {
-        throw new Error(response?.error || "Failed to save settings");
+        throw new Error(response?.error || "Opslaan van instellingen mislukt");
       }
     } catch (error) {
       console.error("Failed to save settings:", error);
-      this.showToast("Failed to save settings", "error");
+      this.showToast("Opslaan van instellingen mislukt", "error");
     }
   }
 
@@ -1321,13 +1327,13 @@ class CheckOptions {
     if (config.updateInterval < 1 || config.updateInterval > 168) {
       return {
         valid: false,
-        message: "Update interval must be between 1-168 hours",
+        message: "Update-interval moet tussen 1 en 168 uur liggen",
       };
     }
 
     // URL validation
     if (config.customRulesUrl && !this.isValidUrl(config.customRulesUrl)) {
-      return { valid: false, message: "Custom rules URL is not valid" };
+      return { valid: false, message: "URL voor aangepaste regels is ongeldig" };
     }
 
     // URL Allowlist validation
@@ -1432,13 +1438,13 @@ class CheckOptions {
         // No longer editing rules, just display them
         this.currentConfigData = defaultRules;
         this.updateConfigDisplay();
-        this.showToast("Default rules loaded", "success");
+        this.showToast("Standaardregels geladen", "success");
       } finally {
         clearTimeout(timeoutId);
       }
     } catch (error) {
       console.error("Failed to load default rules:", error);
-      this.showToast("Failed to load default rules", "error");
+      this.showToast("Laden van standaardregels mislukt", "error");
     }
   }
 
@@ -1776,13 +1782,13 @@ class CheckOptions {
         this.setButtonIconAndLabel(
           this.elements.expandCollapseAll,
           "unfold_less",
-          "Collapse All"
+          "Alles inklappen"
         );
       } else {
         this.setButtonIconAndLabel(
           this.elements.expandCollapseAll,
           "unfold_more",
-          "Expand All"
+          "Alles uitklappen"
         );
       }
     }
@@ -1806,7 +1812,7 @@ class CheckOptions {
         this.setButtonIconAndLabel(
           this.elements.toggleConfigView,
           "code",
-          "Show Raw JSON"
+          "Ruwe JSON tonen"
         );
       }
     }
@@ -1849,9 +1855,9 @@ class CheckOptions {
     this.populateFormFields();
 
     // Show notification to user
-    const mode = this.simulateEnterpriseMode ? "enabled" : "disabled";
+    const mode = this.simulateEnterpriseMode ? "ingeschakeld" : "uitgeschakeld";
     this.showToast(
-      `Enterprise simulation mode ${mode}. Page will reflect ${this.simulateEnterpriseMode ? 'policy restrictions' : 'original settings'}.`,
+      `Enterprise-simulatie ${mode}. De pagina toont ${this.simulateEnterpriseMode ? "beleidsbeperkingen" : "de oorspronkelijke instellingen"}.`,
       "info"
     );
   }
@@ -1913,7 +1919,7 @@ class CheckOptions {
       this.displayLogs(allLogs);
     } catch (error) {
       console.error("Failed to load logs:", error);
-      this.showToast("Failed to load logs", "error");
+      this.showToast("Laden van logboek mislukt", "error");
     }
   }
 
@@ -1928,7 +1934,7 @@ class CheckOptions {
       empty.style.gridColumn = "1 / -1";
       empty.style.textAlign = "center";
       empty.style.color = "#9ca3af";
-      empty.textContent = "No logs available";
+      empty.textContent = "Geen logboeken beschikbaar";
       item.appendChild(empty);
       this.elements.logsList.appendChild(item);
       return;
@@ -2404,7 +2410,7 @@ class CheckOptions {
       const decodedText = this.decodeHtml(text);
       await navigator.clipboard.writeText(decodedText);
 
-      this.showMobileToast("Copied to clipboard!");
+      this.showMobileToast("Gekopieerd naar klembord!");
     } catch (err) {
       console.error("Failed to copy to clipboard:", err);
 
@@ -2419,7 +2425,7 @@ class CheckOptions {
       document.execCommand("copy");
       document.body.removeChild(textArea);
 
-      this.showMobileToast("Copied to clipboard!");
+      this.showMobileToast("Gekopieerd naar klembord!");
     }
   }
 
@@ -2517,21 +2523,21 @@ class CheckOptions {
           cippServerUrl: "",
           cippTenantId: "",
           customRulesUrl:
-            "https://raw.githubusercontent.com/CyberDrain/Check/refs/heads/main/rules/detection-rules.json",
+            "https://raw.githubusercontent.com/BruinsmaICT-Jorik/Bruinsma Protect/refs/heads/main/rules/detection-rules.json",
           updateInterval: 24,
           enableDebugLogging: false,
           // Note: enableDeveloperConsoleLogging is not policy-managed - remains under user control
 
           // Custom branding (matches managed_schema.json structure)
           customBranding: {
-            companyName: "CyberDrain",
-            productName: "Check Enterprise",
+            companyName: "Bruinsma",
+            productName: "Bruinsma Protect",
             supportUrl: "",
             privacyPolicyUrl: "",
             aboutUrl: "",
-            primaryColor: "#F77F00",
+            primaryColor: "#299DCF",
             logoUrl:
-              "https://cyberdrain.com/images/favicon_hu_20e77b0e20e363e.png",
+              "images/icon48.png",
           },
         };
 
@@ -2724,7 +2730,7 @@ class CheckOptions {
       const lockIcon = document.createElement("span");
       lockIcon.className = "material-icons policy-lock";
       lockIcon.textContent = "lock";
-      lockIcon.title = "Managed by policy";
+      lockIcon.title = "Beheerd via beleid";
       lockIcon.style.cssText = `
         font-size: 16px;
         margin-left: 8px;
@@ -2776,7 +2782,7 @@ class CheckOptions {
 
     // Re-enable the save button and restore original text
     if (this.elements.saveSettings) {
-      this.elements.saveSettings.title = "Save all settings";
+      this.elements.saveSettings.title = "Alle instellingen opslaan";
       this.elements.saveSettings.textContent = "Save Settings";
       this.elements.saveSettings.classList.remove("managed-mode");
     }
@@ -2830,7 +2836,7 @@ class CheckOptions {
     if (this.elements.saveSettings) {
       // Don't fully disable the save button - allow saving of non-managed settings
       this.elements.saveSettings.title =
-        "Save non-managed settings (managed settings cannot be modified)";
+        "Niet-beheerde instellingen opslaan (beheerde instellingen kunnen niet worden gewijzigd)";
       this.elements.saveSettings.textContent = "Save Available Settings";
       this.elements.saveSettings.classList.add("managed-mode");
     }
@@ -2839,7 +2845,7 @@ class CheckOptions {
     if (this.elements.enableDebugLogging) {
       this.elements.enableDebugLogging.disabled = true;
       this.elements.enableDebugLogging.title =
-        "Debug logging is managed by your organization's policy";
+        "Debuglogging wordt beheerd via het beleid van je organisatie";
       this.elements.enableDebugLogging.classList.add("policy-managed");
     }
 
@@ -3253,7 +3259,7 @@ class CheckOptions {
           return defaultMsg + formatRedirectInfo(log.event);
       }
     }
-    return log.message || log.type || "Unknown event";
+    return log.message || log.type || "Onbekende gebeurtenis";
   }
 
   async refreshLogs() {
@@ -3268,7 +3274,7 @@ class CheckOptions {
         await this.loadLogs();
 
         // Show success feedback
-        this.showToast("Logs refreshed successfully", "success");
+        this.showToast("Logboek vernieuwd", "success");
 
         // Restore button state
         this.elements.refreshLogs.textContent = originalText;
@@ -3276,11 +3282,11 @@ class CheckOptions {
       } else {
         // Fallback if button element not found
         await this.loadLogs();
-        this.showToast("Logs refreshed successfully", "success");
+        this.showToast("Logboek vernieuwd", "success");
       }
     } catch (error) {
       console.error("Failed to refresh logs:", error);
-      this.showToast("Failed to refresh logs", "error");
+      this.showToast("Vernieuwen van logboek mislukt", "error");
 
       // Restore button state on error
       if (this.elements.refreshLogs) {
@@ -3314,7 +3320,7 @@ class CheckOptions {
   async clearLogs() {
     const confirmed = await this.showConfirmDialog(
       "Clear All Logs",
-      "Are you sure you want to clear all activity logs? This action cannot be undone."
+      "Weet je zeker dat je alle activiteitslogboeken wilt wissen? Dit kan niet ongedaan worden gemaakt."
     );
 
     if (confirmed) {
@@ -3336,10 +3342,10 @@ class CheckOptions {
           ])
         );
         this.loadLogs();
-        this.showToast("Logs cleared successfully", "success");
+        this.showToast("Logboek gewist", "success");
       } catch (error) {
         console.error("Failed to clear logs:", error);
-        this.showToast("Failed to clear logs", "error");
+        this.showToast("Logboek wissen mislukt", "error");
       }
     }
   }
@@ -3378,10 +3384,79 @@ class CheckOptions {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      this.showToast("Logs exported successfully", "success");
+      this.showToast("Logboek geëxporteerd", "success");
     } catch (error) {
       console.error("Failed to export logs:", error);
-      this.showToast("Failed to export logs", "error");
+      this.showToast("Exporteren van logboek mislukt", "error");
+    }
+  }
+
+  async testCippReport() {
+    const button = this.elements.testCippReport;
+    const originalHtml = button?.innerHTML;
+    const cippServerUrl =
+      this.elements.cippServerUrl?.value?.trim() ||
+      document.getElementById("cippServerUrl")?.value?.trim() ||
+      "";
+    const cippTenantId =
+      this.elements.cippTenantId?.value?.trim() ||
+      document.getElementById("cippTenantId")?.value?.trim() ||
+      "";
+
+    if (!cippServerUrl) {
+      this.showToast("Vul eerst een CIPP-server-URL in.", "warning");
+      return;
+    }
+
+    try {
+      if (button) {
+        button.disabled = true;
+        button.innerHTML =
+          '<span class="material-icons">hourglass_empty</span> Bezig met versturen...';
+      }
+
+      const response = await new Promise((resolve) => {
+        chrome.runtime.sendMessage(
+          {
+            type: "TEST_CIPP_REPORT",
+            settings: {
+              cippServerUrl,
+              cippTenantId,
+            },
+          },
+          (result) => {
+            if (chrome.runtime.lastError) {
+              resolve({
+                success: false,
+                error: chrome.runtime.lastError.message,
+              });
+              return;
+            }
+            resolve(result || { success: false, error: "Geen antwoord" });
+          }
+        );
+      });
+
+      if (response?.success) {
+        this.showToast(
+          response.message ||
+            "CIPP-testmelding verstuurd. Controleer CIPP of je request-catcher.",
+          "success"
+        );
+      } else {
+        this.showToast(
+          "CIPP-test mislukt: " + (response?.error || "Onbekende fout"),
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error("CIPP test failed:", error);
+      this.showToast("CIPP-test mislukt: " + error.message, "error");
+    } finally {
+      if (button && originalHtml) {
+        button.disabled = false;
+        button.innerHTML = originalHtml;
+      }
     }
   }
 
@@ -3404,17 +3479,17 @@ class CheckOptions {
       });
 
       if (response?.success) {
-        this.showToast("Detection rules updated successfully", "success");
+        this.showToast("Detectieregels bijgewerkt", "success");
 
         // Reload configuration display if visible
         await this.updateConfigDisplay();
       } else {
-        throw new Error(response?.error || "Failed to update detection rules");
+        throw new Error(response?.error || "Bijwerken van detectieregels mislukt");
       }
     } catch (error) {
       console.error("Failed to refresh detection rules:", error);
       this.showToast(
-        "Failed to update detection rules: " + error.message,
+        "Bijwerken van detectieregels mislukt: " + error.message,
         "error"
       );
     } finally {
@@ -3761,21 +3836,24 @@ class CheckOptions {
       }
       
       if (defaultDomains.length === 0) {
-        this.showToast('No default protected domains found', 'warning');
+        this.showToast("Geen standaard beschermde domeinen gevonden", "warning");
         return;
       }
-      
+
       // Show confirm dialog with default domains
-      const domainList = defaultDomains.map(d => `• ${d}`).join('\n');
-      const message = `Default Protected Domains (${defaultDomains.length}):\n\n${domainList}\n\nThese domains are protected by default. You can add additional domains in the "Protected Domains" field above.`;
-      
+      const domainList = defaultDomains.map((d) => `• ${d}`).join("\n");
+      const message = `Standaard beschermde domeinen (${defaultDomains.length}):\n\n${domainList}\n\nDeze Microsoft 365-domeinen worden standaard beschermd. Extra klant-/partnerdomeinen kun je via beleid of urlAllowlist toevoegen.`;
+
       await this.showConfirmDialog(
-        'Default Protected Domains',
+        "Standaard beschermde domeinen",
         message
       );
     } catch (error) {
-      console.error('Failed to load default domains:', error);
-      this.showToast('Failed to load default protected domains', 'error');
+      console.error("Failed to load default domains:", error);
+      this.showToast(
+        "Laden van standaard beschermde domeinen mislukt",
+        "error"
+      );
     }
   }
 }

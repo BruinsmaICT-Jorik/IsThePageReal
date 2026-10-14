@@ -11,15 +11,15 @@
 }
 
 :root {
-  --primary-color: #F77F00;
+  --primary-color: #299DCF;
   --primary-hover: #E56F00;
-  --primary-dark: #003049;
-  --secondary-teal-dark: #005C63;
+  --primary-dark: #00395F;
+  --secondary-teal-dark: #1A7399;
   --secondary-teal-medium: #3E5C66;
   --secondary-light-green: #EBF0DF;
-  --success-color: #005C63;
-  --warning-color: #F77F00;
-  --error-color: #003049;
+  --success-color: #28A745;
+  --warning-color: #F76E30;
+  --error-color: #DC3545;
   --radius: 8px;
   --radius-lg: 12px;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
