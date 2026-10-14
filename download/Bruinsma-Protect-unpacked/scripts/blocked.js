@@ -8,6 +8,7 @@ let globalDetectionDetails = null;
 let webhookConfig = null;
 let safeStartUrl = "https://www.office.com";
 let supportEmail = "info@bruinsmakantoor.nl";
+const falsePositiveReportEmail = "help@bruinsma-ict.nl";
 
 const AWARENESS_TIPS = [
   "Typ office.com zelf in de adresbalk in plaats van op een link in een mail te klikken.",
