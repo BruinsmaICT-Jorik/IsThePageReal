@@ -182,7 +182,7 @@ async function reportFalsePositive() {
 
   try {
     reportBtn.disabled = true;
-    reportBtn.textContent = "Bezig met melden...";
+    reportBtn.textContent = "Mail openen...";
 
     const reportData = {
       reportedUrl: getOriginalBlockedUrl(),
@@ -191,50 +191,33 @@ async function reportFalsePositive() {
       userComments: null,
     };
 
-    const response = await new Promise((resolve) => {
-      if (typeof chrome === "undefined" || !chrome.runtime?.sendMessage) {
-        resolve({ success: false, error: "Extensie niet beschikbaar" });
-        return;
-      }
+    // Best-effort: also log/send via webhook/CIPP without blocking the mail
+    if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
       chrome.runtime.sendMessage(
         {
           type: "SUBMIT_USER_REPORT",
           reportType: "false_positive_report",
           data: reportData,
         },
-        (result) => {
-          if (chrome.runtime.lastError) {
-            resolve({
-              success: false,
-              error: chrome.runtime.lastError.message,
-            });
-            return;
-          }
-          resolve(result || { success: false, error: "Geen antwoord" });
+        () => {
+          void chrome.runtime.lastError;
         }
       );
-    });
-
-    if (response?.success) {
-      reportBtn.textContent = "Bedankt — melding verstuurd";
-      reportBtn.style.background = "#16a34a";
-      reportBtn.style.color = "white";
-      reportBtn.style.borderColor = "#16a34a";
-      return;
     }
 
-    // Fallback: open mail to Bruinsma support
     const subject = encodeURIComponent(
       "Bruinsma Protect — mogelijk vals alarm"
     );
     const body = encodeURIComponent(
       `Hallo Bruinsma,\n\nIk denk dat Bruinsma Protect een veilige pagina heeft geblokkeerd.\n\nURL: ${reportData.reportedUrl}\nReden: ${reportData.reportedReason}\n\nMet vriendelijke groet`
     );
-    window.location.href = `mailto:${supportEmail}?subject=${subject}&body=${body}`;
-    reportBtn.textContent = "Mail naar Bruinsma geopend";
-    reportBtn.disabled = false;
+    window.location.href = `mailto:${falsePositiveReportEmail}?subject=${subject}&body=${body}`;
+    reportBtn.textContent = "Mail naar help@bruinsma-ict.nl geopend";
+    reportBtn.style.background = "#16a34a";
+    reportBtn.style.color = "white";
+    reportBtn.style.borderColor = "#16a34a";
   } catch (error) {
-    console.error("Failed to send false positive report:", error);
+    console.error("Failed to open false positive mail:", error);
     reportBtn.textContent = "Melden mislukt — bel Bruinsma";
     reportBtn.style.background = "#dc2626";
     reportBtn.style.color = "white";
