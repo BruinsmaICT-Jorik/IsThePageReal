@@ -11,7 +11,7 @@ let supportEmail = "info@bruinsmakantoor.nl";
 
 const AWARENESS_TIPS = [
   "Typ office.com zelf in de adresbalk in plaats van op een link in een mail te klikken.",
-  "Echte Microsoft-inlog staat op microsoftonline.com of office.com — niet op een rare of net-niet-juiste website.",
+  "Echte Microsoft-inlog staat op microsoftonline.com of office.com. Deze vind je niet op een rare of net-niet-juiste website.",
   "Vraagt iemand onverwacht om opnieuw in te loggen? Even checken via Bruinsma of je IT-contact.",
   "Deel nooit een eenmalige code of wachtwoord via mail, chat of telefoon als jij het gesprek niet bent begonnen.",
   "Twijfel je over een link? Open Microsoft 365 via de knop hierboven — niet via de verdachte pagina.",
