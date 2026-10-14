@@ -513,7 +513,7 @@ async function loadBranding() {
         storageResult.companyName || storageResult.productName || "Bruinsma Protect";
       console.log("Setting company name from background to:", companyName);
       document.getElementById("companyName").textContent = companyName;
-      document.title = `Toegang geblokkeerd - ${companyName}`;
+      document.title = `Bruinsma blokkeert de toegang tot deze pagina`;
 
       // Update product name if available
       if (storageResult.productName) {
@@ -648,7 +648,7 @@ async function loadBranding() {
         const companyName = brandingConfig.companyName || "Bruinsma Protect";
         console.log("Setting company name from file to:", companyName);
         document.getElementById("companyName").textContent = companyName;
-        document.title = `Toegang geblokkeerd - ${companyName}`;
+        document.title = `Bruinsma blokkeert de toegang tot deze pagina`;
       }
     } catch (fetchError) {
       console.warn("Could not load branding.json:", fetchError);
