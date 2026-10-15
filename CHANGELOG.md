@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fase 2 — menselijke momenten (1.3.0)
+- **A Veilige gids:** knop “Ga naar echte Microsoft 365” op blocked page + popup; policy `safeStartUrl`.
+- **B Bruinsma-moment:** blocked page als coach (stappen + tip); menselijke NL-teksten.
+- **C Positieve zekerheid:** sterkere “echte Microsoft-inlog / Beschermd door Bruinsma”-badge.
+- **D Meld & help:** popup “Dit lijkt verdacht”; “Was dit een fout?” mailt naar help@bruinsma-ict.nl.
+- **E Wekelijkse brief:** popup vertelt in één zin wat er deze week is gestopt (7 dagen), cijfers onder Details.
+
 ### Fase 1 — snelle winst (1.2.2)
 - Microsoft 365 **domain-squatting baseline** in `rules/detection-rules.json`; runtime merge met policy `protectedDomains` + urlAllowlist.
 - Domain squatting standaard **ingeschakeld** in defaults/schema.

@@ -1399,6 +1399,93 @@ class CheckBackground {
           }
           break;
 
+        case "SUBMIT_USER_REPORT":
+          try {
+            const reportType = message.reportType;
+            const data = message.data || {};
+            if (
+              reportType !== "false_positive_report" &&
+              reportType !== "user_suspicious_report"
+            ) {
+              sendResponse({
+                success: false,
+                error: "Ongeldig rapporttype",
+              });
+              break;
+            }
+
+            const webhookType =
+              reportType === "false_positive_report"
+                ? this.webhookManager.webhookTypes.FALSE_POSITIVE
+                : this.webhookManager.webhookTypes.USER_SUSPICIOUS;
+
+            const config = await this.configManager.getConfig();
+            let userProfile = null;
+            try {
+              userProfile = await this.getCurrentProfile();
+            } catch (_) {
+              userProfile = null;
+            }
+
+            const result = await this.webhookManager.sendWebhook(
+              webhookType,
+              {
+                url: data.reportedUrl || data.url,
+                reportedUrl: data.reportedUrl || data.url,
+                reason:
+                  data.reportedReason ||
+                  data.reason ||
+                  (reportType === "false_positive_report"
+                    ? "Gebruiker meldt mogelijk vals alarm"
+                    : "Gebruiker meldt verdachte pagina"),
+                reportedReason: data.reportedReason,
+                detectionDetails: data.detectionDetails || {},
+                userComments: data.userComments || null,
+                pageTitle: data.pageTitle || null,
+                domain: data.domain || null,
+                referrer: data.referrer || null,
+                severity:
+                  reportType === "user_suspicious_report" ? "high" : "info",
+                category: "user_report",
+              },
+              {
+                userProfile,
+                tenantId: config?.cippTenantId || null,
+              }
+            );
+
+            // Also log locally for activity / MSP follow-up
+            await this.logEvent(
+              {
+                type:
+                  reportType === "false_positive_report"
+                    ? "false_positive_report"
+                    : "user_suspicious_report",
+                url: data.reportedUrl || data.url,
+                reason: data.reportedReason || data.reason,
+                timestamp: new Date().toISOString(),
+              },
+              sender.tab?.id
+            );
+
+            const delivered =
+              result?.success === true ||
+              (Array.isArray(result?.results) &&
+                result.results.some((r) => r.success));
+
+            sendResponse({
+              success: true,
+              delivered: !!delivered,
+              message: delivered
+                ? "Melding verstuurd"
+                : "Melding lokaal vastgelegd (geen webhook/CIPP geconfigureerd)",
+            });
+          } catch (error) {
+            logger.error("Check: Failed to submit user report:", error);
+            sendResponse({ success: false, error: error.message });
+          }
+          break;
+
         case "GET_POLICIES":
           try {
             // Test managed storage directly
@@ -2525,7 +2612,32 @@ class CheckBackground {
     };
   }
 
-  // Get aggregated statistics for popup display
+  isBlockedThreatEvent(event) {
+    if (!event) return false;
+    return (
+      event.type === "threat_blocked" ||
+      event.type === "threat_detected" ||
+      event.type === "content_threat_detected" ||
+      event.type === "page_blocked" ||
+      (event.action && String(event.action).includes("blocked")) ||
+      (event.threatLevel &&
+        ["high", "critical"].includes(event.threatLevel))
+    );
+  }
+
+  isWithinLastDays(entry, days) {
+    const raw =
+      entry?.timestamp ||
+      entry?.event?.timestamp ||
+      entry?.event?.reportTimestamp;
+    if (!raw) return false;
+    const ts = Date.parse(raw);
+    if (Number.isNaN(ts)) return false;
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    return ts >= cutoff;
+  }
+
+  // Get aggregated statistics for popup display (incl. weekly brief)
   async getStatistics() {
     try {
       // Safe wrapper for chrome storage operations
@@ -2544,12 +2656,15 @@ class CheckBackground {
 
       const securityEvents = result?.securityEvents || [];
       const accessLogs = result?.accessLogs || [];
-      const debugLogs = result?.debugLogs || [];
 
       // Calculate statistics from logged events
       let blockedThreats = 0;
       let scannedPages = 0;
       let securityEventsCount = 0;
+      let weekBlockedThreats = 0;
+      let weekScannedPages = 0;
+      let weekSecurityEvents = 0;
+      let weekUserReports = 0;
 
       // Count blocked threats from security events
       securityEvents.forEach((entry) => {
@@ -2558,33 +2673,43 @@ class CheckBackground {
 
         // Count as security event
         securityEventsCount++;
+        const inWeek = this.isWithinLastDays(entry, 7);
+        if (inWeek) {
+          weekSecurityEvents++;
+        }
 
-        // Count blocked threats (various types of blocking/threat detection)
-        if (
-          event.type === "threat_blocked" ||
-          event.type === "threat_detected" ||
-          event.type === "content_threat_detected" ||
-          (event.action && event.action.includes("blocked")) ||
-          (event.threatLevel &&
-            ["high", "critical"].includes(event.threatLevel))
-        ) {
+        if (this.isBlockedThreatEvent(event)) {
           blockedThreats++;
+          if (inWeek) {
+            weekBlockedThreats++;
+          }
+        }
+
+        if (
+          event.type === "user_suspicious_report" ||
+          event.type === "false_positive_report"
+        ) {
+          if (inWeek) {
+            weekUserReports++;
+          }
+        }
+
+        if (event.type === "legitimate_access") {
+          scannedPages++;
+          if (inWeek) {
+            weekScannedPages++;
+          }
         }
       });
 
-      // Count scanned pages from access logs and legitimate access events
+      // Count scanned pages from access logs
       accessLogs.forEach((entry) => {
         const event = entry.event;
         if (event && event.type === "page_scanned") {
           scannedPages++;
-        }
-      });
-
-      // Also count legitimate access events as scanned pages
-      securityEvents.forEach((entry) => {
-        const event = entry.event;
-        if (event && event.type === "legitimate_access") {
-          scannedPages++;
+          if (this.isWithinLastDays(entry, 7)) {
+            weekScannedPages++;
+          }
         }
       });
 
@@ -2593,6 +2718,10 @@ class CheckBackground {
         blockedThreats: blockedThreats,
         scannedPages: scannedPages,
         securityEvents: securityEventsCount,
+        weekBlockedThreats,
+        weekScannedPages,
+        weekSecurityEvents,
+        weekUserReports,
         lastUpdated: new Date().toISOString(),
       };
 
@@ -2605,6 +2734,10 @@ class CheckBackground {
         blockedThreats: 0,
         scannedPages: 0,
         securityEvents: 0,
+        weekBlockedThreats: 0,
+        weekScannedPages: 0,
+        weekSecurityEvents: 0,
+        weekUserReports: 0,
         lastUpdated: new Date().toISOString(),
         error: error.message,
       };

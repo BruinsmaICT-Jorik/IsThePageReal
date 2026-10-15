@@ -296,6 +296,7 @@ export class ConfigManager {
       notificationDuration: 5000,
       enableValidPageBadge: true,
       enablePageBlocking: true,
+      safeStartUrl: "https://www.office.com",
 
       // Debug settings
       enableDebugLogging: false,
@@ -352,7 +353,7 @@ export class ConfigManager {
       // Company branding
       companyName: "Bruinsma",
       productName: "Bruinsma Protect",
-      version: "1.2.2",
+      version: "1.3.0",
 
       // Visual branding
       primaryColor: "#299DCF",
@@ -363,16 +364,26 @@ export class ConfigManager {
       // Contact information
       supportEmail: "info@bruinsmakantoor.nl",
       supportUrl: "https://bruinsmakantoor.nl/ict/",
-      privacyPolicyUrl: "https://bruinsmakantoor.nl/",
+      privacyPolicyUrl:
+        "https://github.com/BruinsmaICT-Jorik/IsThePageReal/blob/main/docs/privacy-avg.md",
       aboutUrl: "https://bruinsmakantoor.nl/ict/over-ons/",
       termsOfServiceUrl: "",
 
       // Customizable text
       welcomeMessage:
-        "Welcome to Check - Your Enterprise Web Security Solution",
-      blockedPageTitle: "Access Blocked by Check",
+        "Welkom bij Bruinsma Protect — phishingbescherming voor Microsoft 365",
+      blockedPageTitle: "We hebben een verdachte inlogpagina gestopt",
       blockedPageMessage:
-        "This page has been blocked by your organization's security policy.",
+        "Deze pagina lijkt Microsoft 365 na te bootsen om jouw inloggegevens te stelen. Log hier niet in — Bruinsma Protect heeft de toegang geblokkeerd.",
+      features: {
+        validBadgeTitle: "Dit is de echte Microsoft-inlog",
+        validBadgeSubtitle: "Beschermd door Bruinsma",
+        safeStartUrl: "https://www.office.com",
+        safeStartLabel: "Ga naar echte Microsoft 365",
+        blockedPageTitle: "We hebben een verdachte inlogpagina gestopt",
+        blockedPageMessage:
+          "Deze pagina lijkt Microsoft 365 na te bootsen om jouw inloggegevens te stelen. Log hier niet in — Bruinsma Protect heeft de toegang geblokkeerd.",
+      },
 
       // Feature customization
       showCompanyBranding: true,

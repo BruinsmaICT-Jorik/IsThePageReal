@@ -3,6 +3,7 @@
   "enableValidPageBadge": true,
   "validPageBadgeTimeout": 5,
   "enablePageBlocking": true,
+  "safeStartUrl": "https://www.office.com",
   "enableCippReporting": true,
   "cippServerUrl": "https://REPLACE_WITH_CIPP_HOST",
   "cippTenantId": "REPLACE_WITH_CUSTOMER_TENANT_ID_OR_DOMAIN",

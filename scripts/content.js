@@ -6588,35 +6588,66 @@ if (window.checkExtensionLoaded) {
         isMobile
       ); // Debug log
 
+      // Bruinsma "positive certainty" badge copy (from branding when available)
+      let badgeTitle = "Dit is de echte Microsoft-inlog";
+      let badgeSubtitle = "Beschermd door Bruinsma";
+      try {
+        const branding = await new Promise((resolve) => {
+          chrome.runtime.sendMessage(
+            { type: "GET_BRANDING_CONFIG" },
+            (response) => {
+              if (chrome.runtime.lastError || !response?.success) {
+                resolve(null);
+                return;
+              }
+              resolve(response.branding || null);
+            }
+          );
+        });
+        const features = branding?.features || {};
+        if (features.validBadgeTitle) {
+          badgeTitle = features.validBadgeTitle;
+        }
+        if (features.validBadgeSubtitle) {
+          badgeSubtitle = features.validBadgeSubtitle;
+        } else if (branding?.companyName) {
+          badgeSubtitle = `Beschermd door ${branding.companyName}`;
+        }
+      } catch (_) {
+        // keep defaults
+      }
+
       const badge = document.createElement("div");
       badge.id = "ms365-valid-badge";
+      badge.setAttribute("role", "status");
+      badge.setAttribute("aria-live", "polite");
 
       if (isMobile) {
-        // Mobile: Banner style
+        // Mobile: full-width reassurance banner
         badge.style.cssText = `
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+        background: #00395F !important;
         color: white !important;
-        padding: 16px !important;
+        padding: 14px 16px !important;
         z-index: 2147483646 !important;
-        font-family: system-ui, -apple-system, sans-serif !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif !important;
+        border-bottom: 3px solid #299DCF !important;
         text-align: center !important;
       `;
 
         badge.innerHTML = `
-        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; position: relative; padding-right: 48px;">
-          <span style="font-size: 24px;">✅</span>
-          <div>
-            <strong>Geverifieerd Microsoft-domein</strong><br>
-            <small>Dit is een echte Microsoft-inlogpagina</small>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px; position: relative; padding-right: 40px;">
+          <div style="width: 28px; height: 28px; border-radius: 50%; background: #299DCF; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0;">✓</div>
+          <div style="text-align: left;">
+            <strong style="display:block; font-size: 15px; line-height: 1.3;">${badgeTitle}</strong>
+            <small style="opacity: 0.9; font-size: 12px;">${badgeSubtitle}</small>
           </div>
           <button onclick="if(window.validBadgeTimeoutId){clearTimeout(window.validBadgeTimeoutId);window.validBadgeTimeoutId=null;} this.parentElement.parentElement.remove(); document.body.style.marginTop = '0';" title="Sluiten" style="
-            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
             color: white; padding: 0; border-radius: 4px; cursor: pointer;
             width: 24px; height: 24px; min-width: 24px; min-height: 24px; max-width: 24px; max-height: 24px;
             display: flex; align-items: center; justify-content: center;
@@ -6626,31 +6657,35 @@ if (window.checkExtensionLoaded) {
         </div>
       `;
 
-        // Push page content down
         document.body.appendChild(badge);
         const bannerHeight = badge.offsetHeight || 64;
         document.body.style.marginTop = `${bannerHeight}px`;
       } else {
-        // Desktop: Badge style (original)
+        // Desktop: stronger Bruinsma certainty card
         badge.style.cssText = `
         position: fixed !important;
-        top: 20px !important;
-        right: 20px !important;
-        background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+        top: 16px !important;
+        right: 16px !important;
+        background: #00395F !important;
         color: white !important;
-        padding: 12px 16px !important;
-        border-radius: 8px !important;
+        padding: 14px 16px !important;
+        border-radius: 10px !important;
         z-index: 2147483646 !important;
-        font-family: system-ui, -apple-system, sans-serif !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif !important;
+        border: 1px solid rgba(41, 157, 207, 0.55) !important;
+        border-left: 4px solid #299DCF !important;
+        max-width: 320px !important;
         font-size: 14px !important;
         font-weight: 500 !important;
       `;
 
         badge.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 16px;">✅</span>
-          <span>Geverifieerd Microsoft-domein</span>
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+          <div style="width: 26px; height: 26px; border-radius: 50%; background: #299DCF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 1px;">✓</div>
+          <div>
+            <div style="font-weight: 600; line-height: 1.3; margin-bottom: 2px;">${badgeTitle}</div>
+            <div style="font-size: 12px; opacity: 0.9; font-weight: 400;">${badgeSubtitle}</div>
+          </div>
         </div>
       `;
 
